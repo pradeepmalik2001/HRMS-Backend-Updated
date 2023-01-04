@@ -7,9 +7,10 @@ import javax.persistence.*;
 public class EmergencyContactInfo {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String emergencyContactName;
+
 	private String emergencyContactMobile;
+	private String emergencyContactName;
+
 	private String emergencyContactEmail;
 	private String emergencyContactAddress;
 	

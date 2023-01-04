@@ -60,7 +60,7 @@ public class EmployeeDeductionServicesimpl implements EmployeeDeductionService {
 				 emp.setDateCreated(employeeDeductiodto.getDateCreated());
 				 emp.setDeductionId(employeeDeductiodto.getDeductionId());
 				 emp.setEffectiveDate(employeeDeductiodto.getEffectiveDate());
-				 emp.setEmpId(employeeDeductiodto.getEmpId());
+
 				 emp.setId(employeeDeductiodto.getId());
 				 emp.setType(employeeDeductiodto.getType());
 				 

@@ -59,9 +59,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.logout()
 //		.permitAll();
-		http=http.csrf().disable().cors().disable();
-		http=http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
-		http=http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
+		http = http.csrf().disable().cors().disable();
+		http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+		http = http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
 		{
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
 		}).and();
@@ -69,19 +69,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf()
 				.disable()
 				.authorizeRequests()
-				.antMatchers("/usermaster/**","/saveapproval/**","/savedepartment/**",
-						"/holiday/**","/addjobtitle/**","/shiftmanagement/**","/allowance/**","/application/**"
-						,"/attendance/**","/AttendanceDetails/**","/savebankinginfo/**","/basic/**",
+				.antMatchers("/usermaster/**", "/saveapproval/**", "/savedepartment/**",
+						"/holiday/**", "/addjobtitle/**", "/shiftmanagement/**", "/allowance/**", "/application/**"
+						, "/attendance/**", "/AttendanceDetails/**", "/savebankinginfo/**", "/basic/**",
 						"/CreateLeaveRequest/**",
-						"/deductions/**","/designation/**","/saveemergencycontact/**","/employeeAllowances/**",
+						"/deductions/**", "/designation/**", "/saveemergencycontact/**", "/employeeAllowances/**",
 						"/employeededuction/**"
-						,"/employee/**","/saveemployement/**","/image/**","/intreview/**",
-						"/leave/**","/loan_application/**","/loan_master/**"
-						,"/MonthlyPerformance/**","/OverTime/**","/payHead/**","/payrollitem/**",
-						"/payrolls/**","/RaiseGrievances/**"
-						,"/saveRole/**","/salary/**","/feedback/**",
-						"/TravelOverview/**","/vancancies/**","/authenticate/**","/savework/**"
-						).permitAll()
+						, "/employee/**", "/saveemployement/**", "/image/**", "/intreview/**",
+						"/leave/**", "/loan_application/**", "/loan_master/**"
+						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
+						"/payrolls/**", "/RaiseGrievances/**"
+						, "/saveRole/**", "/salary/**", "/feedback/**",
+						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**"
+				).permitAll()
 				.antMatchers()
 				.hasAnyRole("ADMIN")
 				.anyRequest().authenticated();
@@ -105,48 +105,48 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //		@Bean
 //		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //			auth.userDetailsService(customUserService).passwordEncoder(passwordEncoder());
-
+//
 //		}
-
-
+//
+//
 //	@Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //
 //		auth.userDetailsService(customUserService).passwordEncoder(passwordEncoder());
 //		auth.inMemoryAuthentication().withUser("akash").password(this.passwordEncoder().encode("123")).roles("ADMIN");
 //		auth.inMemoryAuthentication().withUser("harsh").password("123").roles("ADMIN");
-
-
+//
+//
 //	}
 
 
-	@Bean(name= BeanIds.AUTHENTICATION_MANAGER)
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+		@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+		@Override
+		public AuthenticationManager authenticationManagerBean () throws Exception {
+			return super.authenticationManagerBean();
+		}
 
 
-
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+		@Bean
+		public BCryptPasswordEncoder passwordEncoder () {
+			return new BCryptPasswordEncoder();
+		}
 
 
 //	auth.inMemoryAuthentication().withUser("raja").password("12345").roles("ADMIN");
 //	auth.inMemoryAuthentication().withUser("rohan").password(this.passwordEncoder().encode("123")).roles("ADMIN");
 
 
-	@Bean
+		@Bean
 //	@Override
-	public DaoAuthenticationProvider daoAuthenticationProvider() {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(this.customUserService);
-		provider.setPasswordEncoder(passwordEncoder());
-		return provider;
+		public DaoAuthenticationProvider daoAuthenticationProvider () {
+			DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+			provider.setUserDetailsService(this.customUserService);
+			provider.setPasswordEncoder(passwordEncoder());
+			return provider;
+		}
+
 	}
 
-}
 
 

@@ -17,7 +17,6 @@ public class EmployeeDeduction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
-	private int empId;
 	private int deductionId;
 	private String type;
 	private double ammount;

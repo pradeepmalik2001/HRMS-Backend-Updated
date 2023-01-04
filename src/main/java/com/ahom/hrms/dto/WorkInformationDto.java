@@ -24,12 +24,12 @@ public class WorkInformationDto {
 		
 	}
 
-	public String getEmployementType() {
+	public String getEmploymentType() {
 		return employmentType;
 	}
 
-	public void setEmployementType(String employementType) {
-		this.employmentType = employementType;
+	public void setEmploymentType(String employmentType) {
+		this.employmentType = employmentType;
 	}
 
 	public String getOfficeBranch() {
@@ -56,12 +56,12 @@ public class WorkInformationDto {
 		this.employeeGroup = employeeGroup;
 	}
 
-	public String getInsuranceAvil() {
+	public String getInsuranceAvail() {
 		return insuranceAvail;
 	}
 
-	public void setInsuranceAvil(String insuranceAvil) {
-		this.insuranceAvail = insuranceAvil;
+	public void setInsuranceAvail(String insuranceAvail) {
+		this.insuranceAvail = insuranceAvail;
 	}
 
 	public String getGender() {
