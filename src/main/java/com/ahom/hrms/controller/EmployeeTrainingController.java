@@ -19,7 +19,7 @@ public class EmployeeTrainingController {
 	@Autowired
 	TrainingToEmployeeServiceImpl trainingToEmployeeService;
 	
-	@PostMapping("/employee")
+	@PostMapping("/save")
 	public ResponseEntity<EmployeeTrainingDto> saveEmployeeTraining(@RequestBody EmployeeTrainingDto employeeTrainingDto){
 		trainingToEmployeeService.saveEmployee(employeeTrainingDto);
 		return new ResponseEntity<>(employeeTrainingDto,HttpStatus.CREATED);
@@ -44,6 +44,7 @@ public class EmployeeTrainingController {
 	
 	@DeleteMapping("/delete/{id}")
 	public void delete(@PathVariable("id")int id) {
+
 		trainingToEmployeeService.deleteEmployeeTraining(id);
 	}
 

@@ -8,9 +8,18 @@ public class EmployementTypeMaster {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private  int id;
 	private String employmentType;
 	private String description;
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public EmployementTypeMaster() {
 		
 	}
@@ -31,11 +40,9 @@ public class EmployementTypeMaster {
 		this.description = description;
 	}
 
-	public EmployementTypeMaster(String employmentType, String description) {
-		super();
+	public EmployementTypeMaster(int id, String employmentType, String description) {
+		this.id = id;
 		this.employmentType = employmentType;
 		this.description = description;
 	}
-	
-
 }

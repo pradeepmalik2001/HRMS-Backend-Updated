@@ -1,10 +1,19 @@
 package com.ahom.hrms.dto;
 
 public class EmployementTypeMasterDto {
-	
+	private  int id;
 	private String employmentType;
 	private String description;
-	
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public EmployementTypeMasterDto() {
 		
 	}
@@ -25,11 +34,9 @@ public class EmployementTypeMasterDto {
 		this.description = description;
 	}
 
-	public EmployementTypeMasterDto(String employmentType, String description) {
-		super();
+	public EmployementTypeMasterDto(int id, String employmentType, String description) {
+		this.id = id;
 		this.employmentType = employmentType;
 		this.description = description;
 	}
-	
-
 }

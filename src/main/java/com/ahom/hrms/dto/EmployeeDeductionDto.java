@@ -13,7 +13,7 @@ import lombok.Setter;
 public class EmployeeDeductionDto {
 
 	private int Id;
-	private int empId;
+
 	private int deductionId;
 	private String type;
 	private double ammount;
