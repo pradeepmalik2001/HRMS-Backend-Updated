@@ -39,7 +39,6 @@ public class AttendanceController {
 	}
 
 	@DeleteMapping("/Delete/{employeeId}")
-
 	public void deleteEmp(@PathVariable("employeeId") int id) {
 		attendanceService.deleteAttendance(id);
 	}
