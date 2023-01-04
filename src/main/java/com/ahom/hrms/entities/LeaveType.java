@@ -11,6 +11,10 @@ public class LeaveType {
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO )
 private int id;
+private String names;
+	private String shgs;
+	private String nsfsames;
+	private String fhb;
 @NotBlank(message="not null leaveType is mandatory ")
 private String leaveType;
 @NotBlank(message="not null description is mandatory")
