@@ -26,7 +26,7 @@ public class AttendanceDetailsController {
 	
 	@Autowired
 	AttendanceDetailsServiceImpl attendanceDetailsService;
-	
+
 	 @PostMapping("/post")
 	    public ResponseEntity<AttendanceDetailsDto> saveEmp(@RequestBody AttendanceDetailsDto attendanceDetailsDto)
 	    {
@@ -35,7 +35,7 @@ public class AttendanceDetailsController {
 	        return new ResponseEntity<>(attendanceDetailsDto, HttpStatus.CREATED);
 	    }
 	 
-	 @GetMapping("get")
+	 @GetMapping("/get")
 	    public ResponseEntity<List<AttendanceDetailsDto>> getAttendanceDetails()
 	    {
 	        List<AttendanceDetailsDto> allAttendanceDetails = attendanceDetailsService.getAllAttendanceDetails();

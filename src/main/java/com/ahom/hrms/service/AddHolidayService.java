@@ -12,6 +12,6 @@ public interface AddHolidayService {
 
 	void deleteLaeveDetail(int i);
 
-	void updateLeaveDetail(AddHolidayDto addHolidayDto);
+	void updateLeaveDetail(AddHolidayDto addHolidayDto,int id);
 
 }
