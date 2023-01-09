@@ -8,6 +8,7 @@ public class AddApproval {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private String userName;
 	private String employeeName;
 	private String approvalName;
@@ -49,13 +50,20 @@ public class AddApproval {
 		this.approvalCode = approvalCode;
 	}
 
-	public AddApproval(String userName, String employeeName, String approvalName, String approvalCode) {
-		super();
+
+	public AddApproval(int id, String userName, String employeeName, String approvalName, String approvalCode) {
+		this.id = id;
 		this.userName = userName;
 		this.employeeName = employeeName;
 		this.approvalName = approvalName;
 		this.approvalCode = approvalCode;
 	}
 
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

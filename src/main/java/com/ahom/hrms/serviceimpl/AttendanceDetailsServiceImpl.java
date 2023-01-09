@@ -74,7 +74,7 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 		
 		
 		attendanceDetailsDto.setFromDate(attendanceDetails.getFromDate());
-		
+		attendanceDetailsDto.setToDate(attendanceDetails.getToDate());
 		attendanceDetailsDto.setSelectEmployee(attendanceDetails.getSelectEmployee());
 		
 

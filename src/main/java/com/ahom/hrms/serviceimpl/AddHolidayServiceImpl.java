@@ -36,8 +36,18 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 		addHolidayRepository.deleteById(i);
 	}
 
-	public void updateLeaveDetail(AddHolidayDto addHolidayDto) {
-		addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+	public void updateLeaveDetail(AddHolidayDto addHolidayDto ,int id)
+	{
+
+		AddHoliday addHolidayDto1=addHolidayRepository.findById(id).orElse(null);
+
+		addHolidayDto1.setHolidayName(addHolidayDto.getHolidayName());
+//		addHolidayDto1.setId(addHolidayDto.getId());
+		addHolidayDto1.setHolidayType(addHolidayDto.getHolidayType());
+		addHolidayDto1.setFromDate(addHolidayDto.getFromDate());
+		addHolidayDto1.setToDate(addHolidayDto.getToDate());
+
+		addHolidayRepository.saveAndFlush(addHolidayDto1);
 	}
 
 	public AddHoliday AddHolidayDtotoAddHoliday(AddHolidayDto addHolidayDto) {

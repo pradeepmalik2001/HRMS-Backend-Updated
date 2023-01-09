@@ -8,6 +8,7 @@ public class BankingInfo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private String bankAccountNo;
 	private String bankName;
 	private String bankBranch;
@@ -51,9 +52,9 @@ public class BankingInfo {
 	public void setPan(String pan) {
 		this.pan = pan;
 	}
-	public BankingInfo(String bankAccountNo, String bankName, String bankBranch, String ifscCode, String paymentType,
-			String pan) {
-		super();
+
+	public BankingInfo(int id, String bankAccountNo, String bankName, String bankBranch, String ifscCode, String paymentType, String pan) {
+		this.id = id;
 		this.bankAccountNo = bankAccountNo;
 		this.bankName = bankName;
 		this.bankBranch = bankBranch;
@@ -61,9 +62,16 @@ public class BankingInfo {
 		this.paymentType = paymentType;
 		this.pan = pan;
 	}
-	
+
 	public BankingInfo() {
 		
+	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

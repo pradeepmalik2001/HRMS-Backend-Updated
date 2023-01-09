@@ -3,6 +3,7 @@ package com.ahom.hrms.controller;
 
 import java.util.List;
 
+import com.ahom.hrms.service.AddHolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,10 @@ public List<AddHolidayDto> getAllJob(){
 	addHolidayService.deleteLaeveDetail(i);
 	
 } 
-@PutMapping("/edit")
-public ResponseEntity<AddHolidayDto>updateall(@RequestBody AddHolidayDto addHolidayDto){
-	addHolidayService.updateLeaveDetail(addHolidayDto);
-return new ResponseEntity<>(addHolidayDto,HttpStatus.CREATED);	
+@PutMapping("/edit/{id}")
+public ResponseEntity<AddHolidayDto>updateall(@RequestBody AddHolidayDto addHolidayDto,@PathVariable("id") int id){
+	addHolidayService.updateLeaveDetail(addHolidayDto,id);
+return new ResponseEntity<>(addHolidayDto,HttpStatus.CREATED);
 }
 
 }
