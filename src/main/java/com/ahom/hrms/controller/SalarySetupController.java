@@ -39,6 +39,7 @@ public class SalarySetupController {
     }
     @DeleteMapping("/salary/{SalaryId}")
     public void deleteSal(@PathVariable("SalaryId") int id){
+
         salarySetupService.deleteSalary(id);
     }
 }
