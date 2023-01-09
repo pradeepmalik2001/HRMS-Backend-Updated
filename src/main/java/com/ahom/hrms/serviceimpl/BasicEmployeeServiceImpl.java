@@ -1,7 +1,9 @@
 package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
+import com.ahom.hrms.dto.EmployeeTrainingDto;
 import com.ahom.hrms.entities.BasicEmployee;
+import com.ahom.hrms.entities.EmployeeTraining;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Service;
 import com.ahom.hrms.dto.BasicEmployeeDto;
 
 import com.ahom.hrms.service.BasicEmployeeService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
@@ -41,4 +46,11 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		BasicEmployeeDto basicEmployeeDto = this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
 		return basicEmployeeDto;
 	}
+
+	@Override
+	public List<BasicEmployeeDto> getAll() {
+		List list=basicEmployeeRepository.findAll();
+		return list;
+	}
+
 }

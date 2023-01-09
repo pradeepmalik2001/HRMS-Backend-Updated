@@ -26,6 +26,7 @@ public class PayRoll {
 	private String type;
 	private String status;
 	private String dateCreated;
+
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "payRoll")
 	private List<Allowances> allowances;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "payRoll", fetch = FetchType.LAZY)
