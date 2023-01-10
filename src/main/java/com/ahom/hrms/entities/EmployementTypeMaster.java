@@ -24,9 +24,9 @@ public class EmployementTypeMaster {
 		
 	}
 
-	public String getEmploymentType() {
-		return employmentType;
-	}
+		public String getEmploymentType() {
+			return employmentType;
+		}
 
 	public void setEmploymentType(String employmentType) {
 		this.employmentType = employmentType;

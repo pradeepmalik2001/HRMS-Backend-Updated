@@ -44,12 +44,14 @@ public class PayrollServiceimpl implements PayrollService {
 			payrollRepository.deleteById(Id);
 	}
 
+	@Override
 		public PayRollDto savePayroll(PayRoll payroll)
 		{
 			PayRoll payRoll = payrollRepository.save(payroll);
 			return  payrollToPayrollDto(payroll);
 
 		}
+		@Override
 		 public PayRollDto payrollById(Integer Id)
 		    {
 		        PayRoll payroll = this.payrollRepository.findById(Id).get();
@@ -62,21 +64,23 @@ public class PayrollServiceimpl implements PayrollService {
 
 
 
-	public PayRoll payrollDtoToPayroll(PayRollDto payrollDto) {
+			@Override
+			public PayRoll payrollDtoToPayroll(PayRollDto payrollDto) {
 
-		PayRoll payroll = new PayRoll();
-		payroll.setId(payrollDto.getId());
-		payroll.setDateFrom(payrollDto.getDateFrom());
-		payroll.setDateTo(payrollDto.getDateTo());
-		payroll.setDateCreated(payrollDto.getDateCreated());
-		payroll.setRefNo(payrollDto.getRefNo());
-		payroll.setStatus(payrollDto.getStatus());
-		payroll.setType(payrollDto.getType());
+		   PayRoll payroll = new PayRoll();
+		   payroll.setId(payrollDto.getId());
+		   payroll.setDateFrom(payrollDto.getDateFrom());
+		   payroll.setDateTo(payrollDto.getDateTo());
+		   payroll.setDateCreated(payrollDto.getDateCreated());
+		   payroll.setRefNo(payrollDto.getRefNo());
+		   payroll.setStatus(payrollDto.getStatus());
+		   payroll.setType(payrollDto.getType());
 
-		return payroll;
+		  return payroll;
 
 	}
 
+	@Override
 	public PayRollDto payrollToPayrollDto(PayRoll payroll) {
 
 		PayRollDto payrollDto = new PayRollDto();

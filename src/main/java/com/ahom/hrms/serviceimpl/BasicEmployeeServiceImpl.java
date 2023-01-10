@@ -56,9 +56,13 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		return basicEmployeeDto;
 	}
 
-//	public List<BasicEmployeeDto> getAll() {
-//		List list=basicEmployeeRepository.findAll();
-//		return list;
-//	}
+
+	//fetchAll
+	@Override
+	public List<BasicEmployeeDto> getAll() {
+		List list=basicEmployeeRepository.findAll();
+		return list;
+	}
+
 
 }
