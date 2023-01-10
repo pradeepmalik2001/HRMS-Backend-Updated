@@ -11,6 +11,8 @@ import com.ahom.hrms.dto.UserMasterDto;
 
 import com.ahom.hrms.service.UserMasterService;
 
+import java.util.List;
+
 @Service
 public class UserMasterServiceImpl implements UserMasterService{
 	
@@ -47,4 +49,12 @@ public class UserMasterServiceImpl implements UserMasterService{
 		UserMasterDto userMasterDto = this.modelMapper.map(userMaster, UserMasterDto.class);
 		return userMasterDto;
 	}
+
+//	@Override
+//	public List<UserMasterDto> getALlUser() {
+//		List list=this.userMasterRepository.findAll();
+//		return list;
+//	}
+
+
 }

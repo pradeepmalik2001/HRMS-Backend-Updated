@@ -9,6 +9,8 @@ import com.ahom.hrms.dto.AddDepartmentDto;
 import com.ahom.hrms.entities.AddDepartment;
 import com.ahom.hrms.service.AddDepartmentService;
 
+import java.util.List;
+
 @Service
 public class AddDepartmentServiceImpl implements AddDepartmentService{
 
@@ -32,6 +34,13 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 	public AddDepartmentDto addDepartmentToAddDepartmentDto(AddDepartment addDepartment) {
 		AddDepartmentDto addDepartmentDto = this.modelMapper.map(addDepartment, AddDepartmentDto.class);
 		return addDepartmentDto;
+	}
+
+	@Override
+	public List<AddDepartmentDto> getALlUser()
+	{
+		List list=this.addDepartmentRepository.findAll();
+		return list;
 	}
 
 }
