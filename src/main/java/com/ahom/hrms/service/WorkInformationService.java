@@ -14,6 +14,7 @@ public interface WorkInformationService {
 	
 	WorkInformationDto workInformationToWorkInformationDto(WorkInformation workInformation);
 
+	///
 
 	List<WorkInformationDto> getAll();
 }

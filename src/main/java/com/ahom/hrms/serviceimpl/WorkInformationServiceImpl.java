@@ -37,6 +37,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     }
 
 
+    //fetch
     public List<WorkInformationDto> getAll() {
         List list=workInformationRepository.findAll();
         return list;

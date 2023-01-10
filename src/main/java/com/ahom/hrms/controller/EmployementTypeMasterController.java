@@ -25,6 +25,7 @@ public class EmployementTypeMasterController {
 		return new ResponseEntity<>(employementTypeMasterDto, HttpStatus.CREATED);
 	}
 
+//	rePush
 	@GetMapping("/getall")
 	public List<EmployementTypeMasterDto> getEmployementTypeMaster(){
 		List<EmployementTypeMasterDto> allEmployementTypeMasterDto=employementTypeMasterService.getAll();

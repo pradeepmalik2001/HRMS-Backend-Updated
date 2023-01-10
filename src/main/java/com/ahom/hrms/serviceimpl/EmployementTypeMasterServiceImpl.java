@@ -37,7 +37,7 @@ public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterSe
 		return employementTypeMasterDto;
 	}
 
-
+//fetch
 	public List<EmployementTypeMasterDto> getAll() {
 		List list=employementTypeMasterRepository.findAll();
 		return list;

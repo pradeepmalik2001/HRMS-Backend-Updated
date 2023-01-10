@@ -13,5 +13,6 @@ public interface EmployementTypeMasterService {
 	
 	EmployementTypeMasterDto employementTypeMasterToUserEmployementTypeMasterDto(EmployementTypeMaster employementTypeMaster);
 
+	///
 	List<EmployementTypeMasterDto> getAll();
 }

@@ -24,6 +24,8 @@ public class WorkInformationController {
 		return new ResponseEntity<>(workInformationDto, HttpStatus.CREATED);
 	}
 
+
+	///
 	@GetMapping("/fetchdata")
 	public List<WorkInformationDto> getWorkInformation(){
 		List<WorkInformationDto> allWorkInformationDto=workInformationService.getAll();
