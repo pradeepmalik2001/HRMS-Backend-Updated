@@ -1,7 +1,9 @@
 package com.ahom.hrms.serviceimpl;
 
+import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.SalarySetupRepository;
 import com.ahom.hrms.dto.SalarySetupDto;
+import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.SalarySetup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,21 @@ public class SalarySetupServiceimpl implements com.ahom.hrms.service.SalarySetup
 
     @Autowired
     SalarySetupRepository salarySetupRepository;
+    @Autowired
+    BasicEmployeeRepository basicEmployeeRepository;
     @Override
-    public void saveDeduction(SalarySetupDto salarySetupDto) {
-
-        salarySetupRepository.save(salarySetupDtoTosalarySetup(salarySetupDto));
+    public SalarySetup saveDeduction(SalarySetup salarySetupDto)
+    {
+        BasicEmployee basicEmployee=basicEmployeeRepository.findById(salarySetupDto.getId()).orElse(null);
+        if (basicEmployee==null)
+        {
+            throw new RuntimeException("hshddh");
+        }else
+        {
+            salarySetupDto.setBasicEmployee(basicEmployee);
+        salarySetupRepository.save(salarySetupDto);
+    }
+    return salarySetupDto;
     }
     @Override
     public void deleteSalary(int id ) {
@@ -58,7 +71,7 @@ public class SalarySetupServiceimpl implements com.ahom.hrms.service.SalarySetup
         salarySetupDto.setAnnualSalary(salarySetup.getAnnualSalary());
         salarySetupDto.setFinancialYear(salarySetup.getFinancialYear());
         salarySetupDto.setMonth(salarySetup.getMonth());
-        salarySetupDto.setEmployeeId(salarySetup.getEmployeeId());
+//        salarySetupDto.setEmployeeId(salarySetup.getEmployeeId());
 
         return salarySetupDto;
 

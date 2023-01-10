@@ -1,6 +1,7 @@
 package com.ahom.hrms.controller;
 
 import com.ahom.hrms.dto.SalarySetupDto;
+import com.ahom.hrms.entities.SalarySetup;
 import com.ahom.hrms.serviceimpl.SalarySetupServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class SalarySetupController {
     SalarySetupServiceimpl salarySetupService;
 
     @PostMapping("/salary")
-    public ResponseEntity<SalarySetupDto> saveSalary(@RequestBody @Valid SalarySetupDto salarySetupDto){
+    public ResponseEntity<SalarySetup> saveSalary(@RequestBody @Valid SalarySetup salarySetupDto){
 
         salarySetupService.saveDeduction(salarySetupDto);
         return new ResponseEntity<>(salarySetupDto, HttpStatus.CREATED);

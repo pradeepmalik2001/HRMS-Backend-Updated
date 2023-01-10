@@ -28,8 +28,8 @@ public class  UserMaster {
 //	@NotBlank(message = "please select role type")
 //	private String roleType;
 
-	@OneToOne
-	private PayRoll payRoll;
+//	@OneToOne
+//	private PayRoll payRoll;
 	
 	public int getId() {
 		return id;
