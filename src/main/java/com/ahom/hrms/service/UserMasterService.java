@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserMasterService {
 	
-	void saveUser(UserMasterDto userMasterDto);
+	UserMaster saveUser(UserMaster userMasterDto);
 	
 	UserMasterDto fetchByUser(String userName);
 	
