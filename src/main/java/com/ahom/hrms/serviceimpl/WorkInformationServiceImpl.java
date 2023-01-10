@@ -5,11 +5,11 @@ import com.ahom.hrms.entities.WorkInformation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import com.ahom.hrms.dto.WorkInformationDto;
-
 import com.ahom.hrms.service.WorkInformationService;
+
+import java.util.List;
+
 
 @Service
 public class WorkInformationServiceImpl implements WorkInformationService {
@@ -35,5 +35,13 @@ public class WorkInformationServiceImpl implements WorkInformationService {
         WorkInformationDto workInformationDto = this.modelMapper.map(workInformation, WorkInformationDto.class);
         return workInformationDto;
     }
+
+
+    public List<WorkInformationDto> getAll() {
+        List list=workInformationRepository.findAll();
+        return list;
+    }
+
+
 
 }

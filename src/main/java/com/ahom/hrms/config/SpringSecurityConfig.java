@@ -80,7 +80,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
 						"/payrolls/**", "/RaiseGrievances/**"
 						, "/saveRole/**", "/salary/**", "/feedback/**",
-						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**"
+						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getall/**"
 				).permitAll()
 				.antMatchers()
 				.hasAnyRole("ADMIN")

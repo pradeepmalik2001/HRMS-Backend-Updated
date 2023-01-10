@@ -1,7 +1,10 @@
 package com.ahom.hrms.service;
 
+import com.ahom.hrms.dto.BasicEmployeeDto;
 import com.ahom.hrms.dto.WorkInformationDto;
 import com.ahom.hrms.entities.WorkInformation;
+
+import java.util.List;
 
 public interface WorkInformationService {
 	
@@ -11,4 +14,6 @@ public interface WorkInformationService {
 	
 	WorkInformationDto workInformationToWorkInformationDto(WorkInformation workInformation);
 
+
+	List<WorkInformationDto> getAll();
 }
