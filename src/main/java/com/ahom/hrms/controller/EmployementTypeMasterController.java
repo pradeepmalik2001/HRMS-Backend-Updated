@@ -26,8 +26,8 @@ public class EmployementTypeMasterController {
 	}
 
 //	rePush
-	@GetMapping("/getall")
-	public List<EmployementTypeMasterDto> getEmployementTypeMaster(){
+	@GetMapping("/getallEmp")
+	public List<EmployementTypeMasterDto> getTypeMaster(){
 		List<EmployementTypeMasterDto> allEmployementTypeMasterDto=employementTypeMasterService.getAll();
 		return allEmployementTypeMasterDto;
 

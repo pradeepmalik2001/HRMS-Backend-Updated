@@ -79,8 +79,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/leave/**", "/loan_application/**", "/loan_master/**"
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
 						"/payrolls/**", "/RaiseGrievances/**"
-						, "/saveRole/**", "/salary/**", "/feedback/**",
-						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getall/**"
+						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**",
+						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getallEmp/**"
 				).permitAll()
 				.antMatchers()
 				.hasAnyRole("ADMIN")
