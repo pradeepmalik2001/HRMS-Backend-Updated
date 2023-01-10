@@ -27,9 +27,11 @@ public class PayRoll {
 	private String status;
 	private String dateCreated;
 
+
 	@ManyToOne
 	@JoinColumn(name = "emp_id",referencedColumnName = "employeeId")
 	private BasicEmployee basicEmployee;
+
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "payRoll")
 	private List<Allowances> allowances;

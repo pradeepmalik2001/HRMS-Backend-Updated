@@ -43,9 +43,9 @@ public class TrainingToEmployeeServiceImpl implements TrainingToEmployeeService 
 	 employeeTraining2.setEventName(employeeTraining.getEventName());
 	 employeeTraining2.setId(employeeTraining.getId());
 	 employeeTraining2.setTrainingName(employeeTraining.getTrainingName());
-	 
-	 
+
 	 employeeReposatory.save(employeeTraining2);
+
 //		employeeTraining2.stream().map( b->{
 //			
 //			if(b.getId()==id) {

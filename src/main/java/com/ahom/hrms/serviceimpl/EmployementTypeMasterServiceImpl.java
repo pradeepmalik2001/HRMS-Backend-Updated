@@ -1,5 +1,6 @@
 package com.ahom.hrms.serviceimpl;
 
+import com.ahom.hrms.dto.WorkInformationDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import com.ahom.hrms.Repository.EmployementTypeMasterRepository;
 import com.ahom.hrms.dto.EmployementTypeMasterDto;
 import com.ahom.hrms.entities.EmployementTypeMaster;
 import com.ahom.hrms.service.EmployementTypeMasterService;
+
+import java.util.List;
 
 @Service
 public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterService{
@@ -32,6 +35,12 @@ public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterSe
 	public EmployementTypeMasterDto employementTypeMasterToUserEmployementTypeMasterDto(EmployementTypeMaster employementTypeMaster) {
 		EmployementTypeMasterDto employementTypeMasterDto = this.modelMapper.map(employementTypeMaster, EmployementTypeMasterDto.class);
 		return employementTypeMasterDto;
+	}
+
+//fetch
+	public List<EmployementTypeMasterDto> getAll() {
+		List list=employementTypeMasterRepository.findAll();
+		return list;
 	}
 
 }

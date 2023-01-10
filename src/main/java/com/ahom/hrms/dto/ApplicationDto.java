@@ -30,7 +30,8 @@ public class ApplicationDto {
 	private String exampleTextArea;
 	private int careerPercentage;
 	
-	private ImageData resumeupload;
+//	private ImageData resumeupload;
+	private String imageUrl;
 
 
 }

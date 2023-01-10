@@ -79,12 +79,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/leave/**", "/loan_application/**", "/loan_master/**"
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
 						"/payrolls/**", "/RaiseGrievances/**"
-						, "/saveRole/**", "/salary/**", "/feedback/**",
-						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/getall/**"
+						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**",
+						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getallEmp/**"
 				).permitAll()
 				.antMatchers()
 				.hasAnyRole("ADMIN")
-				.anyRequest().authenticated();
+				.anyRequest().authenticated().and().formLogin().and()
+				.httpBasic().and().logout().permitAll()
+				;
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.BasicEmployeeDto;
 import com.ahom.hrms.service.BasicEmployeeService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/basic")
@@ -29,6 +31,11 @@ public class BasicEmployeeController {
 		BasicEmployeeDto basicEmployeeDto = basicEmployeeService.employeeById(employeeId);
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.ok(basicEmployeeDto);
+	}
+	@GetMapping("/fetchdata")
+	public ResponseEntity<List<BasicEmployeeDto>> getAll()
+	{
+		return new ResponseEntity<>(this.basicEmployeeService.getAllEmployee(),HttpStatus.ACCEPTED);
 	}
 
 }

@@ -71,23 +71,6 @@ public class AddShiftController {
 	    	return shiftManagement;
 	 }
 
-
-//	    @PutMapping("/addshift")
-//	    public ResponseEntity<AddShiftDto> updateaddShift(@RequestBody AddShiftDto addShiftDto)
-//	    {
-//	        addShiftService.updateAddShift(addShiftDto);
-//	        return new ResponseEntity<>(addShiftDto, HttpStatus.ACCEPTED);
-//	    }
-
-
-	//
-//	    @GetMapping("/employee")
-//	    public List<Employee> getEmployee()
-//	    {
-//	        List<Employee> allEmployee = employeeService.getAllEmployee();
-	//
-//	        return allEmployee;
-//	    }
 	}
 
 

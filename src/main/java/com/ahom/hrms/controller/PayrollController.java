@@ -47,12 +47,5 @@ public List<PayRollDto> getPayroll()
 	        payrollService.deletePayroll(id);
 	    }
 
-	
-	
-
-
-
-	
-	
 
 }
