@@ -1,22 +1,18 @@
 package com.ahom.hrms.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import com.ahom.hrms.Helper.Excel;
+import com.ahom.hrms.entities.Attendance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ahom.hrms.dto.AttendanceDto;
 import com.ahom.hrms.serviceimpl.AttendanceServiceImpl;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/attendance")
@@ -30,6 +26,16 @@ public class AttendanceController {
 	public ResponseEntity<AttendanceDto> saveEmp(@RequestBody AttendanceDto attendancedto) {
 		attendanceService.saveEmplAttendance(attendancedto);
 		 return new ResponseEntity<>(attendancedto ,HttpStatus.CREATED);
+	}
+	@PostMapping("/upload")
+	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file){
+		if (Excel.checkFormat(file))
+		{
+			attendanceService.saveExcel(file);
+			String originalFilename = file.getOriginalFilename();
+			return  ResponseEntity.ok(Map.of("message","file uploaded successfully"));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
 	}
 
 	@GetMapping("/fetch")

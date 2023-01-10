@@ -32,8 +32,9 @@ public class Application {
 	private String exampleTextArea;
 	private int careerPercentage;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "application", fetch = FetchType.LAZY )
-	private ImageData resumeupload;
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "application", fetch = FetchType.LAZY )
+//	private ImageData resumeupload;
+	private String imageUrl;
 
 
 }
