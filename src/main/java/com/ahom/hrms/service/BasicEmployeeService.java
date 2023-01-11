@@ -14,6 +14,7 @@ public interface BasicEmployeeService {
 	BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto);
 	
 	BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee);
-	List<BasicEmployeeDto>getAll();
+
+	List<BasicEmployeeDto> getAllEmployee();
 
 }

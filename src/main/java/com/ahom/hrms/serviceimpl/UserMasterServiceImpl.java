@@ -1,6 +1,9 @@
 package com.ahom.hrms.serviceimpl;
 
+import com.ahom.hrms.Repository.RoleRepository;
 import com.ahom.hrms.Repository.UserMasterRepository;
+import com.ahom.hrms.dto.RoleDto;
+import com.ahom.hrms.entities.Role;
 import com.ahom.hrms.entities.UserMaster;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import com.ahom.hrms.dto.UserMasterDto;
 
 import com.ahom.hrms.service.UserMasterService;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,10 +25,24 @@ public class UserMasterServiceImpl implements UserMasterService{
 	
 	@Autowired
 	ModelMapper modelMapper;
+	@Autowired
+	RoleRepository roleRepository;
+
 	
 	//save data
-	public void saveUser(UserMasterDto userMasterDto) {
-		userMasterRepository.save(userMasterDtoToUserMaster(userMasterDto));
+	public UserMaster saveUser(UserMaster userMasterDto) {
+
+
+		Role role=roleRepository.findByRoleName(userMasterDto.getRoleName());
+		if (role==null)
+			throw new RuntimeException("No role");
+		else {
+//			userMasterDto.setRoleName(role.getRoleName());
+			userMasterDto.setRoles(Collections.singletonList(role));
+
+			userMasterRepository.save(userMasterDto);
+		}
+		return userMasterDto;
 	}
 	
 	//fetch data by UserName

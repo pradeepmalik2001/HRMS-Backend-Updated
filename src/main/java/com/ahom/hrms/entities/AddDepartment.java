@@ -8,7 +8,7 @@ public class AddDepartment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int departmentId;
+	private int id;
 	private String departmentName;
 	private String description;
 	
@@ -16,12 +16,12 @@ public class AddDepartment {
 		
 	}
 
-	public int getDepartmentId() {
-		return departmentId;
+	public int getId() {
+		return id;
 	}
 
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDepartmentName() {
@@ -40,12 +40,9 @@ public class AddDepartment {
 		this.description = description;
 	}
 
-	public AddDepartment(int departmentId, String departmentName, String description) {
-		super();
-		this.departmentId = departmentId;
+	public AddDepartment(int id, int departmentId, String departmentName, String description) {
+		this.id = id;
 		this.departmentName = departmentName;
 		this.description = description;
 	}
-	
-
 }
