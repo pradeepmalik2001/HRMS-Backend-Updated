@@ -1,12 +1,16 @@
 package com.ahom.hrms.dto;
 
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 public class OverTimeDto {
 	
 	private int Id;
 	private String selectEmployee;
-	private String date;
+	@Temporal(TemporalType.DATE)
+	private Date date;
 	private String startTime;
 	private String endTime;
 	private String description;
@@ -23,12 +27,7 @@ public class OverTimeDto {
 	public void setSelectEmployee(String selectEmployee) {
 		this.selectEmployee = selectEmployee;
 	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
+
 	public String getStartTime() {
 		return startTime;
 	}
@@ -47,6 +46,12 @@ public class OverTimeDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }

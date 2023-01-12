@@ -1,5 +1,7 @@
 package com.ahom.hrms.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -26,6 +28,7 @@ public class Role {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+	@JsonBackReference
 	
 	public List<UserMaster> getUserMasters() {
 		return userMasters;

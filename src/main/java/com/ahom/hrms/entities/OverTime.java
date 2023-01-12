@@ -1,10 +1,9 @@
 package com.ahom.hrms.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.lang.reflect.Type;
+import java.util.Date;
+
 
 @Entity
 @Table(name="overtime")
@@ -14,7 +13,8 @@ public class OverTime {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
 	private String selectEmployee;
-	private String date;
+	@Temporal(TemporalType.DATE)
+	private Date date;
 	private String startTime;
 	private String endTime;
 	private String description;
@@ -31,12 +31,15 @@ public class OverTime {
 	public void setSelectEmployee(String selectEmployee) {
 		this.selectEmployee = selectEmployee;
 	}
-	public String getDate() {
+
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+
+	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	public String getStartTime() {
 		return startTime;
 	}
