@@ -32,11 +32,10 @@ public class BasicEmployeeController {
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.ok(basicEmployeeDto);
 	}
-
 	@GetMapping("/fetchdata")
-	public List<BasicEmployeeDto>getBasicEmployee(){
-		List<BasicEmployeeDto> allBasicEmployeeDto=basicEmployeeService.getAll();
-		return allBasicEmployeeDto;
-
+	public ResponseEntity<List<BasicEmployeeDto>> getAll()
+	{
+		return new ResponseEntity<>(this.basicEmployeeService.getAllEmployee(),HttpStatus.ACCEPTED);
 	}
+
 }

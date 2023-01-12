@@ -84,7 +84,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				).permitAll()
 				.antMatchers()
 				.hasAnyRole("ADMIN")
-				.anyRequest().authenticated();
+				.anyRequest().authenticated().and().formLogin().and()
+				.httpBasic().and().logout().permitAll()
+				;
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 

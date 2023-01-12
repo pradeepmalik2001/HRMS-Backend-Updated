@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface RoleRepository extends JpaRepository<Role, Integer>{
 
-	
+
+   public Role findByRoleName(String roleName);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ahom.hrms.dto.JwtTokenResponse;
+import com.ahom.hrms.entities.UserMaster;
 import com.ahom.hrms.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,13 +41,14 @@ public class UserMasterController {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<JwtTokenResponse> generateToken(@RequestBody UserMasterDto authRequest) throws Exception {
+		public ResponseEntity<JwtTokenResponse> generateToken(@RequestBody UserMasterDto authRequest) throws Exception {
+
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
 			);
 		} catch (Exception ex) {
-			throw new Exception("inavalid username/password");
+			throw new Exception("invalid username/password");
 		}
 		String jwtToken= jwtUtils.generateToken(authRequest.getUserName());
 		JwtTokenResponse jwtTokenResponse= new JwtTokenResponse();
@@ -57,10 +59,10 @@ public class UserMasterController {
 	
 	//save data
 	@PostMapping("/saveuser")
-	public ResponseEntity<UserMasterDto> saveUsers(@RequestBody UserMasterDto userMasterDto){
-		String pwd = userMasterDto.getPassword();
-		String encryptpwd = passwordEncoder.encode(pwd);
-		userMasterDto.setPassword(encryptpwd);
+	public ResponseEntity<UserMaster> saveUsers(@RequestBody UserMaster userMasterDto){
+//		String pwd = userMasterDto.getPassword();
+//		String encryptpwd = passwordEncoder.encode(pwd);
+		userMasterDto.setPassword(passwordEncoder.encode(userMasterDto.getPassword()));
 		userMasterService.saveUser(userMasterDto);
 		return new ResponseEntity<>(userMasterDto, HttpStatus.CREATED);
 	}

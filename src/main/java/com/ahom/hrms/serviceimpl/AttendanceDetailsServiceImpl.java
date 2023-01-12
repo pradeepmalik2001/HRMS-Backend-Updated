@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ahom.hrms.Repository.AttendanceDetailsRepository;
+import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.entities.AttendanceDetails;
+import com.ahom.hrms.entities.BasicEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 
 	@Autowired
 	AttendanceDetailsRepository attendanceDetailsRepository;
+	@Autowired
+	BasicEmployeeRepository basicEmployeeRepository;
 
 	//save data
 	@Override
@@ -54,11 +58,13 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 
 	public AttendanceDetails attendanceDetailsdtotoAttendanceDetails(AttendanceDetailsDto attendanceDetailsDto)
 	{
+		BasicEmployee basicEmployee=basicEmployeeRepository.findById(attendanceDetailsDto.getEmpId())
+				.orElse(null);
 		AttendanceDetails attendanceDetails=new AttendanceDetails();
+		attendanceDetails.setBasicEmployee(basicEmployee);
 
-		
 		attendanceDetails.setFromDate(attendanceDetailsDto.getFromDate());
-		attendanceDetails.setSelectEmployee(attendanceDetailsDto.getSelectEmployee());
+//		attendanceDetails.setSelectEmployee(attendanceDetailsDto.getSelectEmployee());
 		
 		attendanceDetails.setToDate(attendanceDetailsDto.getToDate());
 
@@ -70,12 +76,14 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 	{
 		AttendanceDetailsDto attendanceDetailsDto= new AttendanceDetailsDto();
 
-		
+		BasicEmployee basicEmployee=basicEmployeeRepository.findById(attendanceDetailsDto.getEmpId())
+				.orElse(null);
+		attendanceDetailsDto.setBasicEmployee(attendanceDetails.getBasicEmployee());
 		
 		
 		attendanceDetailsDto.setFromDate(attendanceDetails.getFromDate());
 		attendanceDetailsDto.setToDate(attendanceDetails.getToDate());
-		attendanceDetailsDto.setSelectEmployee(attendanceDetails.getSelectEmployee());
+//		attendanceDetailsDto.setSelectEmployee(attendanceDetails.getSelectEmployee());
 		
 
 

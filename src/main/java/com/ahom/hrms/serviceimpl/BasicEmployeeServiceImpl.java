@@ -16,6 +16,8 @@ import com.ahom.hrms.service.BasicEmployeeService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.util.List;
+
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	
@@ -35,7 +37,14 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(employeeId).get();
 		return basicEmployeeToBasicEmployeeDto(basicEmployee);
 	}
-	
+
+
+	public List<BasicEmployeeDto> getAllEmployee()
+	{
+		List list=this.basicEmployeeRepository.findAll();
+		 return list;
+	}
+
 	//converting DTO
 	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) {
 		BasicEmployee basicEmployee = this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
@@ -47,11 +56,13 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		return basicEmployeeDto;
 	}
 
+
 	//fetchAll
 	@Override
 	public List<BasicEmployeeDto> getAll() {
 		List list=basicEmployeeRepository.findAll();
 		return list;
 	}
+
 
 }

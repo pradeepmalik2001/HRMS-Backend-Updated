@@ -27,6 +27,12 @@ public class PayRoll {
 	private String status;
 	private String dateCreated;
 
+
+	@ManyToOne
+	@JoinColumn(name = "emp_id",referencedColumnName = "employeeId")
+	private BasicEmployee basicEmployee;
+
+
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "payRoll")
 	private List<Allowances> allowances;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "payRoll", fetch = FetchType.LAZY)
@@ -35,6 +41,6 @@ public class PayRoll {
 	private List<EmployeeDeduction> deductions = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "payRoll", fetch = FetchType.LAZY)
 	private List<Payroll_Item> payroll_items;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "payRoll", fetch = FetchType.LAZY)
-	private  List<SalarySetup>  salarySetups;
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "payRoll", fetch = FetchType.LAZY)
+//	private  List<SalarySetup>  salarySetups;
 }

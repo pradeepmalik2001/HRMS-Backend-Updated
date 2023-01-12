@@ -1,8 +1,10 @@
 package com.ahom.hrms.serviceimpl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.Repository.AttendanceRepository;
 import com.ahom.hrms.entities.Attendance;
 import org.modelmapper.ModelMapper;
@@ -13,6 +15,7 @@ import com.ahom.hrms.dto.AttendanceDto;
 
 
 import com.ahom.hrms.service.AttendanceService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -41,6 +44,25 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public void updateEmployeeAttendance(AttendanceDto attendancedto) {
 		attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
+	}
+
+	String originalFilename="";
+	@Override
+	public void saveExcel(MultipartFile file) {
+
+		try {
+			String originalFilename = file.getOriginalFilename();
+
+			List<Attendance> attendances = Excel.convertExcelToList(file.getInputStream(), originalFilename);
+			this.attendanceRpository.saveAll(attendances);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<Attendance> getAll() {
+		return this.attendanceRpository.findAll();
 	}
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/

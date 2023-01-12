@@ -19,9 +19,17 @@ public class UserMasterDto {
 	private String userName;
 	private String password;
 	
-//	private String roleType;
+	private String roleName;
 	private List<RoleDto> roles;
-	
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
 	public int getId() {
 		return id;
 	}
