@@ -84,17 +84,18 @@ public class  UserMaster {
 	joinColumns = 
 	@JoinColumn(name ="user_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
+
 	private List<Role> roles;
-	@Transient
+//	@Transient
 	private String roleName;
 
-	public PayRoll getPayRoll() {
-		return payRoll;
-	}
-
-	public void setPayRoll(PayRoll payRoll) {
-		this.payRoll = payRoll;
-	}
+//	public PayRoll getPayRoll() {
+//		return payRoll;
+//	}
+//
+//	public void setPayRoll(PayRoll payRoll) {
+//		this.payRoll = payRoll;
+//	}
 
 	public String getRoleName() {
 		return roleName;
