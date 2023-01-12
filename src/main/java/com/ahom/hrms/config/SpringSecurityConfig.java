@@ -79,7 +79,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/leave/**", "/loan_application/**", "/loan_master/**"
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
 						"/payrolls/**", "/RaiseGrievances/**"
-						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**",
+						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**","/training/**",
 						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getallEmp/**"
 				).permitAll()
 				.antMatchers()
