@@ -11,8 +11,8 @@ public interface OverTimeService {
 	
 	public void EmployeeSave(OverTimeDto overtimedto);
 	public List<OverTimeDto> Employeefetch();
-	public List<OverTime> gteOt(Date startdate
-			, Date enddate
+	public List<OverTime> gteOt(String startdate
+			, String enddate
 			, String name);
 
 }
