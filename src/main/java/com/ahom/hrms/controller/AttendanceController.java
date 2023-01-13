@@ -65,7 +65,15 @@ public class AttendanceController {
 		List<Attendance> Emplfetch = attendanceService.gteOt(startdate,enddate,name);
 		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
 	}
-	
-	
+	@GetMapping("/status")
+	public ResponseEntity<List<Attendance>>statusOfAttendance(@RequestParam String startdate,
+															  @RequestParam String enddate,
+															  @RequestParam String name,
+															  @RequestParam String status)
+	{
+		List<Attendance>statusFetch=attendanceService.getByStatus(startdate,enddate,name,status);
+		return new ResponseEntity<>(statusFetch,HttpStatus.ACCEPTED);	
+	}
+
 
 }
