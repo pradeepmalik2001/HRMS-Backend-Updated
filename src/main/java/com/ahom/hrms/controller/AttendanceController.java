@@ -1,5 +1,8 @@
 package com.ahom.hrms.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,19 +63,23 @@ public class AttendanceController {
 	@ResponseBody
 	public ResponseEntity<List<Attendance>> ot(@RequestParam String startdate,
 											 @RequestParam String enddate,
-											 @RequestParam String name)
-	{
-		List<Attendance> Emplfetch = attendanceService.gteOt(startdate,enddate,name);
+											 @RequestParam String name) throws ParseException {
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+		Date stdate= format.parse(startdate);
+		Date endate= format.parse(enddate);
+		List<Attendance> Emplfetch = attendanceService.gteOt(stdate,endate,name);
 		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
 	}
 	@GetMapping("/status")
 	public ResponseEntity<List<Attendance>>statusOfAttendance(@RequestParam String startdate,
 															  @RequestParam String enddate,
 															  @RequestParam String name,
-															  @RequestParam String status)
-	{
-		List<Attendance>statusFetch=attendanceService.getByStatus(startdate,enddate,name,status);
-		return new ResponseEntity<>(statusFetch,HttpStatus.ACCEPTED);	
+															  @RequestParam String status) throws ParseException {
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate=format.parse(startdate);
+		Date endDate=format.parse(enddate);
+		List<Attendance>statusFetch=attendanceService.getByStatus(startDate,endDate,name,status);
+		return new ResponseEntity<>(statusFetch,HttpStatus.ACCEPTED);
 	}
 
 

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class Excel {
                             attendance.setSelectEmployee(cells.getStringCellValue());
                             break;
                         case 2:
-                            attendance.setDate((String) cells.getStringCellValue());
+                            attendance.setDate((Date) cells.getDateCellValue());
                             break;
                         case 3:
                             attendance.setInTime((String) cells.getStringCellValue());

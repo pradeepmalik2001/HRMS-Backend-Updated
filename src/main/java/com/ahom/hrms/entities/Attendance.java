@@ -1,10 +1,7 @@
 package com.ahom.hrms.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="Attendance")
@@ -13,8 +10,9 @@ public class Attendance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;	
-	private String selectEmployee; 
-	private String date;
+	private String selectEmployee;
+	@Temporal(TemporalType.DATE)
+	private Date date;
 	private String inTime;
 	private String outTime;
 
@@ -40,12 +38,15 @@ public class Attendance {
 	public void setSelectEmployee(String selectEmployee) {
 		this.selectEmployee = selectEmployee;
 	}
-	public String getDate() {
+
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+
+	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	public String getInTime() {
 		return inTime;
 	}
