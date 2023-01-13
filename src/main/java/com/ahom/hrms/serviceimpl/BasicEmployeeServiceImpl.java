@@ -57,11 +57,12 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	}
 
 
-	//fetchAll
+	
 	public List<BasicEmployeeDto> getAll() {
 		List list=basicEmployeeRepository.findAll();
 		return list;
 	}
+
 
 
 }
