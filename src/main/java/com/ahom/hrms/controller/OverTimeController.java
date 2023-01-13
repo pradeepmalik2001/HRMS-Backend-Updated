@@ -37,8 +37,8 @@ public class OverTimeController {
 
 	@GetMapping("/bydate")
 	@ResponseBody
-	public ResponseEntity<List<OverTime>> ot(@RequestParam Date startdate,
-												@RequestParam Date enddate,
+	public ResponseEntity<List<OverTime>> ot(@RequestParam String startdate,
+												@RequestParam String enddate,
 												@RequestParam String name)
 	{
 		List<OverTime> Emplfetch = overTimeservice.gteOt(startdate,enddate,name);
