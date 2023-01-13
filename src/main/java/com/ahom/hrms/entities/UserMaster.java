@@ -84,8 +84,9 @@ public class  UserMaster {
 	joinColumns = 
 	@JoinColumn(name ="user_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
+
 	private List<Role> roles;
-	@Transient
+//	@Transient
 	private String roleName;
 
 //	public PayRoll getPayRoll() {

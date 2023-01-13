@@ -39,6 +39,7 @@ public class UserMasterServiceImpl implements UserMasterService{
 		else {
 //			userMasterDto.setRoleName(role.getRoleName());
 			userMasterDto.setRoles(Collections.singletonList(role));
+			userMasterDto.setRoleName(userMasterDto.getRoleName());
 
 			userMasterRepository.save(userMasterDto);
 		}
