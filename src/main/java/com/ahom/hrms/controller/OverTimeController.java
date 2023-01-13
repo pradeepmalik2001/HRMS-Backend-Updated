@@ -22,7 +22,7 @@ public class OverTimeController {
 	OverTimeServiceImpl overTimeservice;
 	
 	@PostMapping("/save")
-	public ResponseEntity<OverTimeDto> EmplSave(@RequestBody OverTimeDto overtimedto)
+	public ResponseEntity<OverTime> EmplSave(@RequestBody OverTime overtimedto)
 	{
 		 overTimeservice.EmployeeSave(overtimedto);	
  		 return new ResponseEntity<>(overtimedto ,HttpStatus.CREATED);

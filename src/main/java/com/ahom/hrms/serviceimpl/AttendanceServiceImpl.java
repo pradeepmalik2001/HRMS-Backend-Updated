@@ -7,6 +7,7 @@ import java.util.List;
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.Repository.AttendanceRepository;
 import com.ahom.hrms.entities.Attendance;
+import com.ahom.hrms.entities.OverTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,22 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public List<Attendance> getAll() {
 		return this.attendanceRpository.findAll();
 	}
+
+	@Override
+	public List<Attendance> gteOt(String startdate, String enddate, String name) {
+		List<Attendance> list = attendanceRpository.findByNameAndDateRange(startdate, enddate, name);
+		System.out.println(list);
+		List<Attendance> filterAttendance = new ArrayList<>();
+
+		for (Attendance attendance: list) {
+			filterAttendance.add(attendance);
+
+			System.out.println(attendance);
+
+		}
+		return filterAttendance;
+	}
+
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	

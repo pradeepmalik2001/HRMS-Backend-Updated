@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.entities.Attendance;
+import com.ahom.hrms.entities.OverTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,15 @@ public class AttendanceController {
 		attendanceService.updateEmployeeAttendance(attendancedto);
 
 		return new ResponseEntity<> (attendancedto,HttpStatus.OK);
+	}
+	@GetMapping("/bydate")
+	@ResponseBody
+	public ResponseEntity<List<Attendance>> ot(@RequestParam String startdate,
+											 @RequestParam String enddate,
+											 @RequestParam String name)
+	{
+		List<Attendance> Emplfetch = attendanceService.gteOt(startdate,enddate,name);
+		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
 	}
 	
 	

@@ -26,10 +26,10 @@ public class OverTimeServiceImpl implements OverTimeService {
 	ModelMapper modelMapper;
 	
 	@Override
-	public void EmployeeSave(OverTimeDto overtimedto)
+	public void EmployeeSave(OverTime overtimedto)
 	{
-		overtimedto.setDate(new Date());
-		overRepository.save(OverTimeDtoToOverTime(overtimedto));
+//		overtimedto.setDate(new Date());
+		overRepository.save(overtimedto);
 		
 	}
 	
