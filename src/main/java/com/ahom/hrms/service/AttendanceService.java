@@ -20,5 +20,8 @@ public interface AttendanceService {
 	public List<Attendance> gteOt(String startdate
 			, String enddate
 			, String name);
+	public List<Attendance>getByStatus(String startdate,
+									   String enddate,String name,
+									   String status);
 	
 }

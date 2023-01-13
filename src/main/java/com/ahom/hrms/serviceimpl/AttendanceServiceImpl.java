@@ -81,6 +81,21 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return filterAttendance;
 	}
 
+	@Override
+	public List<Attendance> getByStatus(String startdate, String enddate, String name,String status) {
+		List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name,status);
+		System.out.println(list);
+		List<Attendance> filterAttendance = new ArrayList<>();
+
+		for (Attendance attendance: list) {
+			filterAttendance.add(attendance);
+
+			System.out.println(attendance);
+
+		}
+		return filterAttendance;
+	}
+
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
