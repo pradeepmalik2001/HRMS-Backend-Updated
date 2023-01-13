@@ -17,7 +17,17 @@ public class Attendance {
 	private String date;
 	private String inTime;
 	private String outTime;
-	
+
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public int getId() {
 		return Id;
 	}

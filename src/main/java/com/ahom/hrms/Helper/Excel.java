@@ -70,6 +70,8 @@ public class Excel {
                         case 4 :
                             attendance.setOutTime((String) cells.getStringCellValue());
                             break;
+                        case 5:
+                            attendance.setStatus((String) cells.getStringCellValue());
                         default:
                             break;
 
