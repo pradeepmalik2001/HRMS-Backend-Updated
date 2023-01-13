@@ -25,7 +25,7 @@ public class BasicEmployeeController {
 		return new ResponseEntity<>(basicEmployeeDto, HttpStatus.CREATED);
 	}
 
-	//fetch data
+	//fetch data by id
 	@GetMapping("/fetchemployee/{employeeid}")
 	public ResponseEntity<BasicEmployeeDto> getEmployee(@PathVariable("employeeid") Integer employeeId){
 		BasicEmployeeDto basicEmployeeDto = basicEmployeeService.employeeById(employeeId);
@@ -37,5 +37,8 @@ public class BasicEmployeeController {
 	{
 		return new ResponseEntity<>(this.basicEmployeeService.getAllEmployee(),HttpStatus.ACCEPTED);
 	}
+
+
+
 
 }

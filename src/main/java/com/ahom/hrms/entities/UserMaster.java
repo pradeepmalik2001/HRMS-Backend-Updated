@@ -88,13 +88,13 @@ public class  UserMaster {
 	@Transient
 	private String roleName;
 
-	public PayRoll getPayRoll() {
-		return payRoll;
-	}
-
-	public void setPayRoll(PayRoll payRoll) {
-		this.payRoll = payRoll;
-	}
+//	public PayRoll getPayRoll() {
+//		return payRoll;
+//	}
+//
+//	public void setPayRoll(PayRoll payRoll) {
+//		this.payRoll = payRoll;
+//	}
 
 	public String getRoleName() {
 		return roleName;
