@@ -11,6 +11,8 @@ import com.ahom.hrms.service.AddDepartmentService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/department")
+
 @CrossOrigin
 public class AddDepartmentController {
 
