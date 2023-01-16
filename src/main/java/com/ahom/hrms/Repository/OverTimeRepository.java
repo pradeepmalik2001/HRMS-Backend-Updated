@@ -17,8 +17,8 @@ public interface OverTimeRepository extends JpaRepository<OverTime, Integer> {
 
 //    @Query(value = "SELECT * FROM Overtime ud WHERE ud.date BETWEEN :startdate AND :enddate AND ud.select_employee=:name" ,nativeQuery = true )
     @Query(value= "SELECT * FROM overtime o WHERE o.select_employee=:name AND o.date BETWEEN :startdate AND :enddate", nativeQuery = true)
-    List <OverTime> findByNameAndDateRange( @Param("startdate") String startdate,
-                                     @Param("enddate")String enddate
+    List <OverTime> findByNameAndDateRange( @Param("startdate") Date startdate,
+                                     @Param("enddate")Date enddate
                                 , @Param("name") String name);
 
 

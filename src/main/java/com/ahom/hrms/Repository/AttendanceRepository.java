@@ -19,7 +19,8 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
                                           @Param("enddate")Date enddate
             , @Param("name") String name);
 
-    @Query(value = "SELECT * FROM attendance ud WHERE ud.select_employee=:name AND ud.date BETWEEN :startdate AND " +
+    @Query(value = "SELECT * FROM attendance ud WHERE ud.select_employee=:name " +
+            "AND ud.date BETWEEN :startdate AND " +
             ":enddate AND status=:status" ,nativeQuery = true)
     List<Attendance> findByMonth(@Param("startdate") Date startdate,
                                  @Param("enddate")Date enddate,

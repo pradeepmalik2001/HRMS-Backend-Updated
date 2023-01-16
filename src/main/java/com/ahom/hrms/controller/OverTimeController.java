@@ -1,5 +1,7 @@
 package com.ahom.hrms.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class OverTimeController {
 	@PostMapping("/save")
 	public ResponseEntity<OverTime> EmplSave(@RequestBody OverTime overtimedto)
 	{
+		overtimedto.setDate(new Date());
 		 overTimeservice.EmployeeSave(overtimedto);	
  		 return new ResponseEntity<>(overtimedto ,HttpStatus.CREATED);
 	}
@@ -39,9 +42,11 @@ public class OverTimeController {
 	@ResponseBody
 	public ResponseEntity<List<OverTime>> ot(@RequestParam String startdate,
 												@RequestParam String enddate,
-												@RequestParam String name)
-	{
-		List<OverTime> Emplfetch = overTimeservice.gteOt(startdate,enddate,name);
+												@RequestParam String name) throws ParseException {
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+		Date stdate= format.parse(startdate);
+		Date endate= format.parse(enddate);
+		List<OverTime> Emplfetch = overTimeservice.gteOt(stdate,endate,name);
 		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
 	}
 	

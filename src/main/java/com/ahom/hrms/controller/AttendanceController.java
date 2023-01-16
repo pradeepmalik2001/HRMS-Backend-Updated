@@ -28,6 +28,7 @@ public class AttendanceController {
 
 	@PostMapping("/save")
 	public ResponseEntity<AttendanceDto> saveEmp(@RequestBody AttendanceDto attendancedto) {
+		attendancedto.setDate(new Date());
 		attendanceService.saveEmplAttendance(attendancedto);
 		 return new ResponseEntity<>(attendancedto ,HttpStatus.CREATED);
 	}
