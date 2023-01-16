@@ -13,8 +13,9 @@ public class OverTime {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
 	private String selectEmployee;
+	@Temporal(TemporalType.DATE)
 
-	private String date;
+	private Date date;
 	private String startTime;
 	private String endTime;
 	private String description;
@@ -32,11 +33,11 @@ public class OverTime {
 		this.selectEmployee = selectEmployee;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, Integer>{
 	
-//	BasicEmployee findByEmployeeId(Integer employeeId);
+	BasicEmployee findByEmployeeName(String employeeName);
 
 }

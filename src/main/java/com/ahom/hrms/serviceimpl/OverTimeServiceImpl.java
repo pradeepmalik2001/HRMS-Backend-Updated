@@ -42,7 +42,7 @@ public class OverTimeServiceImpl implements OverTimeService {
 	}
 
 	@Override
-	public List<OverTime> gteOt(String startdate, String enddate, String name) {
+	public List<OverTime> gteOt(Date startdate, Date enddate, String name) {
 		List<OverTime> list = overRepository.findByNameAndDateRange(startdate, enddate, name);
 		System.out.println(list);
 		List<OverTime> filteredoverTimes = new ArrayList<>();

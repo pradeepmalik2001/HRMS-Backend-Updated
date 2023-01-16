@@ -71,6 +71,7 @@ public class SalarySetupServiceimpl implements com.ahom.hrms.service.SalarySetup
         salarySetupDto.setAnnualSalary(salarySetup.getAnnualSalary());
         salarySetupDto.setFinancialYear(salarySetup.getFinancialYear());
         salarySetupDto.setMonth(salarySetup.getMonth());
+        salarySetupDto.setBasicEmployee(salarySetup.getBasicEmployee());
 //        salarySetupDto.setEmployeeId(salarySetup.getEmployeeId());
 
         return salarySetupDto;

@@ -17,6 +17,8 @@ public class SalarySetup {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+//    @Transient
+//    private String name;
     private String financialYear;
 
 //    private int employeeId;
