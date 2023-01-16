@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -14,14 +15,14 @@ import java.util.List;
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer>{
     @Query(value= "SELECT * FROM attendance o WHERE o.select_employee=:name AND o.date BETWEEN :startdate AND :enddate",
             nativeQuery = true)
-    List<Attendance> findByNameAndDateRange(@Param("startdate") String startdate,
-                                          @Param("enddate")String enddate
+    List<Attendance> findByNameAndDateRange(@Param("startdate") Date startdate,
+                                          @Param("enddate")Date enddate
             , @Param("name") String name);
 
     @Query(value = "SELECT * FROM attendance ud WHERE ud.select_employee=:name AND ud.date BETWEEN :startdate AND " +
             ":enddate AND status=:status" ,nativeQuery = true)
-    List<Attendance> findByMonth(@Param("startdate") String startdate,
-                                 @Param("enddate")String enddate,
+    List<Attendance> findByMonth(@Param("startdate") Date startdate,
+                                 @Param("enddate")Date enddate,
                                  @Param("name") String name,
                                  @Param("status") String status);
 

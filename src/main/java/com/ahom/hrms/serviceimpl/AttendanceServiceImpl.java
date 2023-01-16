@@ -2,6 +2,7 @@ package com.ahom.hrms.serviceimpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.ahom.hrms.Helper.Excel;
@@ -67,8 +68,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public List<Attendance> gteOt(String startdate, String enddate, String name) {
+	public List<Attendance> gteOt(Date startdate, Date enddate, String name) {
 		List<Attendance> list = attendanceRpository.findByNameAndDateRange(startdate, enddate, name);
+
 		System.out.println(list);
 		List<Attendance> filterAttendance = new ArrayList<>();
 
@@ -82,7 +84,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public List<Attendance> getByStatus(String startdate, String enddate, String name,String status) {
+	public List<Attendance> getByStatus(Date startdate, Date enddate, String name,String status) {
 		List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name,status);
 		System.out.println(list);
 		List<Attendance> filterAttendance = new ArrayList<>();

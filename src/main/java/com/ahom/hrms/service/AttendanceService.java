@@ -1,5 +1,6 @@
 package com.ahom.hrms.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ahom.hrms.dto.AttendanceDto;
@@ -17,11 +18,11 @@ public interface AttendanceService {
 	public void updateEmployeeAttendance(AttendanceDto attendancedto);
 	public void saveExcel(MultipartFile file);
 	public List<Attendance>getAll();
-	public List<Attendance> gteOt(String startdate
-			, String enddate
+	public List<Attendance> gteOt(Date startdate
+			, Date enddate
 			, String name);
-	public List<Attendance>getByStatus(String startdate,
-									   String enddate,String name,
+	public List<Attendance>getByStatus(Date startdate,
+									   Date enddate,String name,
 									   String status);
 	
 }
