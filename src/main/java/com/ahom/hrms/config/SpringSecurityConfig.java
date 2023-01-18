@@ -69,13 +69,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf()
 				.disable()
 				.authorizeRequests()
-				.antMatchers("/usermaster/**", "/saveapproval/**", "/savedepartment/**",
-						"/holiday/**", "/addjobtitle/**", "/shiftmanagement/**", "/allowance/**", "/application/**"
+				.antMatchers("/usermaster/**", "/saveapproval/**",
+						"/holiday/**", "/addjobtitle/**", "/shiftmanagement/**", "/allowance/**",
+						"/application/**"
 						, "/attendance/**", "/AttendanceDetails/**", "/savebankinginfo/**", "/basic/**",
 						"/CreateLeaveRequest/**",
-						"/deductions/**", "/designation/**", "/saveemergencycontact/**", "/employeeAllowances/**",
-						"/employeededuction/**"
-						, "/employee/**", "/saveemployement/**", "/image/**", "/intreview/**",
+						"/deductions/**", "/designation/**", "/saveemergencycontact/**",
+						"/employeeAllowances/**",
+						"/employeededuction/**","/department/**",
+						"/employee/**", "/saveemployement/**", "/image/**", "/intreview/**",
 						"/leave/**", "/loan_application/**", "/loan_master/**"
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
 

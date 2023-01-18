@@ -53,6 +53,7 @@ public class UserMasterController {
 		String jwtToken= jwtUtils.generateToken(authRequest.getUserName());
 		JwtTokenResponse jwtTokenResponse= new JwtTokenResponse();
 		jwtTokenResponse.setUserName(authRequest.getUserName());
+		jwtTokenResponse.setRoleName(authRequest.getRoleName());
 		jwtTokenResponse.setJwtToken(jwtToken);
 		return new ResponseEntity<>(jwtTokenResponse, HttpStatus.ACCEPTED);
 	}

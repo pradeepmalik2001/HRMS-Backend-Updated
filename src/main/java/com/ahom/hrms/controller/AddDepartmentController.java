@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/department")
 
 @CrossOrigin
+@RequestMapping("/department")
 public class AddDepartmentController {
 
 	@Autowired
@@ -30,6 +31,10 @@ public class AddDepartmentController {
 	public ResponseEntity<List<AddDepartmentDto>> getALlUser()
 	{
 		return new ResponseEntity<>(this.addDepartmentService.getALlUser(),HttpStatus.CREATED);
+	}
+	@DeleteMapping("/delete/{id}")
+	public void delete(@PathVariable ("id") int id){
+		addDepartmentService.delete(id);
 	}
 
 }

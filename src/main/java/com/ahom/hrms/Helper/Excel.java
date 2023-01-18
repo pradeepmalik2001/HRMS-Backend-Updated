@@ -1,6 +1,7 @@
 package com.ahom.hrms.Helper;
 
 import com.ahom.hrms.entities.Attendance;
+import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.serviceimpl.AttendanceServiceImpl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -9,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +28,22 @@ public class Excel {
             return false;
         }
     }
+
+//    public void  setResponseHeader(HttpServletResponse response,String contentType,String extension,
+//                                  String prefix)
+//    {
+//        String fileName =prefix+extension;
+//        response.setContentType(contentType);
+//
+//        String headerKey ="Content-Disposition";
+//        String headerValue="attachment;fileName="+ fileName;
+//        response.setHeader(headerKey,headerValue);
+//
+//    }
+//    public void exportToCsv(List<BasicEmployee>basicEmployeeList,HttpServletResponse response)
+//    {
+//        setResponseHeader(response,"text/csv",".csv","Employee_");
+//    }
 
     @Autowired
     AttendanceServiceImpl attendanceService;
