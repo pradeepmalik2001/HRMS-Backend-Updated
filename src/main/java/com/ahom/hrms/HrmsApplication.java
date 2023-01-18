@@ -20,13 +20,5 @@ public class HrmsApplication {
 		return new ModelMapper();
 	}
 
-//	@Bean
-//	public Docket swaggerConfiguration(){
-//		return new Docket(DocumentationType.SWAGGER_2)
-//				.select()
-//				.paths(PathSelectors.ant("/api-docs"))
-//				.apis(RequestHandlerSelectors.basePackage("com.example.controller"))
-//				.build();
-//	}
 
 }

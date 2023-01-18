@@ -43,4 +43,10 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 		return list;
 	}
 
+	@Override
+	public AddDepartment delete(int id) {
+		addDepartmentRepository.deleteById(id);
+		return null;
+	}
+
 }
