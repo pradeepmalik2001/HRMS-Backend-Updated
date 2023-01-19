@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/department")
 
 @CrossOrigin
-@RequestMapping("/department")
+
 public class AddDepartmentController {
 
 	@Autowired

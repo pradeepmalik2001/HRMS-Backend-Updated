@@ -1,25 +1,35 @@
 package com.ahom.hrms.dto;
 
+import com.ahom.hrms.entities.UserMaster;
+
 public class JwtTokenResponse {
 
-    String userName;
+    UserMaster user;
     String jwtToken;
-    String roleName;
+//    String roleName;
 
-    public String getRoleName() {
-        return roleName;
+//    public String getRoleName() {
+//        return roleName;
+//    }
+
+//    public void setRoleName(String roleName) {
+//        this.roleName = roleName;
+//    }
+
+//    public String getUserName() {
+//        return userName;
+//    }
+//
+//    public void setUserName(String userName) {
+//        this.userName = userName;
+//    }
+
+    public UserMaster getUser() {
+        return user;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(UserMaster user) {
+        this.user = user;
     }
 
     public String getJwtToken() {
