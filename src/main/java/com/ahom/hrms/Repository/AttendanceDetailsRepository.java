@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.ahom.hrms.entities.AttendanceDetails;
 
 @EnableJpaRepositories
-public interface AttendanceDetailsRepository extends JpaRepository<AttendanceDetails, String>{
+public interface AttendanceDetailsRepository extends JpaRepository<AttendanceDetails, Integer>{
 
 }

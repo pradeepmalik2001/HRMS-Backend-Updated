@@ -27,6 +27,12 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 	@Override
 	public void saveAttendanceDetails(AttendanceDetailsDto attendanceDetailsDto)
 	{
+		BasicEmployee basicEmployee = basicEmployeeRepository.findById(attendanceDetailsDto.getEmpId()).orElse(null);
+		if (basicEmployee==null)
+		{
+			throw new RuntimeException("no employee present");
+		}
+		attendanceDetailsDto.setBasicEmployee(basicEmployee);
 		attendanceDetailsRepository.save(attendanceDetailsdtotoAttendanceDetails(attendanceDetailsDto));
 
 	}
@@ -47,10 +53,18 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 //	}
 	//update data
 	@Override
-	public AttendanceDetailsDto updateAttendanceDetails(AttendanceDetailsDto attendanceDetailsDto)
+	public AttendanceDetails updateAttendanceDetails(AttendanceDetails attendanceDetails,int id)
 	{
-		attendanceDetailsRepository.save(attendanceDetailsdtotoAttendanceDetails(attendanceDetailsDto));
-		return attendanceDetailsDto;
+//		AttendanceDetails details1 = attendanceDetailsRepository.findById(attendanceDetails.getEmpId()).orElse(null);
+			BasicEmployee basicEmployee = basicEmployeeRepository.findById(attendanceDetails.getEmpId()).orElse(null);
+		AttendanceDetails details=new AttendanceDetails();
+		details.setFromDate(attendanceDetails.getFromDate());
+		details.setToDate(attendanceDetails.getToDate());
+		details.setBasicEmployee(basicEmployee);
+		details.setId(attendanceDetails.getEmpId());
+
+		attendanceDetailsRepository.save(details);
+		return details;
 
 	}
 
@@ -62,10 +76,11 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 				.orElse(null);
 		AttendanceDetails attendanceDetails=new AttendanceDetails();
 		attendanceDetails.setBasicEmployee(basicEmployee);
+		attendanceDetails.setId(attendanceDetailsDto.getEmpId());
 
 		attendanceDetails.setFromDate(attendanceDetailsDto.getFromDate());
 //		attendanceDetails.setSelectEmployee(attendanceDetailsDto.getSelectEmployee());
-		
+
 		attendanceDetails.setToDate(attendanceDetailsDto.getToDate());
 
 
@@ -79,8 +94,6 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 		BasicEmployee basicEmployee=basicEmployeeRepository.findById(attendanceDetailsDto.getEmpId())
 				.orElse(null);
 		attendanceDetailsDto.setBasicEmployee(attendanceDetails.getBasicEmployee());
-		
-		
 		attendanceDetailsDto.setFromDate(attendanceDetails.getFromDate());
 		attendanceDetailsDto.setToDate(attendanceDetails.getToDate());
 //		attendanceDetailsDto.setSelectEmployee(attendanceDetails.getSelectEmployee());

@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class AttendanceDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String fromDate;
 	private String toDate;

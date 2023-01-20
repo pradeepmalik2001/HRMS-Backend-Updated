@@ -1,16 +1,7 @@
 package com.ahom.hrms.dto;
 
 import com.ahom.hrms.entities.BasicEmployee;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.Id;
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class AttendanceDetailsDto {
 	
 
@@ -20,4 +11,43 @@ public class AttendanceDetailsDto {
 	private int empId;
 	private BasicEmployee basicEmployee;
 
+	public String getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public String getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
+
+	public String getSelectEmployee() {
+		return selectEmployee;
+	}
+
+	public void setSelectEmployee(String selectEmployee) {
+		this.selectEmployee = selectEmployee;
+	}
+
+	public int getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public BasicEmployee getBasicEmployee() {
+		return basicEmployee;
+	}
+
+	public void setBasicEmployee(BasicEmployee basicEmployee) {
+		this.basicEmployee = basicEmployee;
+	}
 }

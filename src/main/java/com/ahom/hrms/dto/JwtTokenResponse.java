@@ -6,23 +6,15 @@ public class JwtTokenResponse {
 
     UserMaster user;
     String jwtToken;
-//    String roleName;
+    String roleName;
 
-//    public String getRoleName() {
-//        return roleName;
-//    }
+    public String getRoleName() {
+        return roleName;
+    }
 
-//    public void setRoleName(String roleName) {
-//        this.roleName = roleName;
-//    }
-
-//    public String getUserName() {
-//        return userName;
-//    }
-//
-//    public void setUserName(String userName) {
-//        this.userName = userName;
-//    }
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public UserMaster getUser() {
         return user;
