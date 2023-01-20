@@ -56,6 +56,7 @@ public class AttendanceController {
 
 	@PutMapping("/update")
 	public ResponseEntity<AttendanceDto> updateEmplAttendance(@RequestBody AttendanceDto attendancedto) {
+		attendancedto.setDate(new Date());
 		attendanceService.updateEmployeeAttendance(attendancedto);
 
 		return new ResponseEntity<> (attendancedto,HttpStatus.OK);

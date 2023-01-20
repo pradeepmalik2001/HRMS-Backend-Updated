@@ -3,6 +3,7 @@ package com.ahom.hrms.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ahom.hrms.entities.AttendanceDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,11 +50,11 @@ public class AttendanceDetailsController {
 //	        attendanceDetailsService.deleteAttendanceDetails(id);
 //	    }
 	  
-	  @PutMapping("/put")
-	    public ResponseEntity<AttendanceDetailsDto> updateEmp(@RequestBody AttendanceDetailsDto attendanceDetailsDto)
+	  @PutMapping("/put/{id}")
+	    public ResponseEntity<AttendanceDetails> updateEmp(@PathVariable("id")int id, @RequestBody AttendanceDetails attendanceDetails)
 	    {
-	        attendanceDetailsService.updateAttendanceDetails(attendanceDetailsDto);
-	        return new ResponseEntity<>(attendanceDetailsDto, HttpStatus.ACCEPTED);
+	        attendanceDetailsService.updateAttendanceDetails(attendanceDetails,id);
+	        return new ResponseEntity<>(attendanceDetails, HttpStatus.ACCEPTED);
 	    }
 
 

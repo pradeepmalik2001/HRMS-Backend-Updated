@@ -3,6 +3,7 @@ package com.ahom.hrms.service;
 import java.util.List;
 
 import com.ahom.hrms.dto.AttendanceDetailsDto;
+import com.ahom.hrms.entities.AttendanceDetails;
 
 
 public interface AttendanceDetailsService {
@@ -11,7 +12,7 @@ public interface AttendanceDetailsService {
 
 	List<AttendanceDetailsDto> getAllAttendanceDetails();
 
-	AttendanceDetailsDto updateAttendanceDetails(AttendanceDetailsDto attendanceDetailsDto);
+	AttendanceDetails updateAttendanceDetails(AttendanceDetails attendanceDetails,int id);
 
 
 }

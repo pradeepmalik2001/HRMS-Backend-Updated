@@ -57,6 +57,7 @@ public class UserMasterController {
 		public ResponseEntity<JwtTokenResponse> generateToken(@RequestBody UserMaster authRequest) throws Exception {
 
 //		UserMaster byUserName;
+		UserDetails userDetails;
 		try {
 //			UserMaster byUserName = userMasterRepository.findByUserName(authRequest.getUserName());
 //			if (byUserName != null) {
@@ -71,7 +72,7 @@ public class UserMasterController {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
 
-			UserDetails userDetails=this.userDetailsService.loadUserByUsername(authRequest.getUserName());
+			userDetails = this.userDetailsService.loadUserByUsername(authRequest.getUserName());
 //			String token= this.jwtUtils.generateToken(authRequest.getUserName());
 
 		} catch (Exception ex) {
@@ -80,7 +81,7 @@ public class UserMasterController {
 		String jwtToken = jwtUtils.generateToken(authRequest.getUserName());
 		JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
 //		jwtTokenResponse.setUserName(authRequest.getUserName());
-//		jwtTokenResponse.setRoleName(byUserName.getRoleName());
+//		jwtTokenResponse.setRoleName(String.valueOf(userDetailsService.loadUserByUsername(authRequest.getRoleName())));
 		jwtTokenResponse.setJwtToken(jwtToken);
 		jwtTokenResponse.setUser(this.userMasterRepository.findByUserName(authRequest.getUserName()));
 		return new ResponseEntity<>(jwtTokenResponse, HttpStatus.ACCEPTED);
