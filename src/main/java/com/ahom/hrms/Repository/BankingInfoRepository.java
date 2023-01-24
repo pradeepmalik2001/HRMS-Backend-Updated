@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface BankingInfoRepository extends JpaRepository<BankingInfo, String>{
 
+    BankingInfo findByName(String name);
 }

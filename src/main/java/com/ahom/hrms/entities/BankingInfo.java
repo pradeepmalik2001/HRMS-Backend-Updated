@@ -13,9 +13,20 @@ public class BankingInfo {
 	private String bankName;
 	private String bankBranch;
 	private String ifscCode;
-	private String paymentType;
-	private String pan;
-	
+//	private String paymentType;
+	private String name;
+	@OneToOne
+	@JoinColumn(name = "basic_employee_employee_id")
+	private BasicEmployee basicEmployee;
+
+	public BasicEmployee getBasicEmployee() {
+		return basicEmployee;
+	}
+
+	public void setBasicEmployee(BasicEmployee basicEmployee) {
+		this.basicEmployee = basicEmployee;
+	}
+
 	public String getBankAccountNo() {
 		return bankAccountNo;
 	}
@@ -40,27 +51,23 @@ public class BankingInfo {
 	public void setIfscCode(String ifscCode) {
 		this.ifscCode = ifscCode;
 	}
-	public String getPaymentType() {
-		return paymentType;
-	}
-	public void setPaymentType(String paymentType) {
-		this.paymentType = paymentType;
-	}
-	public String getPan() {
-		return pan;
-	}
-	public void setPan(String pan) {
-		this.pan = pan;
+
+	public String getName() {
+		return name;
 	}
 
-	public BankingInfo(int id, String bankAccountNo, String bankName, String bankBranch, String ifscCode, String paymentType, String pan) {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public BankingInfo(int id, String bankAccountNo, String bankName, String bankBranch,
+					   String ifscCode, String name) {
 		this.id = id;
 		this.bankAccountNo = bankAccountNo;
 		this.bankName = bankName;
 		this.bankBranch = bankBranch;
 		this.ifscCode = ifscCode;
-		this.paymentType = paymentType;
-		this.pan = pan;
+		this.name = name;
 	}
 
 	public BankingInfo() {
