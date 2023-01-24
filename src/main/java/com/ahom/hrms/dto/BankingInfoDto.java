@@ -6,9 +6,18 @@ public class BankingInfoDto {
 	private String bankName;
 	private String bankBranch;
 	private String ifscCode;
-	private String paymentType;
-	private String pan;
-	
+//	private String paymentType;
+	private String name;
+	private int basicId;
+
+	public int getBasicId() {
+		return basicId;
+	}
+
+	public void setBasicId(int basicId) {
+		this.basicId = basicId;
+	}
+
 	public String getBankAccountNo() {
 		return bankAccountNo;
 	}
@@ -33,32 +42,25 @@ public class BankingInfoDto {
 	public void setIfscCode(String ifscCode) {
 		this.ifscCode = ifscCode;
 	}
-	public String getPaymentType() {
-		return paymentType;
+
+	public String getName() {
+		return name;
 	}
-	public void setPaymentType(String paymentType) {
-		this.paymentType = paymentType;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getPan() {
-		return pan;
-	}
-	public void setPan(String pan) {
-		this.pan = pan;
-	}
-	public BankingInfoDto(String bankAccountNo, String bankName, String bankBranch, String ifscCode, String paymentType,
-			String pan) {
-		super();
-		this.bankAccountNo = bankAccountNo;
-		this.bankName = bankName;
-		this.bankBranch = bankBranch;
-		this.ifscCode = ifscCode;
-		this.paymentType = paymentType;
-		this.pan = pan;
-	}
-	
+
 	public BankingInfoDto() {
 		
 	}
 
-
+	public BankingInfoDto(String bankAccountNo, String bankName, String bankBranch,
+						  String ifscCode, String name) {
+		this.bankAccountNo = bankAccountNo;
+		this.bankName = bankName;
+		this.bankBranch = bankBranch;
+		this.ifscCode = ifscCode;
+		this.name = name;
+	}
 }
