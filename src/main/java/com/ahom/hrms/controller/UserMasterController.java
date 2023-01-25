@@ -111,6 +111,10 @@ public class UserMasterController {
 		userMasterService.updateUser(userMasterDto);
 		return new ResponseEntity<>(userMasterDto, HttpStatus.ACCEPTED);
 	}
+	@GetMapping("/fetchAll")
+	public ResponseEntity<List<UserMasterDto>>get(){
+		return new ResponseEntity<>(this.userMasterService.getALlUser(),HttpStatus.ACCEPTED);
+	}
 
 
 }
