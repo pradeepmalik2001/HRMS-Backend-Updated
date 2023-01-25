@@ -21,16 +21,29 @@ public class  UserMaster {
 	@NotNull(message="employee name shouldn't be null")
 	private String employeeName;
 	@NotNull(message="employee name shouldn't be null")
-	private String employeeCode;
+
 	@NotBlank(message = "it is mandatory")
 	private String userName;
 	private String password;
-//	@NotBlank(message = "please select role type")
-//	private String roleType;
+	private  String aadhaarNumber;
+	private String panNumber;
 
-//	@OneToOne
-//	private PayRoll payRoll;
-	
+	public String getAadhaarNumber() {
+		return aadhaarNumber;
+	}
+
+	public void setAadhaarNumber(String aadhaarNumber) {
+		this.aadhaarNumber = aadhaarNumber;
+	}
+
+	public String getPanNumber() {
+		return panNumber;
+	}
+
+	public void setPanNumber(String panNumber) {
+		this.panNumber = panNumber;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -49,12 +62,7 @@ public class  UserMaster {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public String getEmployeeCode() {
-		return employeeCode;
-	}
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
-	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -67,12 +75,7 @@ public class  UserMaster {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-//	public String getRoleType() {
-//		return roleType;
-//	}
-//	public void setRoleType(String roleType) {
-//		this.roleType = roleType;
-//	}
+
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -88,13 +91,7 @@ public class  UserMaster {
 //	@Transient
 	private String roleName;
 
-//	public PayRoll getPayRoll() {
-//		return payRoll;
-//	}
-//
-//	public void setPayRoll(PayRoll payRoll) {
-//		this.payRoll = payRoll;
-//	}
+
 
 	public String getRoleName() {
 		return roleName;

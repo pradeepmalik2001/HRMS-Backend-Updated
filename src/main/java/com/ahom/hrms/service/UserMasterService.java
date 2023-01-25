@@ -17,6 +17,7 @@ public interface UserMasterService {
 	
 	UserMasterDto userMasterToUserMasterDto(UserMaster userMaster);
 
-//	List<UserMasterDto> getALlUser();
+
+	List<UserMasterDto> getALlUser();
 
 }

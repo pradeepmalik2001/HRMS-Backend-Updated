@@ -2,8 +2,6 @@ package com.ahom.hrms.dto;
 
 import java.util.List;
 
-//import javax.validation.constraints.NotBlank;
-//import javax.validation.constraints.NotNull;
 
 
 public class UserMasterDto {
@@ -14,13 +12,33 @@ public class UserMasterDto {
 	//@NotNull(message="employee name shouldn't be null")
 	private String employeeName;
 	//@NotNull(message="employee name shouldn't be null")
-	private String employeeCode;
+//	private String employeeCode;
 	//@NotBlank(message = "it is mandatory")
 	private String userName;
 	private String password;
 	
 	private String roleName;
 	private List<RoleDto> roles;
+
+	private  String aadhaarNumber;
+
+	private String panNumber;
+
+	public String getAadhaarNumber() {
+		return aadhaarNumber;
+	}
+
+	public void setAadhaarNumber(String aadhaarNumber) {
+		this.aadhaarNumber = aadhaarNumber;
+	}
+
+	public String getPanNumber() {
+		return panNumber;
+	}
+
+	public void setPanNumber(String panNumber) {
+		this.panNumber = panNumber;
+	}
 
 	public String getRoleName() {
 		return roleName;
@@ -48,12 +66,7 @@ public class UserMasterDto {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public String getEmployeeCode() {
-		return employeeCode;
-	}
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
-	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -66,12 +79,7 @@ public class UserMasterDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-//	public String getRoleType() {
-//		return roleType;
-//	}
-//	public void setRoleType(String roleType) {
-//		this.roleType = roleType;
-//	}
+
 	public List<RoleDto> getRoles() {
 		return roles;
 	}

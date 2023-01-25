@@ -69,6 +69,12 @@ public class UserMasterServiceImpl implements UserMasterService{
 		return userMasterDto;
 	}
 
+	@Override
+	public List<UserMasterDto> getALlUser() {
+		List all = userMasterRepository.findAll();
+		return all;
+	}
+
 //	@Override
 //	public List<UserMasterDto> getALlUser() {
 //		List list=this.userMasterRepository.findAll();
