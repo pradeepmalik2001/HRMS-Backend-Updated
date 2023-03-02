@@ -27,4 +27,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
                                  @Param("name") String name,
                                  @Param("status") String status);
 
+
 }
