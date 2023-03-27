@@ -14,7 +14,7 @@ public class EmployeeAllowancesDto {
 	private int Id;
 	private int employeeId;
 	private String Type;
-	private String ammount;
+	private double ammount;
 	private String  effectiveDate;
 	private String  dateCreated;
 

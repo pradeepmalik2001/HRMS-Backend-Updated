@@ -1,6 +1,5 @@
 package com.ahom.hrms.controller;
 
-import com.ahom.hrms.entities.BankingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +11,8 @@ import com.ahom.hrms.service.BankingInfoService;
 import java.util.List;
 
 @RestController
-@CrossOrigin
-@RequestMapping("/bank")
+
+//@RequestMapping("/bank")
 public class BankingInfoController {
 
 	@Autowired
@@ -21,18 +20,19 @@ public class BankingInfoController {
 
 	//save data
 	@PostMapping("/savebankinginfo")
-	public ResponseEntity<BankingInfoDto> saveBankingInfo(@RequestBody BankingInfoDto bankingInfoDto){
+	public ResponseEntity<BankingInfoDto> saveBankingInfo(@RequestBody BankingInfoDto bankingInfoDto) throws Exception{
 		bankingInfoService.saveBankingInfo(bankingInfoDto);
 		return new ResponseEntity<>(bankingInfoDto, HttpStatus.CREATED);
 	}
 	@GetMapping("/getBankInfo")
-	public ResponseEntity<List<BankingInfoDto>>response(){
+	public ResponseEntity<List<BankingInfoDto>>response() throws Exception {
+		
 		return
 				new ResponseEntity<>(this.bankingInfoService.getBankInfo(),HttpStatus.ACCEPTED);
 	}
-	@GetMapping("/getByName/{name}")
-	public BankingInfo response(@PathVariable("name")String name){
-		return bankingInfoService.getByName(name);
+	@GetMapping("/getById/{employeeId}")
+	public BankingInfoDto response(@PathVariable Integer employeeId) throws Exception {
+		return bankingInfoService.getById(employeeId);
 	}
 
 }

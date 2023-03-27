@@ -18,25 +18,19 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	
 	@Autowired
 	CreateLeaveRequestRepository createLeaveRequestRepository;
-	
-	
+
 	@Override
 	 public void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto)
 	    {
 	        createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
 
 	    }
-	
-	
+
 	 @Override
 	 public List<CreateLeaveRequestDto> getAllCreateLeaveRequest(){
-
 	        List<CreateLeaveRequest> listCreateLeaveRequest= this.createLeaveRequestRepository.findAll();
-
 	        List<CreateLeaveRequestDto> createLeaveRequestDtoList = listCreateLeaveRequest.stream().map(emp -> this.createLeaveRequesttoCreateLeaveRequestdto(emp)).collect(Collectors.toList());
-
 	        //employeeReposatory.findAll().forEach(l1->listEmployee.add(l1));
-
 	        return createLeaveRequestDtoList;
 	    }
 	 
@@ -53,12 +47,9 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 	    }
 
-	
-	  
 	  public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto)
 	    {
 	        CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
-
 	        createLeaveRequest.setAvailableBalance(createLeaveRequestDto.getAvailableBalance());
 			createLeaveRequest.setId(createLeaveRequestDto.getId());
 	        createLeaveRequest.setDays(createLeaveRequestDto.getDays());
@@ -86,9 +77,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 		  createLeaveRequestDto.setReasonForLeave(createLeaveRequest.getReasonForLeave());
 		  createLeaveRequestDto.setSelectEmployee(createLeaveRequest.getSelectEmployee());
 		  createLeaveRequestDto.setStartDate(createLeaveRequest.getStartDate());
-
-		  
-		  return createLeaveRequestDto;
+ 		  return createLeaveRequestDto;
 		  
 	  }
 

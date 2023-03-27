@@ -19,7 +19,7 @@ public class MonthlyPerformance {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int employeeId;
 	

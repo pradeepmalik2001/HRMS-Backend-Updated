@@ -1,9 +1,12 @@
 package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
+import com.ahom.hrms.Repository.SalarySetupRepository;
 import com.ahom.hrms.dto.EmployeeTrainingDto;
+import com.ahom.hrms.dto.SalarySetupDto;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.EmployeeTraining;
+import com.ahom.hrms.entities.SalarySetup;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,8 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	
 	@Autowired
 	BasicEmployeeRepository basicEmployeeRepository;
-	
+	@Autowired
+	SalarySetupRepository salarySetupRepository;
 	@Autowired
 	ModelMapper modelMapper;
 	
@@ -39,7 +43,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	}
 
 
-	public List<BasicEmployeeDto> getAllEmployee()
+	public List<BasicEmployee> getAllEmployee()
 	{
 		List list=this.basicEmployeeRepository.findAll();
 		 return list;
@@ -55,13 +59,21 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		BasicEmployeeDto basicEmployeeDto = this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
 		return basicEmployeeDto;
 	}
-
+//	public double hraCalculation(int id)
+//	{
+//		// int empId= salarySetupDtoTosalarySetup().getId();
+//		BasicEmployee basId=basicEmployeeRepository.findById(id).orElseThrow(null);
+//		SalarySetup byEmpId = salarySetupRepository.findById(basId.getEmployeeId());
+//		double annualSalary = byEmpId.getAnnualSalary();
+//		double hra=(annualSalary / 100) * 15;
+//		return hra;+
+//	}
 
 	
-	public List<BasicEmployeeDto> getAll() {
-		List list=basicEmployeeRepository.findAll();
-		return list;
-	}
+//	public List<BasicEmployeeDto> getAll() {
+//		List list=basicEmployeeRepository.findAll();
+//		return list;
+//	}
 
 
 

@@ -2,12 +2,14 @@ package com.ahom.hrms.entities;
 
 import javax.persistence.*;
 
+import com.lowagie.text.pdf.PdfPCell;
+
 @Entity
 @Table(name = "banking_info")
 public class BankingInfo {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String bankAccountNo;
 	private String bankName;
@@ -18,14 +20,17 @@ public class BankingInfo {
 	@OneToOne
 	@JoinColumn(name = "basic_employee_employee_id")
 	private BasicEmployee basicEmployee;
+//
+//	@OneToOne
+//	private WorkInformation workInformation;
 
-	public BasicEmployee getBasicEmployee() {
-		return basicEmployee;
-	}
-
-	public void setBasicEmployee(BasicEmployee basicEmployee) {
-		this.basicEmployee = basicEmployee;
-	}
+//	public BasicEmployee getBasicEmployee() {
+//		return basicEmployee;
+//	}
+//
+//	public void setBasicEmployee(BasicEmployee basicEmployee2) {
+//		this.basicEmployee = basicEmployee2;
+//	}
 
 	public String getBankAccountNo() {
 		return bankAccountNo;
@@ -56,6 +61,7 @@ public class BankingInfo {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -81,4 +87,11 @@ public class BankingInfo {
 		this.id = id;
 	}
 
+	public BasicEmployee getBasicEmployee() {
+		return basicEmployee;
+	}
+
+	public void setBasicEmployee(BasicEmployee basicEmployee) {
+		this.basicEmployee = basicEmployee;
+	}
 }

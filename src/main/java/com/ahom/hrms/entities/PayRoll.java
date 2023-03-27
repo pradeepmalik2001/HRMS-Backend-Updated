@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PayRoll {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String refNo;
 	private String dateFrom;

@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class AddDepartment {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String departmentName;
 	private String description;

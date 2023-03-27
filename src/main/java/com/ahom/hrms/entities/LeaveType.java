@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class LeaveType {
 @Id
-@GeneratedValue(strategy = GenerationType.AUTO )
+@GeneratedValue(strategy = GenerationType.IDENTITY )
 private int id;
 
 @NotBlank(message="not null leaveType is mandatory ")

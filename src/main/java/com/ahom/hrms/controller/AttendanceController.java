@@ -26,6 +26,9 @@ public class AttendanceController {
 	@Autowired
 	AttendanceServiceImpl attendanceService;
 
+//	@Autowired
+//	AttendanceServiceImpl attendanceServiceimpl;
+
 	@PostMapping("/save")
 	public ResponseEntity<AttendanceDto> saveEmp(@RequestBody AttendanceDto attendancedto) {
 		attendancedto.setDate(new Date());
@@ -83,6 +86,16 @@ public class AttendanceController {
 		List<Attendance>statusFetch=attendanceService.getByStatus(startDate,endDate,name,status);
 		return new ResponseEntity<>(statusFetch,HttpStatus.ACCEPTED);
 	}
-
+	@GetMapping("/count")
+	public ResponseEntity<Integer>countAttendance(@RequestParam String startdate,
+															  @RequestParam String enddate,
+															  @RequestParam String name,
+															  @RequestParam String status) throws ParseException {
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate=format.parse(startdate);
+		Date endDate=format.parse(enddate);
+		Integer attendance = attendanceService.countAttendance(startDate, endDate, name, status);
+		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
+	}
 
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 public class Attendance {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;	
 	private String selectEmployee;
 	@Temporal(TemporalType.DATE)

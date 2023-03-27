@@ -16,9 +16,9 @@ public class SalarySetupDto {
     private String financialYear;
 //    private int employeeId;
     private String month;
-    private String annualSalary;
-
-    private BasicEmployee basicEmployee;
+    private int annualSalary;
+private int employeeId;
+   // private BasicEmployee basicEmployee;
 
 
 }

@@ -7,7 +7,9 @@ import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Data
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class AddJobTitle {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String jobTitles;

@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class TravelOverview {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String branchMaster;
 	private String searchBranchName;

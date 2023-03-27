@@ -1,14 +1,17 @@
 package com.ahom.hrms.serviceimpl;
 
-import com.ahom.hrms.Repository.EmergencyContactInfoRepository;
-import com.ahom.hrms.entities.EmergencyContactInfo;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.ahom.hrms.Repository.BasicEmployeeRepository;
+import com.ahom.hrms.Repository.EmergencyContactInfoRepository;
 import com.ahom.hrms.dto.EmergencyContactInfoDto;
-
+import com.ahom.hrms.entities.BasicEmployee;
+import com.ahom.hrms.entities.EmergencyContactInfo;
 import com.ahom.hrms.service.EmergencyContactInfoService;
 
 @Service
@@ -17,17 +20,30 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 	@Autowired
 	EmergencyContactInfoRepository emergencyContactInfoRepository;
 
+	
+	@Autowired
+	private BasicEmployeeRepository basicEmployeeRepository;
+	
 	@Autowired
 	ModelMapper modelMapper;
 
 	//save data
-	public void saveEmergencyContact(EmergencyContactInfoDto emergencyContactInfoDto) {
+	public void saveEmergencyContact(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {
 		emergencyContactInfoRepository.save(emergencyContactInfoDtoToEmergencyContactInfo(emergencyContactInfoDto));
 	}
 
 	//converting DTO
-	public EmergencyContactInfo emergencyContactInfoDtoToEmergencyContactInfo(EmergencyContactInfoDto emergencyContactInfoDto) {
+	public EmergencyContactInfo emergencyContactInfoDtoToEmergencyContactInfo(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {
 		EmergencyContactInfo emergencyContactInfo = this.modelMapper.map(emergencyContactInfoDto, EmergencyContactInfo.class);
+		BasicEmployee basicEmployee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
+		if(basicEmployee!=null)
+		{
+			emergencyContactInfo.setBasicEmployee(basicEmployee);
+		}
+		else
+		{
+			throw new Exception("employee name not found!!");
+		}
 		return emergencyContactInfo;
 	}
 
@@ -35,5 +51,10 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 		EmergencyContactInfoDto emergencyContactInfoDto = this.modelMapper.map(emergencyContactInfo, EmergencyContactInfoDto.class);
 		return emergencyContactInfoDto;
 	}
-
+	public List<EmergencyContactInfoDto> EmergencyContactInfo()
+	{
+		List<EmergencyContactInfo> salest=emergencyContactInfoRepository.findAll();
+		List<EmergencyContactInfoDto> salesdt=salest.stream().map((EmergencyContactInfo)->modelMapper.map(EmergencyContactInfo, EmergencyContactInfoDto.class)).collect(Collectors.toList());
+		return salesdt;
+	}
 }

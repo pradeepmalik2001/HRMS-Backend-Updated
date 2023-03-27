@@ -15,12 +15,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class EmployeeAllowances {
 	
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private int Id;
 	private int employeeId;
 	private String Type;
-	private String ammount;
+	private double ammount;
 	private String effectiveDate;
 	private String dateCreated;
 	@ManyToOne

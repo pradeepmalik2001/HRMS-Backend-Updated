@@ -10,5 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, Integer>{
 	
 	BasicEmployee findByEmployeeName(String employeeName);
+//	BasicEmployee findById(int employeeId);
+BasicEmployee findByManyTables(int employeeId);
 
 }

@@ -2,63 +2,27 @@ package com.ahom.hrms.entities;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "emergency_contact_info")
 public class EmergencyContactInfo {
 	
 	@Id
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String emergencyContactMobile;
 	private String emergencyContactName;
-
 	private String emergencyContactEmail;
 	private String emergencyContactAddress;
-	
-	public EmergencyContactInfo() {
 		
-	}
-
-	public String getEmergencyContactName() {
-		return emergencyContactName;
-	}
-
-	public void setEmergencyContactName(String emergencyContactName) {
-		this.emergencyContactName = emergencyContactName;
-	}
-
-	public String getEmergencyContactMobile() {
-		return emergencyContactMobile;
-	}
-
-	public void setEmergencyContactMobile(String emergencyContactMobile) {
-		this.emergencyContactMobile = emergencyContactMobile;
-	}
-
-	public String getEmergencyContactEmail() {
-		return emergencyContactEmail;
-	}
-
-	public void setEmergencyContactEmail(String emergencyContactEmail) {
-		this.emergencyContactEmail = emergencyContactEmail;
-	}
-
-	public String getEmergencyContactAddress() {
-		return emergencyContactAddress;
-	}
-
-	public void setEmergencyContactAddress(String emergencyContactAddress) {
-		this.emergencyContactAddress = emergencyContactAddress;
-	}
-
-	public EmergencyContactInfo(String emergencyContactName, String emergencyContactMobile,
-			String emergencyContactEmail, String emergencyContactAddress) {
-		super();
-		this.emergencyContactName = emergencyContactName;
-		this.emergencyContactMobile = emergencyContactMobile;
-		this.emergencyContactEmail = emergencyContactEmail;
-		this.emergencyContactAddress = emergencyContactAddress;
-	}
-	
-	
-
+	@OneToOne
+	private BasicEmployee basicEmployee;
 }

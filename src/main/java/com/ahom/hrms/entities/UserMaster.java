@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class  UserMaster {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotBlank(message = "select anyone")
 	private String departmentName;

@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class EmployementTypeMaster {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  int id;
 	private String employmentType;
 	private String description;

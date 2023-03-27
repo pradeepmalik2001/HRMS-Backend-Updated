@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class LoanMaster {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int  loanId;
 	private String loanName; 
 	private String rateOfInterest; 

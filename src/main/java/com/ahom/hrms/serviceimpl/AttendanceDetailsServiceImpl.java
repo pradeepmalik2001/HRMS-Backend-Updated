@@ -37,6 +37,7 @@ public class AttendanceDetailsServiceImpl implements AttendanceDetailsService {
 
 	}
 
+
 	@Override
 	public List<AttendanceDetailsDto> getAllAttendanceDetails(){
 
