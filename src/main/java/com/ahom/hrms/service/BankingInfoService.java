@@ -7,12 +7,14 @@ import java.util.List;
 
 public interface BankingInfoService {
 	
-	void saveBankingInfo(BankingInfoDto bankingInfoDto);
+	void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception;
 	
-	BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto);
+	BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception;
 	
-	BankingInfoDto bankingInfoToBankingInfoDto(BankingInfo bankingInfo);
-	List<BankingInfoDto>getBankInfo();
-	BankingInfo getByName(String name);
+	BankingInfoDto bankingInfoToBankingInfoDto(BankingInfo bankingInfo) throws Exception;
+	List<BankingInfoDto>getBankInfo() throws Exception;
+//	BankingInfo getByName(String name);
 
+
+    BankingInfoDto getById(Integer employeeId) throws Exception;
 }

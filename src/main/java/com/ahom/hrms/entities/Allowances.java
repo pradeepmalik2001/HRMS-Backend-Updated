@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 
 public class Allowances {
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private int Id;
 	private String allowancesDescription;

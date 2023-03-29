@@ -10,6 +10,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/work")
 
 @CrossOrigin
 public class WorkInformationController {
@@ -19,19 +20,13 @@ public class WorkInformationController {
 
 	//save data
 	@PostMapping("/savework")
-	public ResponseEntity<WorkInformationDto> saveWork(@RequestBody WorkInformationDto workInformationDto){
+	public ResponseEntity<WorkInformationDto> saveWork(@RequestBody WorkInformationDto workInformationDto) throws Exception{
 		workInformationService.saveWorkInfo(workInformationDto);
 		return new ResponseEntity<>(workInformationDto, HttpStatus.CREATED);
 	}
-
-
-	///
 	@GetMapping("/fetchdata")
 	public List<WorkInformationDto> getWorkInformation(){
 		List<WorkInformationDto> allWorkInformationDto=workInformationService.getAll();
 		return allWorkInformationDto;
-
 	}
-
-
 }

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class EmployeeDeduction {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 	private int deductionId;
 	private String type;

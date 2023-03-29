@@ -1,14 +1,26 @@
 package com.ahom.hrms.controller;
 
+import com.ahom.hrms.serviceimpl.ReportXmlServiceImpl;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ahom.hrms.dto.BasicEmployeeDto;
+import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.service.BasicEmployeeService;
+import com.ahom.hrms.util.PdfGenerator;
+import com.lowagie.text.DocumentException;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -17,6 +29,9 @@ public class BasicEmployeeController {
 
 	@Autowired
 	BasicEmployeeService basicEmployeeService;
+
+	@Autowired
+	ReportXmlServiceImpl reportxmlService;
 
 	//save data
 	@PostMapping("/saveemployee")
@@ -32,14 +47,38 @@ public class BasicEmployeeController {
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.ok(basicEmployeeDto);
 	}
+	@GetMapping("/export-to-pdf")
+	public void getAll(HttpServletResponse response) throws DocumentException, IOException
+	{
+		 response.setContentType("application/pdf");
+		    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+		    String currentDateTime = dateFormat.format(new Date());
+		    String headerkey = "Content-Disposition";
+		    String headervalue = "attachment; filename=student" + currentDateTime + ".pdf";
+		    response.setHeader(headerkey, headervalue);
+	        List<BasicEmployee> allEmployee = this.basicEmployeeService.getAllEmployee();
+	        PdfGenerator generator = new PdfGenerator();
+		    generator.generate(allEmployee, response);
+	}
+//	@PostMapping("/hra/{id}")
+//	public double  hra(@PathVariable int id)
+//	{
+//		return basicEmployeeService.
+//
+//	}
+@GetMapping("/formatof/{format}")
+public String generateReport(@PathVariable String format) throws JRException, FileNotFoundException {
+	return reportxmlService.exportReport(format);
+}
 	@GetMapping("/fetchdata")
-	public ResponseEntity<List<BasicEmployeeDto>> getAll()
+	public ResponseEntity<List<BasicEmployee>> getAll()
 	{
 		return new ResponseEntity<>(this.basicEmployeeService.getAllEmployee(),HttpStatus.ACCEPTED);
 	}
 
-
-
-
-
+	@PostMapping("/fetchdata")
+	public ResponseEntity<List<BasicEmployee>>fetch(@RequestParam int id){
+		List<BasicEmployee>list=basicEmployeeService.details(id);
+		return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
+	}
 }

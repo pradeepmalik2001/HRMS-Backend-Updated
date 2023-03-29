@@ -22,7 +22,7 @@ public class Application {
 	@Column(name="email",nullable = false,unique = true)
 	private String email;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String contact;
 	private int yearOfExperince;

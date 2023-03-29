@@ -118,4 +118,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 	        return attendancedto;
 	    
          }
+
+		 public Integer countAttendance(Date startdate, Date enddate, String name,String status){
+			 Integer countAttendance = attendanceRpository.getOneSelectEmployee(startdate, enddate, name, status);
+		return countAttendance;
+	 }
+
+
 }

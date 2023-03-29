@@ -13,7 +13,7 @@ import java.util.List;
 
 @EnableJpaRepositories
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer>{
-    @Query(value= "SELECT * FROM attendance o WHERE o.select_employee=:name AND o.date BETWEEN :startdate AND :enddate",
+    @Query(value= "Count(*)  FROM attendance o WHERE o.select_employee=:name AND o.date BETWEEN :startdate AND :enddate",
             nativeQuery = true)
     List<Attendance> findByNameAndDateRange(@Param("startdate") Date startdate,
                                           @Param("enddate")Date enddate
@@ -27,5 +27,13 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
                                  @Param("name") String name,
                                  @Param("status") String status);
 
+
+    @Query(value = "SELECT count(*) FROM attendance ud WHERE ud.select_employee=:name " +
+            "AND ud.date BETWEEN :startdate AND " +
+            ":enddate AND status=:status",nativeQuery = true)
+    Integer getOneSelectEmployee(@Param("startdate") Date startdate,
+                                 @Param("enddate")Date enddate,
+                                 @Param("name") String name,
+                                 @Param("status") String status);
 
 }

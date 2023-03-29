@@ -64,7 +64,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
         String token = null;
 
-        if (requesttoken != null && requesttoken.startsWith("Bearer ")) {
+        if (requesttoken != null && requesttoken.startsWith("Basic ")) {
 
             token = requesttoken.substring(7);
 
@@ -96,9 +96,7 @@ public class JwtFilter extends OncePerRequestFilter {
             System.out.println("username is null or context is not null");
         }
 
-
         filterChain.doFilter(request, response);
-
     }
 }
 

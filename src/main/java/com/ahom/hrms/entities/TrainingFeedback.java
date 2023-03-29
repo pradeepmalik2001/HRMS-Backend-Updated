@@ -21,7 +21,7 @@ import javax.persistence.OneToOne;
 public class TrainingFeedback {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String feedback;

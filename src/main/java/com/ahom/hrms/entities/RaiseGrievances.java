@@ -20,7 +20,7 @@ public class RaiseGrievances {
 	
 	@Id
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String grievanceType;
 	private String title;

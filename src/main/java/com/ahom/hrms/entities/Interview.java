@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Interview {
 	
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String vacancy;
 	private String candidate;

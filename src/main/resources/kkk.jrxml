@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c62caf1-8fb9-4837-a8ef-f73869bf95e5">
+
+
+    <field name="employeeId" class="java.lang.Integer">
+
+    </field>
+    <field name="employeeName" class="java.lang.String">
+
+    </field>
+    <field name="bankName" class="java.lang.String">
+
+    </field>
+    <field name="bankAccountNo" class="java.lang.String">
+
+    </field>
+    <field name="joiningDate" class="java.lang.String">
+
+    </field>
+    <field name="bankBranch" class="java.lang.String"/>
+    <field name="selectDepartment" class="java.lang.String"/>
+    <field name="designation" class="java.lang.String"/>
+    <group name="Group1">
+        <groupExpression><![CDATA[$F{employeeId}]]></groupExpression>
+        <groupHeader>
+            <band height="308"/>
+        </groupHeader>
+        <groupFooter>
+            <band/>
+        </groupFooter>
+    </group>
+    <group name="Group2">
+        <groupExpression><![CDATA[$F{employeeName}]]></groupExpression>
+        <groupHeader>
+            <band height="157"/>
+        </groupHeader>
+        <groupFooter>
+            <band/>
+        </groupFooter>
+    </group>
+    <group name="Group3">
+        <groupExpression><![CDATA[$F{bankName}]]></groupExpression>
+        <groupHeader>
+            <band height="169"/>
+        </groupHeader>
+        <groupFooter>
+            <band/>
+        </groupFooter>
+    </group>
+    <group name="Group4">
+        <groupExpression><![CDATA[$F{bankAccountNo}]]></groupExpression>
+        <groupHeader>
+            <band height="258"/>
+        </groupHeader>
+        <groupFooter>
+            <band/>
+        </groupFooter>
+    </group>
+    <group name="CITY">
+        <groupExpression><![CDATA[$F{joiningDate}]]></groupExpression>
+    </group>
+    <background>
+        <band/>
+    </background>
+    <title>
+        <band height="72">
+            <frame>
+                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="cc76d580-8724-480e-8e2b-e55dcdd8f599"/>
+                <staticText>
+                    <reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="85e67a3a-1213-4a91-8deb-d35e91b84f4e"/>
+                    <textElement>
+                        <font size="34" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[ahom tech pvt ltd]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="d07b96c1-cfba-4d22-8c63-449803d980d4"/>
+                    <textElement textAlignment="Right">
+                        <font size="14" isBold="false"/>
+                    </textElement>
+                    <text><![CDATA[gurugram sector 81 ]]></text>
+                </staticText>
+            </frame>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="37"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="205">
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="65" width="100" height="20" forecolor="#666666" backcolor="#FFFCFC" uuid="d65a7d76-7145-4ff3-8cea-ca189af02d2c"/>
+                <box>
+                    <pen lineColor="#FFFFFF"/>
+                </box>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[employeeId]]></text>
+            </staticText>
+            <textField>
+                <reportElement mode="Opaque" x="100" y="65" width="180" height="20" forecolor="#006699" backcolor="#FFFCFC" uuid="03b3a1ba-a13d-4839-89b8-933542591efb"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="85" width="100" height="20" forecolor="#666666" uuid="5a83b5bc-fd43-4de9-80fe-6c1dd18fdc3d"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[bankName]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="100" y="85" width="180" height="20" forecolor="#006699" uuid="71b676a0-a4be-46bb-a6e5-cd6ac8621cb5"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{bankName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="105" width="100" height="20" forecolor="#666666" uuid="6478e5f3-ee8e-464b-afe0-dd3f04727c21"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[joiningDate]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="100" y="105" width="180" height="20" forecolor="#006699" uuid="add8d50d-6e7f-4f80-89ae-a2e97bf85255"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{joiningDate}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="1" y="125" width="100" height="20" forecolor="#666666" uuid="a7d5d93f-e7d7-44a4-8ae1-73cd12f6d2c7"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[bankBranch]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="100" y="125" width="180" height="20" forecolor="#006699" uuid="07cdf828-e849-466e-ab1d-8e94dc4a325d"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{bankBranch}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="165" width="100" height="20" forecolor="#666666" backcolor="#FCFAFA" uuid="238122d5-4ce5-40c2-af4e-5637a59d2f0e"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[selectDepartment]]></text>
+            </staticText>
+            <textField>
+                <reportElement mode="Opaque" x="100" y="165" width="180" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="27291892-6be7-4288-a809-1397228555b9"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{selectDepartment}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement mode="Opaque" x="379" y="65" width="176" height="20" forecolor="#006699" backcolor="#FFFCFC" uuid="70ca514f-6ddd-484c-9dda-a9aa5b788ecc"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement mode="Opaque" x="279" y="65" width="100" height="20" forecolor="#666666" backcolor="#FFFCFC" uuid="7e90a68e-23a3-492b-9949-0394b7babb71"/>
+                <box>
+                    <pen lineColor="#FFFFFF"/>
+                </box>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[employeeName]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="279" y="85" width="100" height="20" forecolor="#666666" uuid="5738cd63-eba3-4a20-a334-b6311980f7ca"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[bankAccountNo]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="279" y="145" width="100" height="20" forecolor="#666666" backcolor="#FFFFFF" uuid="a3ef3b39-0810-4b15-90af-fd8c78e11483"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[designation]]></text>
+            </staticText>
+            <textField>
+                <reportElement mode="Opaque" x="379" y="145" width="176" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="e4a08394-1e45-43c7-8b37-ca27284cc608"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="379" y="85" width="176" height="20" forecolor="#006699" uuid="eb92d030-4a7c-4fd5-9abd-be9dd9a6503d"/>
+                <textElement>
+                    <font size="13" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{bankAccountNo}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="1" y="65" width="554" height="1" uuid="70fee365-9c75-4c19-ac32-7da5819a0c68"/>
+            </line>
+            <line>
+                <reportElement x="0" y="40" width="555" height="1" uuid="f3f97fec-3de3-40b3-9f75-8abbfa2cbbef"/>
+            </line>
+            <textField>
+                <reportElement x="0" y="41" width="555" height="24" uuid="25536bb5-ddb5-4173-b758-ae7bde18122f"/>
+                <textElement>
+                    <font size="16"/>
+                </textElement>
+                <textFieldExpression><![CDATA[Employee
+
+
+
+
+                slip]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="3" width="561" height="37" uuid="9ebaa59f-1981-4ed9-b043-50d03e618dd0"/>
+                <textElement>
+                    <font size="20"/>
+                </textElement>
+                <textFieldExpression><![CDATA[Ahom Technologies Pvt Ltd]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="1" width="1" height="184" uuid="b2218b82-907c-4260-a06d-d076d462f6a7"/>
+            </line>
+            <line>
+                <reportElement x="555" y="0" width="1" height="185" uuid="7fd067f0-0744-4b98-9aa0-5c7ceeefcfc6"/>
+            </line>
+            <line>
+                <reportElement x="2" y="1" width="553" height="1" uuid="c0c02931-d300-4ee3-b6d1-62e50bf66adf"/>
+            </line>
+            <line>
+                <reportElement x="1" y="184" width="554" height="1" uuid="fb391f6d-8cc3-4b75-b5bc-862ed0fc3bf2"/>
+            </line>
+            <line>
+                <reportElement x="280" y="66" width="1" height="117" uuid="86531d49-b6d0-4a9d-9bd4-5a8f2ee5701f"/>
+            </line>
+        </band>
+    </columnHeader>
+    <columnFooter>
+        <band/>
+    </columnFooter>
+    <pageFooter>
+        <band height="180"/>
+    </pageFooter>
+    <summary>
+        <band/>
+    </summary>
+</jasperReport>/////
+
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<!--<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c62caf1-8fb9-4837-a8ef-f73869bf95e5">-->
+
+
+
+<!--    <field name="employeeId" class="java.lang.Integer">-->
+
+<!--    </field>-->
+<!--    <field name="employeeName" class="java.lang.String">-->
+
+<!--    </field>-->
+<!--    <field name="joiningDate" class="java.lang.String">-->
+
+<!--    </field>-->
+<!--    <field name="selectDepartment" class="java.lang.String">-->
+
+<!--    </field>-->
+<!--    <field name="designation" class="java.lang.String">-->
+
+<!--    </field>-->
+<!--    <field name="bankBranch" class="java.lang.String">-->
+
+<!--    </field>-->
+<!--    <group name="Group1">-->
+<!--        <groupExpression><![CDATA[$F{employeeId}]]></groupExpression>-->
+<!--        <groupHeader>-->
+<!--            <band height="33">-->
+<!--                <staticText>-->
+<!--                    <reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="d65a7d76-7145-4ff3-8cea-ca189af02d2c"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="12"/>-->
+<!--                    </textElement>-->
+<!--                    <text><![CDATA[employeeId]]></text>-->
+<!--                </staticText>-->
+<!--                <textField>-->
+<!--                    <reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="03b3a1ba-a13d-4839-89b8-933542591efb"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="24" isBold="true"/>-->
+<!--                    </textElement>-->
+<!--                    <textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>-->
+<!--                </textField>-->
+<!--                <line>-->
+<!--                    <reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="0da6c67f-b7e1-40b0-a62b-995a596bf8b1"/>-->
+<!--                </line>-->
+<!--            </band>-->
+<!--        </groupHeader>-->
+<!--        <groupFooter>-->
+<!--            <band/>-->
+<!--        </groupFooter>-->
+<!--    </group>-->
+<!--    <group name="Group2">-->
+<!--        <groupExpression><![CDATA[$F{employeeName}]]></groupExpression>-->
+<!--        <groupHeader>-->
+<!--            <band height="32">-->
+<!--                <textField>-->
+<!--                    <reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="71b676a0-a4be-46bb-a6e5-cd6ac8621cb5"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="22" isBold="true"/>-->
+<!--                    </textElement>-->
+<!--                    <textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>-->
+<!--                </textField>-->
+<!--                <staticText>-->
+<!--                    <reportElement x="0" y="0" width="100" height="20" forecolor="#666666" uuid="5a83b5bc-fd43-4de9-80fe-6c1dd18fdc3d"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="12"/>-->
+<!--                    </textElement>-->
+<!--                    <text><![CDATA[employeeName]]></text>-->
+<!--                </staticText>-->
+<!--            </band>-->
+<!--        </groupHeader>-->
+<!--        <groupFooter>-->
+<!--            <band/>-->
+<!--        </groupFooter>-->
+<!--    </group>-->
+<!--    <group name="Group3">-->
+<!--        <groupExpression><![CDATA[$F{joiningDate}]]></groupExpression>-->
+<!--        <groupHeader>-->
+<!--            <band height="32">-->
+<!--                <textField>-->
+<!--                    <reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="add8d50d-6e7f-4f80-89ae-a2e97bf85255"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="20" isBold="true"/>-->
+<!--                    </textElement>-->
+<!--                    <textFieldExpression><![CDATA[$F{joiningDate}]]></textFieldExpression>-->
+<!--                </textField>-->
+<!--                <staticText>-->
+<!--                    <reportElement x="0" y="0" width="100" height="20" forecolor="#666666" uuid="6478e5f3-ee8e-464b-afe0-dd3f04727c21"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="12"/>-->
+<!--                    </textElement>-->
+<!--                    <text><![CDATA[joiningDate]]></text>-->
+<!--                </staticText>-->
+<!--            </band>-->
+<!--        </groupHeader>-->
+<!--        <groupFooter>-->
+<!--            <band/>-->
+<!--        </groupFooter>-->
+<!--    </group>-->
+<!--    <group name="Group4">-->
+<!--        <groupExpression><![CDATA[$F{selectDepartment}]]></groupExpression>-->
+<!--        <groupHeader>-->
+<!--            <band height="32">-->
+<!--                <textField>-->
+<!--                    <reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="07cdf828-e849-466e-ab1d-8e94dc4a325d"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="16" isBold="true"/>-->
+<!--                    </textElement>-->
+<!--                    <textFieldExpression><![CDATA[$F{selectDepartment}]]></textFieldExpression>-->
+<!--                </textField>-->
+<!--                <staticText>-->
+<!--                    <reportElement x="1" y="0" width="100" height="20" forecolor="#666666" uuid="a7d5d93f-e7d7-44a4-8ae1-73cd12f6d2c7"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="12"/>-->
+<!--                    </textElement>-->
+<!--                    <text><![CDATA[selectDepartment]]></text>-->
+<!--                </staticText>-->
+<!--            </band>-->
+<!--        </groupHeader>-->
+<!--        <groupFooter>-->
+<!--            <band/>-->
+<!--        </groupFooter>-->
+<!--    </group>-->
+<!--    <group name="CITY">-->
+<!--        <groupExpression><![CDATA[$F{designation}]]></groupExpression>-->
+<!--    </group>-->
+<!--    <background>-->
+<!--        <band/>-->
+<!--    </background>-->
+<!--    <title>-->
+<!--        <band height="72">-->
+<!--            <frame>-->
+<!--                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="cc76d580-8724-480e-8e2b-e55dcdd8f599"/>-->
+<!--                <staticText>-->
+<!--                    <reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="85e67a3a-1213-4a91-8deb-d35e91b84f4e"/>-->
+<!--                    <textElement>-->
+<!--                        <font size="34" isBold="true"/>-->
+<!--                    </textElement>-->
+<!--                    <text><![CDATA[ahom tech pvt ltd]]></text>-->
+<!--                </staticText>-->
+<!--                <staticText>-->
+<!--                    <reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="d07b96c1-cfba-4d22-8c63-449803d980d4"/>-->
+<!--                    <textElement textAlignment="Right">-->
+<!--                        <font size="14" isBold="false"/>-->
+<!--                    </textElement>-->
+<!--                    <text><![CDATA["gurugram sector 81 "]]></text>-->
+<!--                </staticText>-->
+<!--            </frame>-->
+<!--        </band>-->
+<!--    </title>-->
+<!--    <pageHeader>-->
+<!--        <band height="13"/>-->
+<!--    </pageHeader>-->
+<!--    <columnHeader>-->
+<!--        <band height="21">-->
+<!--            <line>-->
+<!--                <reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="6d3eb7bb-c6b8-4861-9850-313755ce26b6"/>-->
+<!--            </line>-->
+<!--        </band>-->
+<!--    </columnHeader>-->
+<!--    <detail>-->
+<!--        <band height="32">-->
+<!--            <line>-->
+<!--                <reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="0704a3d6-c40d-467f-92b9-f2e575c4e8fe"/>-->
+<!--            </line>-->
+<!--            <staticText>-->
+<!--                <reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="386e9be2-07c1-49aa-9b6d-8d3d3b2d55e7"/>-->
+<!--                <textElement>-->
+<!--                    <font size="12"/>-->
+<!--                </textElement>-->
+<!--                <text><![CDATA[designation]]></text>-->
+<!--            </staticText>-->
+<!--            <textField>-->
+<!--                <reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="1599849d-0fd5-4705-8b77-ae0753026941"/>-->
+<!--                <textElement>-->
+<!--                    <font size="24" isBold="true"/>-->
+<!--                </textElement>-->
+<!--                <textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>-->
+<!--            </textField>-->
+<!--        </band>-->
+<!--    </detail>-->
+<!--    <columnFooter>-->
+<!--        <band/>-->
+<!--    </columnFooter>-->
+<!--    <pageFooter>-->
+<!--        <band height="180">-->
+<!--            <textField>-->
+<!--                <reportElement mode="Opaque" x="200" y="20" width="315" height="13" backcolor="#E6E6E6" uuid="e176b6d4-ff98-4c7e-8f2d-0dfef40144de"/>-->
+<!--                <textElement textAlignment="Right"/>-->
+<!--                <textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>-->
+<!--            </textField>-->
+<!--            <textField evaluationTime="Report">-->
+<!--                <reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="601ff858-ea79-4b9b-8b36-03db1d29c80e"/>-->
+<!--                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>-->
+<!--            </textField>-->
+
+<!--            <staticText>-->
+<!--                <reportElement mode="Opaque" x="10" y="100" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="238122d5-4ce5-40c2-af4e-5637a59d2f0e"/>-->
+<!--                <textElement>-->
+<!--                    <font size="12"/>-->
+<!--                </textElement>-->
+<!--                <text><![CDATA[hrms.bankBranch]]></text>-->
+<!--            </staticText>-->
+<!--            <textField>-->
+<!--                <reportElement mode="Opaque" x="110" y="100" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="27291892-6be7-4288-a809-1397228555b9"/>-->
+<!--                <textElement>-->
+<!--                    <font size="24" isBold="true"/>-->
+<!--                </textElement>-->
+<!--                <textFieldExpression><![CDATA[$F{hrms.bankBranch}]]></textFieldExpression>-->
+<!--            </textField>-->
+<!--        </band>-->
+<!--    </pageFooter>-->
+<!--    <summary>-->
+<!--        <band/>-->
+<!--    </summary>-->
+<!--</jasperReport>-->

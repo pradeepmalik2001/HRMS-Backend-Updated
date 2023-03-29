@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class BasicEmployee {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	private int employeeId;
 	private String employeeName;
@@ -20,6 +20,10 @@ public class BasicEmployee {
 	private String reportingTo;
 	private String dob;
 	private String workType;
+@ManyToOne
+private SalarySetup salarySetup;
+	@OneToOne
+	private BankingInfo bankingInfo;
 	
 	public BasicEmployee() {
 		
@@ -113,9 +117,17 @@ public class BasicEmployee {
 		this.workType = workType;
 	}
 
+	public SalarySetup getSalarySetup() {
+		return salarySetup;
+	}
+
+	public void setSalarySetup(SalarySetup salarySetup) {
+		this.salarySetup = salarySetup;
+	}
+
 	public BasicEmployee(int employeeId, String employeeName, String whichCompany, String selectDepartment,
-			String designation, String email, String mobile, String joiningDate, String reportingTo, String dob,
-			String workType) {
+						 String designation, String email, String mobile, String joiningDate, String reportingTo, String dob,
+						 String workType) {
 		super();
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;
@@ -129,6 +141,6 @@ public class BasicEmployee {
 		this.dob = dob;
 		this.workType = workType;
 	}
-	
+
 
 }

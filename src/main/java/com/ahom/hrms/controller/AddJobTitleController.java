@@ -26,9 +26,9 @@ public class AddJobTitleController {
 	
 	@PostMapping("/save")
 	
-	public ResponseEntity<AddJobTitleDto>add(@RequestBody AddJobTitleDto addJobTitleDto)
+	public ResponseEntity<AddJobTitleDto> saveTitle(@RequestBody AddJobTitleDto addJobTitleDto)
 	{
-		addJobTitleService.saveTitle(addJobTitleDto);
+		addJobTitleService.saveTitle(addJobTitleDto); 
 		return new ResponseEntity<>(addJobTitleDto,HttpStatus.CREATED);
 		
 	}

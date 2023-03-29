@@ -71,19 +71,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/usermaster/**", "/saveapproval/**","/bank/**",
 						"/holiday/**", "/addjobtitle/**", "/shiftmanagement/**", "/allowance/**",
-						"/application/**"
+						"/application/**", "/attendence/status**"
 						, "/attendance/**", "/AttendanceDetails/**", "/savebankinginfo/**", "/basic/**",
-						"/CreateLeaveRequest/**",
+						"/CreateLeaveRequest/**","/getBankInfo/",
 						"/deductions/**", "/designation/**", "/saveemergencycontact/**",
-						"/employeeAllowances/**",
+						"/employeeAllowances/**", "/getById/{employeeId}/","/basic/formatof/pdf",
 						"/employeededuction/**","/department/**",
 						"/employee/**", "/saveemployement/**", "/image/**", "/intreview/**",
 						"/leave/**", "/loan_application/**", "/loan_master/**"
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
-
-						"/payrolls/**", "/RaiseGrievances/**","/event/**"
+						"/bank/savebankinginfo","/savework","/demo/**",
+						"/payrolls/**", "/getallemergencyContactInfo", "/RaiseGrievances/**","/event/**"
 						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**","/training/**","/department/**",
-						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getallEmp/**"
+						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getallEmp/**","/salary/**","/work/**"
 				).permitAll()
 				.antMatchers()
 				.hasAnyRole("ADMIN")
@@ -120,8 +120,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //		auth.userDetailsService(customUserService).passwordEncoder(passwordEncoder());
 //		auth.inMemoryAuthentication().withUser("akash").password(this.passwordEncoder().encode("123")).roles("ADMIN");
 //		auth.inMemoryAuthentication().withUser("harsh").password("123").roles("ADMIN");
-//
-//
+
+
 //	}
 
 

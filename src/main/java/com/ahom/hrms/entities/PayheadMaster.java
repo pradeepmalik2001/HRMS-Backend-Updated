@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class PayheadMaster {
 @Id
-@GeneratedValue(strategy = GenerationType.AUTO )
+@GeneratedValue(strategy = GenerationType.IDENTITY )
 private int id;
 @NotBlank(message="not null payhead is mandatory")
 private String payhead;

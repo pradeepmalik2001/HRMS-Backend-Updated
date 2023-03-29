@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Table(name="Add_holiday")
 public class AddHoliday {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO )
+	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	private int id;
 	@NotBlank(message="not null holidayName is mandatory")
 	private String holidayName;

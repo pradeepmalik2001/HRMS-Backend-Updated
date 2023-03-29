@@ -15,7 +15,7 @@ import javax.persistence.Id;
 public class CreateLeaveRequest {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private Double availableBalance;
 	private String selectEmployee;
