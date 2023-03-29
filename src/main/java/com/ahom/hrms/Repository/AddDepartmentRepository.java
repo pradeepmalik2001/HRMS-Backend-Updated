@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories
 public interface AddDepartmentRepository extends JpaRepository<AddDepartment, Integer>{
+    AddDepartment findByDepartmentName (String departmentName);
 
 }

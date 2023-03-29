@@ -22,11 +22,17 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 
 	//save data
 	public void saveDepartment(AddDepartmentDto addDepartmentDto) {
-		addDepartmentRepository.save(addDepartmentDtoToAddDepartment(addDepartmentDto));
+		AddDepartment byName = addDepartmentRepository.findByDepartmentName(addDepartmentDto.getDepartmentName());
+		if (byName==null) {
+			addDepartmentRepository.save(addDepartmentDtoToAddDepartment(addDepartmentDto));
+		}else {
+			throw new RuntimeException("already present");
+		}
 	}
 
 	//converting DTO
 	public AddDepartment addDepartmentDtoToAddDepartment(AddDepartmentDto addDepartmentDto) {
+
 		AddDepartment addDepartment = this.modelMapper.map(addDepartmentDto, AddDepartment.class);
 		return addDepartment;
 	}

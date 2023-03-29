@@ -9,6 +9,7 @@ public class AddDepartment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(unique = true)
 	private String departmentName;
 	private String description;
 	
