@@ -23,7 +23,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 @RequestMapping("/basic")
 public class BasicEmployeeController {
 
@@ -48,7 +48,7 @@ public class BasicEmployeeController {
 		return ResponseEntity.ok(basicEmployeeDto);
 	}
 	@GetMapping("/export-to-pdf")
-	public void getAll(HttpServletResponse response) throws DocumentException, IOException 
+	public void getAll(HttpServletResponse response) throws DocumentException, IOException
 	{
 		 response.setContentType("application/pdf");
 		    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
@@ -70,4 +70,15 @@ public class BasicEmployeeController {
 public String generateReport(@PathVariable String format) throws JRException, FileNotFoundException {
 	return reportxmlService.exportReport(format);
 }
+	@GetMapping("/fetchdata")
+	public ResponseEntity<List<BasicEmployee>> getAll()
+	{
+		return new ResponseEntity<>(this.basicEmployeeService.getAllEmployee(),HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/fetchdata")
+	public ResponseEntity<List<BasicEmployee>>fetch(@RequestParam int id){
+		List<BasicEmployee>list=basicEmployeeService.details(id);
+		return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
+	}
 }

@@ -16,5 +16,6 @@ public interface BasicEmployeeService {
 	BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee);
 
 	List<BasicEmployee> getAllEmployee();
+	List<BasicEmployee>details(int id);
 
 }

@@ -16,6 +16,7 @@ import com.ahom.hrms.dto.BasicEmployeeDto;
 
 import com.ahom.hrms.service.BasicEmployeeService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,19 +24,19 @@ import java.util.List;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
-	
+
 	@Autowired
 	BasicEmployeeRepository basicEmployeeRepository;
 	@Autowired
 	SalarySetupRepository salarySetupRepository;
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	//save data
 	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) {
 		basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
 	}
-	
+
 	//fetch data by employee id
 	public BasicEmployeeDto employeeById(int employeeId){
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(employeeId).get();
@@ -49,12 +50,13 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		 return list;
 	}
 
+
 	//converting DTO
 	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) {
 		BasicEmployee basicEmployee = this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
 		return basicEmployee;
 	}
-	
+
 	public BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee) {
 		BasicEmployeeDto basicEmployeeDto = this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
 		return basicEmployeeDto;
@@ -69,11 +71,25 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 //		return hra;+
 //	}
 
-	
+
 //	public List<BasicEmployeeDto> getAll() {
 //		List list=basicEmployeeRepository.findAll();
 //		return list;
 //	}
+
+	public List<BasicEmployee>details(int id){
+		List<BasicEmployee>list=basicEmployeeRepository.findByDetails(id);
+		System.out.println(list);
+		List<BasicEmployee>filterData=new ArrayList<>();
+
+		for (BasicEmployee basicEmployee:list)
+		{
+			filterData.add(basicEmployee);
+			System.out.println(basicEmployee);
+
+		}
+		return filterData;
+	}
 
 
 
