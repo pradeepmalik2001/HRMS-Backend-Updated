@@ -12,9 +12,8 @@ public interface BankingInfoService {
 	BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception;
 	
 	BankingInfoDto bankingInfoToBankingInfoDto(BankingInfo bankingInfo) throws Exception;
-	List<BankingInfoDto>getBankInfo() throws Exception;
-//	BankingInfo getByName(String name);
 
+	List<BankingInfo>getAllInfo();
 
     BankingInfoDto getById(Integer employeeId) throws Exception;
 }

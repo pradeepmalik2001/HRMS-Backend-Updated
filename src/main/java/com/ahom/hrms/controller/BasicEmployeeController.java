@@ -79,6 +79,9 @@ public String generateReport(@PathVariable String format) throws JRException, Fi
 	@PostMapping("/fetchdata")
 	public ResponseEntity<List<BasicEmployee>>fetch(@RequestParam int id){
 		List<BasicEmployee>list=basicEmployeeService.details(id);
-		return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
+//	public ResponseEntity<List<DeptEmpDto>> getDeptEmployeesLeftJoin() {
+//		return new ResponseEntity<List<DeptEmpDto>>(joinQueryService.getDeptEmployeesLeftJoin(), HttpStatus.OK);
+//	}
 }

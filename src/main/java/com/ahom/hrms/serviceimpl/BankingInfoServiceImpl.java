@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.ahom.hrms.dto.BankingInfoDto;
 import com.ahom.hrms.service.BankingInfoService;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BankingInfoServiceImpl implements BankingInfoService{
@@ -42,7 +41,7 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
 		if(basicEmployee!=null)
 		{
-			bankingInfo.setBasicEmployee(basicEmployee);
+			bankingInfo.setBasicEmployee1(basicEmployee);
 //			String pfAcc=workInformation.getPfAccountNo();
 //           bankingInfoDto.setPfAcc(pfAcc);
 		}
@@ -60,13 +59,13 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 		int empId=bankingInfoDto.getEmployeeId();
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(empId).orElse(null);
 		WorkInformation workInformation=workInformationRepository.findById(empId).orElse(null);
-		String pfAcc=workInformation.getPfAccountNo();
+//		String pfAcc=workInformation.getPfAccountNo();
 		if( workInformation!=null)
 		{
 
 			bankingInfoDto.setBasicEmployee(basicEmployee);
 
-			bankingInfoDto.setPfAcc(pfAcc);
+//			bankingInfoDto.setPfAcc(pfAcc);
 		}
 		else
 		{
@@ -76,22 +75,37 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 	}
 
 	@Override
-	public List<BankingInfoDto> getBankInfo()  {
+	public List<BankingInfo> getAllInfo() {
 
-		List<BankingInfo>get=this.bankingInfoRepository.findAll();
-		 List<BankingInfoDto> getBank=get.stream().map(li-> {
-			 try {
-				 return this.bankingInfoToBankingInfoDto(li);
-			 } catch (Exception e) {
-				 throw new RuntimeException(e);
-			 }
-		 }).collect(Collectors.toList());
-		 return getBank;
+	return bankingInfoRepository.findAll();
 	}
+
+	//	@Override
+//	public List<BankingInfo> getBankInfo() {
+//
+//		List list=this.bankingInfoRepository.findAll();
+//		return list;
+//		List<BankingInfo>get=this.bankingInfoRepository.findAll();
+//		 List<BankingInfoDto> getBank=get.stream().map(li-> {
+//			 try {
+//				 return this.bankingInfoToBankingInfoDto(li);
+//			 } catch (Exception e) {
+//				 throw new RuntimeException(e);
+//			 }
+//		 }).collect(Collectors.toList());
+//		 return getBank;
+//	}
 	@Override
 	public BankingInfoDto getById(Integer employeeId) throws Exception {
 		BankingInfo byId = bankingInfoRepository.findAllById(employeeId);
-		return bankingInfoToBankingInfoDto(byId);
+//		BasicEmployee basicEmployee=basicEmployeeRepository.findById(employeeId).orElse(null);
+//		if (basicEmployee!=null)
+//		{
+//			byId.setBasicEmployee1(basicEmployee);
+			return bankingInfoToBankingInfoDto(byId);
+//		}else
+//			return null;
+
 	}
 
 
