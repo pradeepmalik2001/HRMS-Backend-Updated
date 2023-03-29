@@ -1,8 +1,19 @@
 package com.ahom.hrms.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "basic_employee")
 public class BasicEmployee {
 	
@@ -22,125 +33,10 @@ public class BasicEmployee {
 	private String workType;
 @ManyToOne
 private SalarySetup salarySetup;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private BankingInfo bankingInfo;
 	
-	public BasicEmployee() {
-		
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
-
-	public String getWhichCompany() {
-		return whichCompany;
-	}
-
-	public void setWhichCompany(String whichCompany) {
-		this.whichCompany = whichCompany;
-	}
-
-	public String getSelectDepartment() {
-		return selectDepartment;
-	}
-
-	public void setSelectDepartment(String selectDepartment) {
-		this.selectDepartment = selectDepartment;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getJoiningDate() {
-		return joiningDate;
-	}
-
-	public void setJoiningDate(String joiningDate) {
-		this.joiningDate = joiningDate;
-	}
-
-	public String getReportingTo() {
-		return reportingTo;
-	}
-
-	public void setReportingTo(String reportingTo) {
-		this.reportingTo = reportingTo;
-	}
-
-	public String getDob() {
-		return dob;
-	}
-
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-
-	public String getWorkType() {
-		return workType;
-	}
-
-	public void setWorkType(String workType) {
-		this.workType = workType;
-	}
-
-	public SalarySetup getSalarySetup() {
-		return salarySetup;
-	}
-
-	public void setSalarySetup(SalarySetup salarySetup) {
-		this.salarySetup = salarySetup;
-	}
-
-	public BasicEmployee(int employeeId, String employeeName, String whichCompany, String selectDepartment,
-						 String designation, String email, String mobile, String joiningDate, String reportingTo, String dob,
-						 String workType) {
-		super();
-		this.employeeId = employeeId;
-		this.employeeName = employeeName;
-		this.whichCompany = whichCompany;
-		this.selectDepartment = selectDepartment;
-		this.designation = designation;
-		this.email = email;
-		this.mobile = mobile;
-		this.joiningDate = joiningDate;
-		this.reportingTo = reportingTo;
-		this.dob = dob;
-		this.workType = workType;
-	}
 
 
 }

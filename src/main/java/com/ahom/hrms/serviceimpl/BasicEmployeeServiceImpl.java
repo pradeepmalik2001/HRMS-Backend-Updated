@@ -2,11 +2,7 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.SalarySetupRepository;
-import com.ahom.hrms.dto.EmployeeTrainingDto;
-import com.ahom.hrms.dto.SalarySetupDto;
 import com.ahom.hrms.entities.BasicEmployee;
-import com.ahom.hrms.entities.EmployeeTraining;
-import com.ahom.hrms.entities.SalarySetup;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +13,6 @@ import com.ahom.hrms.dto.BasicEmployeeDto;
 import com.ahom.hrms.service.BasicEmployeeService;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import java.util.List;
 
 @Service
@@ -78,7 +71,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 //	}
 
 	public List<BasicEmployee>details(int id){
-		List<BasicEmployee>list=basicEmployeeRepository.findByDetails(id);
+		List<BasicEmployee>list=basicEmployeeRepository.findAllByDetails(id);
 		System.out.println(list);
 		List<BasicEmployee>filterData=new ArrayList<>();
 

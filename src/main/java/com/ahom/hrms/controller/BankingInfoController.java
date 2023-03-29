@@ -1,5 +1,6 @@
 package com.ahom.hrms.controller;
 
+import com.ahom.hrms.entities.BankingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 
-//@RequestMapping("/bank")
+@RequestMapping("/bank")
 public class BankingInfoController {
 
 	@Autowired
@@ -25,10 +26,9 @@ public class BankingInfoController {
 		return new ResponseEntity<>(bankingInfoDto, HttpStatus.CREATED);
 	}
 	@GetMapping("/getBankInfo")
-	public ResponseEntity<List<BankingInfoDto>>response() throws Exception {
-		
-		return
-				new ResponseEntity<>(this.bankingInfoService.getBankInfo(),HttpStatus.ACCEPTED);
+	public ResponseEntity<List<BankingInfo>>response() {
+
+		return new ResponseEntity<>(this.bankingInfoService.getAllInfo(),HttpStatus.ACCEPTED);
 	}
 	@GetMapping("/getById/{employeeId}")
 	public BankingInfoDto response(@PathVariable Integer employeeId) throws Exception {
