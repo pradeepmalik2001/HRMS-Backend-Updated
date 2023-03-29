@@ -64,7 +64,7 @@ public class AttendanceController {
 
 		return new ResponseEntity<> (attendancedto,HttpStatus.OK);
 	}
-	@GetMapping("/bydate")
+	@PostMapping("/bydate")
 	@ResponseBody
 	public ResponseEntity<List<Attendance>> ot(@RequestParam String startdate,
 											 @RequestParam String enddate,
@@ -75,7 +75,7 @@ public class AttendanceController {
 		List<Attendance> Emplfetch = attendanceService.gteOt(stdate,endate,name);
 		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
 	}
-	@GetMapping("/status")
+	@PostMapping("/status")
 	public ResponseEntity<List<Attendance>>statusOfAttendance(@RequestParam String startdate,
 															  @RequestParam String enddate,
 															  @RequestParam String name,
@@ -86,7 +86,7 @@ public class AttendanceController {
 		List<Attendance>statusFetch=attendanceService.getByStatus(startDate,endDate,name,status);
 		return new ResponseEntity<>(statusFetch,HttpStatus.ACCEPTED);
 	}
-	@GetMapping("/count")
+	@PostMapping("/count")
 	public ResponseEntity<Integer>countAttendance(@RequestParam String startdate,
 															  @RequestParam String enddate,
 															  @RequestParam String name,
