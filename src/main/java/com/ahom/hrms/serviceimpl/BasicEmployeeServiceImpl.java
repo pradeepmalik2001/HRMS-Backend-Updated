@@ -39,20 +39,17 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	public List<BasicEmployee> getAllEmployee()
 	{
-		List list=this.basicEmployeeRepository.findAll();
-		 return list;
+		return this.basicEmployeeRepository.findAll();
 	}
 
 
 	//converting DTO
 	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) {
-		BasicEmployee basicEmployee = this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
-		return basicEmployee;
+		return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
 	}
 
 	public BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee) {
-		BasicEmployeeDto basicEmployeeDto = this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
-		return basicEmployeeDto;
+		return this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
 	}
 //	public double hraCalculation(int id)
 //	{

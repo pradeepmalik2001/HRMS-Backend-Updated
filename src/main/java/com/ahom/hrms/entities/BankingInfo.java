@@ -20,10 +20,10 @@ public class BankingInfo {
 	private String ifscCode;
 	//	private String paymentType;
 	private String name;
-	@OneToOne(targetEntity = BasicEmployee.class, fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = BasicEmployee.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "basic_employee_employee_id")
 
-	@JsonBackReference
+//	@JsonBackReference
 	private BasicEmployee basicEmployee1;
 }
 
