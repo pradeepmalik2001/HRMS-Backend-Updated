@@ -12,6 +12,7 @@ import com.ahom.hrms.service.BankingInfoService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 
 @RequestMapping("/bank")
 public class BankingInfoController {
