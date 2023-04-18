@@ -33,4 +33,9 @@ public class EmployementTypeMasterController {
 
 	}
 
+	@DeleteMapping("/employment/delete/{id}")
+	public void deleteEmployement(@PathVariable int id)
+	{
+		employementTypeMasterService.deleteEMployement(id);
+	}
 }
