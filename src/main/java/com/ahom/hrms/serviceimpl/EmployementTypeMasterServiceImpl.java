@@ -43,10 +43,4 @@ public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterSe
 		return list;
 	}
 
-	@Override
-	public void employementDeleteById(int id)
-	{
-		employementTypeMasterRepository.deleteById(id);
-	}
-
 }

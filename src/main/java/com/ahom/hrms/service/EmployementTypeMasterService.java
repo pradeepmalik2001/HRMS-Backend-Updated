@@ -15,6 +15,4 @@ public interface EmployementTypeMasterService {
 
 	///
 	List<EmployementTypeMasterDto> getAll();
-
-	void employementDeleteById(int id);
 }
