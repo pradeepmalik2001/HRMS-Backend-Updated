@@ -7,20 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.http.HttpServletResponse;
-import java.beans.BeanInfo;
-import java.beans.Beans;
 
 @Configuration
 @EnableWebSecurity
@@ -59,12 +50,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.logout()
 //		.permitAll();
-		http = http.csrf().disable().cors().disable();
-		http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
-		http = http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
-		{
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
-		}).and();
+//		http = http.csrf().disable().cors().disable();
+//		http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+//		http = http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
+//		{
+//			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+//		}).and();
 
 		http.csrf()
 				.disable()
