@@ -31,11 +31,13 @@ public class BasicEmployee {
 	private String reportingTo;
 	private String dob;
 	private String workType;
-@ManyToOne
-private SalarySetup salarySetup;
-	@OneToOne(fetch = FetchType.LAZY)
-	@Fetch(FetchMode.JOIN)
-	private BankingInfo bankingInfo;
+	private int basicSalary;
+	private String pfnumber;
+//@ManyToOne
+//private SalarySetup salarySetup;
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@Fetch(FetchMode.JOIN)
+//	private BankingInfo bankingInfo;
 	
 
 

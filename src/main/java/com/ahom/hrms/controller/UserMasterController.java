@@ -56,32 +56,18 @@ public class UserMasterController {
 	@PostMapping("/authenticate")
 		public ResponseEntity<JwtTokenResponse> generateToken(@RequestBody UserMaster authRequest) throws Exception {
 
-//		UserMaster byUserName;
 		UserDetails userDetails;
 		try {
-//			UserMaster byUserName = userMasterRepository.findByUserName(authRequest.getUserName());
-//			if (byUserName != null) {
-//				UserMaster byId = userMasterRepository.findById(byUserName.getId()).get();
-//
-//				if (byId != null) {
-//					Role role = roleRepository.findById();
-//					Role byRoleName = roleRepository.findByRoleName(role.getRoleName());
-//				}
-//			}
-
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
 
 			userDetails = this.userDetailsService.loadUserByUsername(authRequest.getUserName());
-//			String token= this.jwtUtils.generateToken(authRequest.getUserName());
 
 		} catch (Exception ex) {
 			throw new Exception("invalid username/password");
 		}
 		String jwtToken = jwtUtils.generateToken(authRequest.getUserName());
 		JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
-//		jwtTokenResponse.setUserName(authRequest.getUserName());
-//		jwtTokenResponse.setRoleName(String.valueOf(userDetailsService.loadUserByUsername(authRequest.getRoleName())));
 		jwtTokenResponse.setJwtToken(jwtToken);
 		jwtTokenResponse.setUser(this.userMasterRepository.findByUserName(authRequest.getUserName()));
 		return new ResponseEntity<>(jwtTokenResponse, HttpStatus.ACCEPTED);
