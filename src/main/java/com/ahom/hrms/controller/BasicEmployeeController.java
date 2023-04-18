@@ -84,4 +84,10 @@ public String generateReport(@PathVariable String format) throws JRException, Fi
 //	public ResponseEntity<List<DeptEmpDto>> getDeptEmployeesLeftJoin() {
 //		return new ResponseEntity<List<DeptEmpDto>>(joinQueryService.getDeptEmployeesLeftJoin(), HttpStatus.OK);
 //	}
+
+	@DeleteMapping("/delete/{id}")
+	public void deleteEmployee(@PathVariable int id)
+	{
+		basicEmployeeService.deleteEmployee(id);
+	}
 }

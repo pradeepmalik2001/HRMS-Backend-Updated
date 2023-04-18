@@ -46,4 +46,10 @@ public class DesignationMasterServiceImpl implements DesignationMasterService{
 		return designationMasterDto;
 	}
 
+	@Override
+	public void deleteById(int id)
+	{
+		designationMasterRepository.deleteById(id);
+	}
+
 }
