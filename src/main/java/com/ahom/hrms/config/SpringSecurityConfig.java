@@ -70,7 +70,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/employeededuction/**","/department/**",
 						"/employee/**", "/saveemployement/**", "/image/**", "/intreview/**",
 						"/leave/**", "/loan_application/**", "/loan_master/**"
-						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**","/employment/**",
+						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
 						"/bank/savebankinginfo","/savework","/demo/**",
 						"/payrolls/**", "/getallemergencyContactInfo", "/RaiseGrievances/**","/event/**"
 						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**","/training/**","/department/**",

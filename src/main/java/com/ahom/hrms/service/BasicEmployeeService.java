@@ -18,5 +18,4 @@ public interface BasicEmployeeService {
 	List<BasicEmployee> getAllEmployee();
 	List<BasicEmployee>details(int id);
 
-	void deleteEmployee(int id);
 }
