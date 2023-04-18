@@ -50,9 +50,8 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 	}
 
 	@Override
-	public AddDepartment delete(int id) {
+	public void delete(int id) {
 		addDepartmentRepository.deleteById(id);
-		return null;
 	}
 
 }
