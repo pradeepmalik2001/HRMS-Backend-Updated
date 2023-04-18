@@ -15,4 +15,6 @@ public interface EmployementTypeMasterService {
 
 	///
 	List<EmployementTypeMasterDto> getAll();
+
+	void deleteEMployement(int id);
 }
