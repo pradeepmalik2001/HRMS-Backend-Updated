@@ -22,6 +22,7 @@ public class EmergencyContactInfo {
 	private String emergencyContactName;
 	private String emergencyContactEmail;
 	private String emergencyContactAddress;
+	private String employeeName;
 		
 	@OneToOne
 	private BasicEmployee basicEmployee;

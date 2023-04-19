@@ -26,30 +26,27 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 
 //	@Autowired
 //	WorkInformation workInformation;
-	@Autowired
-	WorkInformationRepository workInformationRepository;
+@Autowired
+WorkInformationRepository workInformationRepository;
 
 	//save data
 	public void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-	bankingInfoRepository.save(bankingInfoDtoToBankingInfo(bankingInfoDto));
+		bankingInfoRepository.save(bankingInfoDtoToBankingInfo(bankingInfoDto));
 	}
 
 	//converting DTO
 	public BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
 		int empId=bankingInfoDto.getEmployeeId();
-		BasicEmployee basicEmployee = basicEmployeeRepository.findById(empId).orElse(null);
+		BasicEmployee basicEmployee = basicEmployeeRepository.findByEmployeeName(bankingInfoDto.getName());
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
-		if(basicEmployee!=null)
-		{
+		if(basicEmployee!=null) {
 			bankingInfo.setBasicEmployee1(basicEmployee);
 //			String pfAcc=workInformation.getPfAccountNo();
 //           bankingInfoDto.setPfAcc(pfAcc);
+		} else {
+			throw new Exception("employee name not found!!");
 		}
-		else
-		{
-			throw new Exception("employee id not found!!");
-		}
-	
+
 		return bankingInfo;
 	}
 
@@ -60,15 +57,12 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(empId).orElse(null);
 		WorkInformation workInformation=workInformationRepository.findById(empId).orElse(null);
 //		String pfAcc=workInformation.getPfAccountNo();
-		if( workInformation!=null)
-		{
+		if( workInformation!=null) {
 
 			bankingInfoDto.setBasicEmployee(basicEmployee);
 
 //			bankingInfoDto.setPfAcc(pfAcc);
-		}
-		else
-		{
+		} else {
 			throw new Exception("employee id not found!!");
 		}
 		return bankingInfoDto;
@@ -77,7 +71,7 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 	@Override
 	public List<BankingInfo> getAllInfo() {
 
-	return bankingInfoRepository.findAll();
+		return bankingInfoRepository.findAll();
 	}
 
 	//	@Override
@@ -102,7 +96,7 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 //		if (basicEmployee!=null)
 //		{
 //			byId.setBasicEmployee1(basicEmployee);
-			return bankingInfoToBankingInfoDto(byId);
+		return bankingInfoToBankingInfoDto(byId);
 //		}else
 //			return null;
 
