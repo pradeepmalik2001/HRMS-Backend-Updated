@@ -50,12 +50,12 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	  public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto)
 	    {
 	        CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
-	        createLeaveRequest.setAvailableBalance(createLeaveRequestDto.getAvailableBalance());
+//	        createLeaveRequest.setAvailableBalance(createLeaveRequestDto.getAvailableBalance());
 			createLeaveRequest.setId(createLeaveRequestDto.getId());
 	        createLeaveRequest.setDays(createLeaveRequestDto.getDays());
 	        createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
 	        createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
-	        createLeaveRequest.setLeaveFor(createLeaveRequestDto.getLeaveFor());
+//	        createLeaveRequest.setLeaveFor(createLeaveRequestDto.getLeaveFor());
 	        createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
 	        createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
 	        createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
@@ -68,11 +68,11 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	  public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest) {
 		  CreateLeaveRequestDto createLeaveRequestDto= new CreateLeaveRequestDto();
 		  
-		  createLeaveRequestDto.setAvailableBalance(createLeaveRequest.getAvailableBalance());
+//		  createLeaveRequestDto.setAvailableBalance(createLeaveRequest.getAvailableBalance());
 		  createLeaveRequestDto.setDays(createLeaveRequest.getDays());
 		  createLeaveRequestDto.setEndDate(createLeaveRequest.getEndDate());
 		  createLeaveRequestDto.setLeaveApprover(createLeaveRequest.getLeaveApprover());
-		  createLeaveRequestDto.setLeaveFor(createLeaveRequest.getLeaveFor());
+//		  createLeaveRequestDto.setLeaveFor(createLeaveRequest.getLeaveFor());
 		  createLeaveRequestDto.setLeaveType(createLeaveRequest.getLeaveType());
 		  createLeaveRequestDto.setReasonForLeave(createLeaveRequest.getReasonForLeave());
 		  createLeaveRequestDto.setSelectEmployee(createLeaveRequest.getSelectEmployee());

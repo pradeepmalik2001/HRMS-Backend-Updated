@@ -11,11 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateLeaveRequestDto {
 	private int id;
-	private Double availableBalance;
+
 	private String selectEmployee;
 	private String leaveApprover;
 	private String leaveType;
-	private String leaveFor;
+
 	private String startDate;
 	private String endDate;
 	private String days;

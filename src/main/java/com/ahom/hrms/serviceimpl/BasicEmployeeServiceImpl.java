@@ -39,6 +39,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	public List<BasicEmployee> getAllEmployee()
 	{
+
 		return this.basicEmployeeRepository.findAll();
 	}
 

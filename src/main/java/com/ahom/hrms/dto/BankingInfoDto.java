@@ -15,7 +15,7 @@ public class BankingInfoDto {
 	private String name;
 	private int employeeId;
 
-	private String pfAcc;
+//	private String pfAcc;
 	private BasicEmployee basicEmployee;
 
 }
