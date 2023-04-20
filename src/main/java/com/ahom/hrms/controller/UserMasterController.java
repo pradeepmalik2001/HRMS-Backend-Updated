@@ -19,14 +19,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ahom.hrms.dto.UserMasterDto;
 import com.ahom.hrms.service.UserMasterService;
@@ -100,6 +93,11 @@ public class UserMasterController {
 	@GetMapping("/fetchAll")
 	public ResponseEntity<List<UserMasterDto>>get(){
 		return new ResponseEntity<>(this.userMasterService.getALlUser(),HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void delete(@PathVariable() int id){
+		userMasterService.deleteUser(id);
 	}
 
 

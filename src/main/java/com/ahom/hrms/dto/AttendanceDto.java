@@ -4,7 +4,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class AttendanceDto {
+public class 	AttendanceDto {
 
 	
 	private int Id;	
