@@ -75,6 +75,11 @@ public class UserMasterServiceImpl implements UserMasterService{
 		return all;
 	}
 
+	@Override
+	public void deleteUser(int id) {
+		userMasterRepository.deleteById(id);
+	}
+
 //	@Override
 //	public List<UserMasterDto> getALlUser() {
 //		List list=this.userMasterRepository.findAll();
