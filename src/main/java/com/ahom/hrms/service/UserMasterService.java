@@ -20,4 +20,6 @@ public interface UserMasterService {
 
 	List<UserMasterDto> getALlUser();
 
+	void deleteUser(int id);
+
 }
