@@ -57,23 +57,18 @@ public class Excel {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
                 int rowNumber=1;
-            Iterator<Row> iterator = sheet.iterator();
 
-            while (iterator.hasNext())
-            {
-                Row row = iterator.next();
-
-                if (rowNumber==1){
+            for (Row row : sheet) {
+                if (rowNumber == 1) {
                     rowNumber++;
                     continue;
                 }
                 Iterator<Cell> cell = row.iterator();
-                int cid=0;
-                Attendance attendance=new Attendance();
-                while (cell.hasNext()){
+                int cid = 0;
+                Attendance attendance = new Attendance();
+                while (cell.hasNext()) {
                     Cell cells = cell.next();
-                    switch (cid)
-                    {
+                    switch (cid) {
                         case 0:
                             attendance.setId((int) cells.getNumericCellValue());
                             break;
@@ -86,11 +81,11 @@ public class Excel {
                         case 3:
                             attendance.setInTime((String) cells.getStringCellValue());
                             break;
-                        case 4 :
+                        case 4:
                             attendance.setOutTime((String) cells.getStringCellValue());
                             break;
                         case 5:
-                            attendance.setStatus((String) cells.getStringCellValue());
+                            attendance.setStatus(cells.getStringCellValue());
                         default:
                             break;
 

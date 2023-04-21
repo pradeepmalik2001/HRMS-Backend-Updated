@@ -112,16 +112,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 	
 	 public AttendanceDto AttendanceToAttendanceDto(Attendance attendance)
 	    {
-		 AttendanceDto attendancedto= this.modelMapper.map(attendance , AttendanceDto.class);
 
-	     
-	        return attendancedto;
+
+			return this.modelMapper.map(attendance , AttendanceDto.class);
 	    
          }
 
 		 public Integer countAttendance(Date startdate, Date enddate, String name,String status){
-			 Integer countAttendance = attendanceRpository.getOneSelectEmployee(startdate, enddate, name, status);
-		return countAttendance;
+			 return attendanceRpository.getOneSelectEmployee(startdate, enddate, name, status);
 	 }
 
 
