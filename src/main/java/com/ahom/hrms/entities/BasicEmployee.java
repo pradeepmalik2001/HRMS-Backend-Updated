@@ -31,8 +31,11 @@ public class BasicEmployee {
 	private String reportingTo;
 	private String dob;
 	private String workType;
-	private int basicSalary;
+	private int ctc;
 	private String pfnumber;
+	private String panNumber;
+	private String aadhaarNumber;
+
 //@ManyToOne
 //private SalarySetup salarySetup;
 //	@OneToOne(fetch = FetchType.LAZY)

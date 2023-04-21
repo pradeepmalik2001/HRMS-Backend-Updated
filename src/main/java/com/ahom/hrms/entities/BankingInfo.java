@@ -25,6 +25,19 @@ public class BankingInfo {
 
 //	@JsonBackReference
 	private BasicEmployee basicEmployee1;
+
+
+
+	private double basicSalary;
+	private double grossSalary;
+
+//	public void setBasicSalary(double basicSalary) {
+//		this.basicSalary = basicSalary;
+//	}
+//
+//	public void setGrossSalary(double grossSalary) {
+//		this.grossSalary = grossSalary;
+//	}
 }
 
 

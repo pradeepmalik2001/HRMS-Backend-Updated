@@ -21,6 +21,8 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 
 	@Autowired
 	ModelMapper modelMapper;
+
+
 	@Autowired
 	BasicEmployeeRepository basicEmployeeRepository;
 
@@ -31,7 +33,9 @@ WorkInformationRepository workInformationRepository;
 
 	//save data
 	public void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-		bankingInfoRepository.save(bankingInfoDtoToBankingInfo(bankingInfoDto));
+		bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
+
+		bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
 	}
 
 	//converting DTO
@@ -41,6 +45,21 @@ WorkInformationRepository workInformationRepository;
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
 		if(basicEmployee!=null) {
 			bankingInfo.setBasicEmployee1(basicEmployee);
+
+//			double ctc=basicEmployee.getCtc();
+			bankingInfo.setGrossSalary((double) basicEmployee.getCtc() /12);
+
+			bankingInfo.setBasicSalary(((double) basicEmployee.getCtc() /12)*0.6);
+
+//			if (((double) basicEmployee.getCtc() /12)*0.6<10500 ){
+//				bankingInfo.setBasicSalary(((double) basicEmployee.getCtc() /12));
+//			}
+//
+//			System.out.println("gross salary"+ " " + grossSalary);
+//			System.out.println("basicSalary" + " " + basicSalary);
+//
+//			bankingInfo.setBasicSalary(bankingInfoDto.getBasicSalary());
+//			bankingInfo.setGrossSalary(bankingInfo.getGrossSalary());
 //			String pfAcc=workInformation.getPfAccountNo();
 //           bankingInfoDto.setPfAcc(pfAcc);
 		} else {
@@ -59,7 +78,7 @@ WorkInformationRepository workInformationRepository;
 //		String pfAcc=workInformation.getPfAccountNo();
 		if( workInformation!=null) {
 
-			bankingInfoDto.setBasicEmployee(basicEmployee);
+			bankingInfoDto.setBasicEmployee1(basicEmployee);
 
 //			bankingInfoDto.setPfAcc(pfAcc);
 		} else {
@@ -71,6 +90,11 @@ WorkInformationRepository workInformationRepository;
 	@Override
 	public List<BankingInfo> getAllInfo() {
 
+//		BasicEmployee basicEmployee= (BasicEmployee) basicEmployeeRepository.findAll();
+//		double grossSalary = (double) (basicEmployee.getCtc()) /12;
+//		double basicSalary=grossSalary*0.6;
+//		System.out.println(basicSalary);
+//		System.out.println(grossSalary);
 		return bankingInfoRepository.findAll();
 	}
 
