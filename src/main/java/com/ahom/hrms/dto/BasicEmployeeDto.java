@@ -19,8 +19,10 @@ public class BasicEmployeeDto {
 	private String reportingTo;
 	private String dob;
 	private String workType;
-	private int basicSalary;
+	private int ctc;
 	private String pfnumber;
+	private String panNumber;
+	private String aadhaarNumber;
 
 	private WorkInformationDto workInfoDto;
 	
