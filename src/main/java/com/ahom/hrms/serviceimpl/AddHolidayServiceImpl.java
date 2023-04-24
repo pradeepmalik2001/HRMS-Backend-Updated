@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.ahom.hrms.Repository.AddHolidayRepository;
 import com.ahom.hrms.entities.AddHoliday;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,14 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	}
 
 	public void deleteLaeveDetail(int i) {
+		AddHoliday addHoliday=addHolidayRepository.findById(i).orElse(null);
+		if (addHoliday!=null){
 		addHolidayRepository.deleteById(i);
+		throw new CustomException("deleted successfully");
+		}else {
+			throw new CustomException("No Particular holiday present");
+		}
+
 	}
 
 	public void updateLeaveDetail(AddHolidayDto addHolidayDto ,int id)

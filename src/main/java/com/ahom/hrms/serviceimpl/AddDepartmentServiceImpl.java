@@ -1,5 +1,7 @@
 package com.ahom.hrms.serviceimpl;
 
+import com.ahom.hrms.exception.AuthenticationException;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 		if (byName==null) {
 			addDepartmentRepository.save(addDepartmentDtoToAddDepartment(addDepartmentDto));
 		}else {
-			throw new RuntimeException("already present");
+			throw new CustomException("Department already exist");
 		}
 	}
 
@@ -51,8 +53,13 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 
 	@Override
 	public AddDepartment delete(int id) {
-		addDepartmentRepository.deleteById(id);
-		return null;
+		AddDepartment addDepartment=addDepartmentRepository.findById(id).orElse(null);
+		if (addDepartment!=null) {
+			addDepartmentRepository.deleteById(id);
+			throw new CustomException("successful");
+		}else {
+			throw new CustomException("Department is not present ");
+		}
 	}
 
 }
