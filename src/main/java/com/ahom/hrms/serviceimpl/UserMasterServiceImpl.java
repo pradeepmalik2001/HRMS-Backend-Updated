@@ -5,6 +5,7 @@ import com.ahom.hrms.Repository.UserMasterRepository;
 import com.ahom.hrms.dto.RoleDto;
 import com.ahom.hrms.entities.Role;
 import com.ahom.hrms.entities.UserMaster;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,20 @@ public class UserMasterServiceImpl implements UserMasterService{
 
 
 		Role role=roleRepository.findByRoleName(userMasterDto.getRoleName());
+		UserMaster userMaster=userMasterRepository.findByUserName(userMasterDto.getUserName());
+		if (userMaster==null)
+		{
+
 		if (role==null)
-			throw new RuntimeException("No role");
+			throw new CustomException("No role present");
 		else {
 //			userMasterDto.setRoleName(role.getRoleName());
 			userMasterDto.setRoles(Collections.singletonList(role));
 			userMasterDto.setRoleName(userMasterDto.getRoleName());
 
 			userMasterRepository.save(userMasterDto);
+
+		}
 		}
 		return userMasterDto;
 	}
@@ -60,13 +67,11 @@ public class UserMasterServiceImpl implements UserMasterService{
 	
 	//converting DTO
 	public UserMaster userMasterDtoToUserMaster(UserMasterDto userMasterDto) {
-		UserMaster userMaster = this.modelMapper.map(userMasterDto, UserMaster.class);
-		return userMaster;
+		return this.modelMapper.map(userMasterDto, UserMaster.class);
 	}
 	
 	public UserMasterDto userMasterToUserMasterDto(UserMaster userMaster) {
-		UserMasterDto userMasterDto = this.modelMapper.map(userMaster, UserMasterDto.class);
-		return userMasterDto;
+		return this.modelMapper.map(userMaster, UserMasterDto.class);
 	}
 
 	@Override
@@ -77,14 +82,14 @@ public class UserMasterServiceImpl implements UserMasterService{
 
 	@Override
 	public void deleteUser(int id) {
-		userMasterRepository.deleteById(id);
+		UserMaster userMaster=userMasterRepository.findById(id).orElse(null);
+		if (userMaster!=null) {
+			userMasterRepository.deleteById(id);
+			throw new CustomException("deleted Successfully");
+		}else {
+			throw new CustomException("No User present");
+		}
 	}
-
-//	@Override
-//	public List<UserMasterDto> getALlUser() {
-//		List list=this.userMasterRepository.findAll();
-//		return list;
-//	}
-
+	
 
 }
