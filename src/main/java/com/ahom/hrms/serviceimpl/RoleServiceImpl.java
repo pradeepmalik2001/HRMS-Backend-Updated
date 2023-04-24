@@ -11,6 +11,8 @@ import com.ahom.hrms.dto.RoleDto;
 
 import com.ahom.hrms.service.RoleService;
 
+import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService{
 	
@@ -34,6 +36,12 @@ public class RoleServiceImpl implements RoleService{
 	public RoleDto roleToRoleDto(Role role) {
 		RoleDto roleDto = this.modelMapper.map(role, RoleDto.class);
 		return roleDto;
+	}
+
+	@Override
+	public List <Role> fetchAll() {
+	  return roleRepository.findAll();
+
 	}
 
 }

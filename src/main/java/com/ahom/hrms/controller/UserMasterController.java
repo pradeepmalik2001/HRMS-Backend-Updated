@@ -1,28 +1,24 @@
 package com.ahom.hrms.controller;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.ahom.hrms.Repository.RoleRepository;
 import com.ahom.hrms.Repository.UserMasterRepository;
 import com.ahom.hrms.dto.JwtTokenResponse;
-import com.ahom.hrms.entities.Role;
+import com.ahom.hrms.dto.UserMasterDto;
 import com.ahom.hrms.entities.UserMaster;
+import com.ahom.hrms.service.UserMasterService;
 import com.ahom.hrms.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ahom.hrms.dto.UserMasterDto;
-import com.ahom.hrms.service.UserMasterService;
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -47,7 +43,7 @@ public class UserMasterController {
 	UserDetailsService userDetailsService;
 
 	@PostMapping("/authenticate")
-		public ResponseEntity<JwtTokenResponse> generateToken(@RequestBody UserMaster authRequest) throws Exception {
+		public ResponseEntity<?> generateToken(@RequestBody UserMaster authRequest) throws Exception {
 
 		UserDetails userDetails;
 		try {
@@ -59,11 +55,11 @@ public class UserMasterController {
 		} catch (Exception ex) {
 			throw new Exception("invalid username/password");
 		}
-		String jwtToken = jwtUtils.generateToken(userDetails);
+		String Token = jwtUtils.generateToken(userDetails);
 		JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
-		jwtTokenResponse.setJwtToken(jwtToken);
+		jwtTokenResponse.setToken(Token);
 		jwtTokenResponse.setUser(this.userMasterRepository.findByUserName(authRequest.getUserName()));
-		return new ResponseEntity<>(jwtTokenResponse, HttpStatus.ACCEPTED);
+		return ResponseEntity.ok(jwtTokenResponse);
 	}
 	
 	//save data
