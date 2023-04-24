@@ -23,8 +23,6 @@ public class BasicEmployeeDto {
 	private String pfnumber;
 	private String panNumber;
 	private String aadhaarNumber;
-
-	private WorkInformationDto workInfoDto;
 	
 	
 

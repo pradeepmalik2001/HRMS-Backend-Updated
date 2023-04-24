@@ -82,6 +82,10 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		return filterData;
 	}
 
+	@Override
+	public void deleteEmployee(int id) {
+		basicEmployeeRepository.deleteById(id);
+	}
 
 
 }
