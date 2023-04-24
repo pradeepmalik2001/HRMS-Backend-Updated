@@ -1,10 +1,9 @@
 package com.ahom.hrms.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +11,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JWTUtils {
 
+    private String signature;
     private static final long serialVersionUID = 234234523523L;
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
@@ -43,10 +44,12 @@ public class JWTUtils {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(UserDetails userDetails) {
+        final String auth =userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        claims.put("Roles",auth);
+        return createToken(claims, userDetails.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -54,9 +57,50 @@ public class JWTUtils {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new
                 Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)).signWith(SignatureAlgorithm.HS256, secret).compact();
     }
-
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    private String Signature(String token) throws IllegalAccessException {
+            String[] parts=token.split("\\.");
+            if(parts.length!=3){
+                throw new IllegalAccessException("Invalid");
+            }
+            signature=parts[2];
+            return signature;
     }
+
+//    private String extractSignature (String token){
+//            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getSignature();
+//    }
+    public Boolean validateToken(String token, UserDetails userDetails) {
+//        final String username = extractUsername(token);
+        try {
+            Jws<Claims> claimsJws=Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            if (claimsJws.getBody().getExpiration().before(new Date()))
+            {
+                return false;
+        }
+            return true;
+
+        }catch(JwtException | IllegalArgumentException e){
+            throw new RuntimeException("saffdas");
+        }
+
+
+
+//        boolean verify=Signature(token).equals(extractSignature(token));
+//        String [] chunks=token.split("//")
+
+
+//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+//    public Boolean validateAdminToken(String token, UserDetails userDetails) {
+//
+//    }
+
+
+
+//    public Jwt decode(String token) throws JwtException {
+//Jwt jwt = JwtParser.parse(token);
+//return (token, jwt);
+//}
+
 }

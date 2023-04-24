@@ -59,7 +59,7 @@ public class UserMasterController {
 		} catch (Exception ex) {
 			throw new Exception("invalid username/password");
 		}
-		String jwtToken = jwtUtils.generateToken(authRequest.getUserName());
+		String jwtToken = jwtUtils.generateToken(userDetails);
 		JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
 		jwtTokenResponse.setJwtToken(jwtToken);
 		jwtTokenResponse.setUser(this.userMasterRepository.findByUserName(authRequest.getUserName()));
