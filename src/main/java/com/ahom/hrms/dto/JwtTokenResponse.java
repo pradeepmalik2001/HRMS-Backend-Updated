@@ -5,16 +5,16 @@ import com.ahom.hrms.entities.UserMaster;
 public class JwtTokenResponse {
 
     UserMaster user;
-    String jwtToken;
-    String roleName;
+    String Token;
+//    String roleName;
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+//    public String getRoleName() {
+//        return roleName;
+//    }
+//
+//    public void setRoleName(String roleName) {
+//        this.roleName = roleName;
+//    }
 
     public UserMaster getUser() {
         return user;
@@ -24,11 +24,11 @@ public class JwtTokenResponse {
         this.user = user;
     }
 
-    public String getJwtToken() {
-        return jwtToken;
+    public String getToken() {
+        return Token;
     }
 
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public void setToken(String token) {
+        this.Token = token;
     }
 }

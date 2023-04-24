@@ -71,14 +71,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/employee/**", "/saveemployement/**", "/image/**", "/intreview/**",
 						"/leave/**", "/loan_application/**", "/loan_master/**","/employment/**"
 						, "/MonthlyPerformance/**", "/OverTime/**", "/payHead/**", "/payrollitem/**",
-						"/bank/savebankinginfo","/savework","/demo/**",
+						"/bank/savebankinginfo","/savework","/demo/**","/role/getRole",
 						"/payrolls/**", "/getallemergencyContactInfo", "/RaiseGrievances/**","/event/**"
 						, "/saveRole/**", "/salary/**", "/feedback/**","/branch/**","/training/**","/department/**",
 						"/TravelOverview/**", "/vancancies/**", "/authenticate/**", "/savework/**","/fetchdata/**","/getallEmp/**","/salary/**","/work/**"
 				)
 				.permitAll()
 				.antMatchers()
-				.hasRole("EMPLOYEE")
+
+				.hasRole("ADMIN")
+
 
 				.antMatchers("/usermaster/authenticate").hasRole("EMPLOYEE")
 				.anyRequest().authenticated().and().formLogin().and()

@@ -82,11 +82,11 @@ public class Excel {
                             attendance.setInTime((String) cells.getStringCellValue());
                             break;
                         case 4:
-                            attendance.setOutTime((String) cells.getStringCellValue());
-                            break;
-                        case 5:
                             attendance.setStatus(cells.getStringCellValue());
                         default:
+
+                        case 5:
+                            attendance.setOutTime((String) cells.getStringCellValue());
                             break;
 
                     }

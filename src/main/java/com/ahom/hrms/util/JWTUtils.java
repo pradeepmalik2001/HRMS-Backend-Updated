@@ -1,8 +1,6 @@
 package com.ahom.hrms.util;
 
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -23,9 +21,9 @@ public class JWTUtils {
 
     private String secret = "savit";
 
-        public String extractUsername(String token) {
-        return extractClaim(token,Claims::getSubject);
-    }
+        public void extractUsername(String token) {
+            extractClaim(token, Claims::getSubject);
+        }
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
