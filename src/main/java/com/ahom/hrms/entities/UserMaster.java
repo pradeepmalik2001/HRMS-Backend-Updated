@@ -25,24 +25,24 @@ public class  UserMaster {
 	@NotBlank(message = "it is mandatory")
 	private String userName;
 	private String password;
-	private  String aadhaarNumber;
-	private String panNumber;
+//	private  String aadhaarNumber;
+//	private String panNumber;
 
-	public String getAadhaarNumber() {
-		return aadhaarNumber;
-	}
-
-	public void setAadhaarNumber(String aadhaarNumber) {
-		this.aadhaarNumber = aadhaarNumber;
-	}
-
-	public String getPanNumber() {
-		return panNumber;
-	}
-
-	public void setPanNumber(String panNumber) {
-		this.panNumber = panNumber;
-	}
+//	public String getAadhaarNumber() {
+//		return aadhaarNumber;
+//	}
+//
+//	public void setAadhaarNumber(String aadhaarNumber) {
+//		this.aadhaarNumber = aadhaarNumber;
+//	}
+//
+//	public String getPanNumber() {
+//		return panNumber;
+//	}
+//
+//	public void setPanNumber(String panNumber) {
+//		this.panNumber = panNumber;
+//	}
 
 	public int getId() {
 		return id;
@@ -82,7 +82,7 @@ public class  UserMaster {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	@ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(targetEntity = Role.class, fetch=FetchType.EAGER)
 	@JoinTable(name = "user_roles",
 	joinColumns = 
 	@JoinColumn(name ="user_id", referencedColumnName = "id"),

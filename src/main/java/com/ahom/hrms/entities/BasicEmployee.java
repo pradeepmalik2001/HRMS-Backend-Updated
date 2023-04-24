@@ -1,5 +1,6 @@
 package com.ahom.hrms.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,17 @@ public class BasicEmployee {
 	private String panNumber;
 	private String aadhaarNumber;
 
+	@OneToOne(mappedBy = "basicEmployee1", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+			@JsonBackReference
+	BankingInfo bankingInfo;
+
+	@OneToOne(mappedBy = "basicEmployee",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+			@JsonBackReference
+	WorkInformation workInformation;
+
+	@OneToOne(mappedBy = "basicEmployee",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JsonBackReference
+	EmergencyContactInfo emergencyContactInfo;
 //@ManyToOne
 //private SalarySetup salarySetup;
 //	@OneToOne(fetch = FetchType.LAZY)

@@ -24,6 +24,6 @@ public class EmergencyContactInfo {
 	private String emergencyContactAddress;
 	private String employeeName;
 		
-	@OneToOne
+	@OneToOne(targetEntity = BasicEmployee.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private BasicEmployee basicEmployee;
 }

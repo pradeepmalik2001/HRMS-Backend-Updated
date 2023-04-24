@@ -35,7 +35,7 @@ public class WorkInformation {
 	private String description;
 	
 	
-@OneToOne
+@OneToOne(targetEntity = BasicEmployee.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private BasicEmployee basicEmployee;
 
 	
