@@ -1,5 +1,6 @@
 package com.ahom.hrms.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.parameters.P;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "user_master")
@@ -16,14 +18,19 @@ public class  UserMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotBlank(message = "select anyone")
+	@NotNull(message = "dkshd")
+
 	private String departmentName;
-	@NotNull(message="employee name shouldn't be null")
+//	@NotNull(message="employee name shouldn't be null")
+	@Column(nullable = false)
 	private String employeeName;
 	@NotNull(message="employee name shouldn't be null")
 
 	@NotBlank(message = "it is mandatory")
+	@Column(unique = true)
 	private String userName;
+//	@JsonProperty(access = JsonProperty.Access.AUTO)
+	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{5,}$")
 	private String password;
 //	private  String aadhaarNumber;
 //	private String panNumber;

@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class UserMasterController {
 	
 	//save data
 	@PostMapping("/saveuser")
-	public ResponseEntity<UserMaster> saveUsers(@RequestBody UserMaster userMasterDto){
+	public ResponseEntity<UserMaster> saveUsers(@Valid @RequestBody UserMaster userMasterDto){
 //		String pwd = userMasterDto.getPassword();
 //		String encryptpwd = passwordEncoder.encode(pwd);
 		userMasterDto.setPassword(passwordEncoder.encode(userMasterDto.getPassword()));
