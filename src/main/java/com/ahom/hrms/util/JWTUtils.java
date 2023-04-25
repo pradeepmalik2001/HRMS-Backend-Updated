@@ -90,15 +90,6 @@ public class JWTUtils {
 //        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-//    public Boolean validateAdminToken(String token, UserDetails userDetails) {
-//
-//    }
 
-
-
-//    public Jwt decode(String token) throws JwtException {
-//Jwt jwt = JwtParser.parse(token);
-//return (token, jwt);
-//}
 
 }

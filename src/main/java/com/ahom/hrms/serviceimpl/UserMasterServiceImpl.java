@@ -39,8 +39,9 @@ public class UserMasterServiceImpl implements UserMasterService{
 		if (userMaster==null)
 		{
 
-		if (role==null)
+		if (role==null) {
 			throw new CustomException("No role present");
+		}
 		else {
 //			userMasterDto.setRoleName(role.getRoleName());
 			userMasterDto.setRoles(Collections.singletonList(role));
@@ -49,6 +50,8 @@ public class UserMasterServiceImpl implements UserMasterService{
 			userMasterRepository.save(userMasterDto);
 
 		}
+		}else {
+			throw new CustomException("User Name can not be repeated");
 		}
 		return userMasterDto;
 	}
