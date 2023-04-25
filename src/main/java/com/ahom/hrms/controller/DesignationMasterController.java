@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.DesignationMasterDto;
 import com.ahom.hrms.service.DesignationMasterService;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/designation")
@@ -21,7 +23,7 @@ public class DesignationMasterController {
 
 	//save data
 	@PostMapping("/savedesignation")
-	public ResponseEntity<DesignationMasterDto> saveDesignation(@RequestBody DesignationMasterDto designationMasterDto){
+	public ResponseEntity<DesignationMasterDto> saveDesignation(@Valid @RequestBody DesignationMasterDto designationMasterDto){
 		designationMasterService.saveDesignation(designationMasterDto);
 		return new ResponseEntity<>(designationMasterDto, HttpStatus.CREATED);
 	}

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @EnableJpaRepositories
-public interface EmployementTypeMasterRepository extends JpaRepository<EmployementTypeMaster,Integer>{
-
+public interface EmployementTypeMasterRepository extends JpaRepository<EmployementTypeMaster,Integer>
+{
+    public EmployementTypeMaster findByEmploymentType(String employmentType);
 }

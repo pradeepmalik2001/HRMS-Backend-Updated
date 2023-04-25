@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ahom.hrms.dto.AddJobTitleDto;
 import com.ahom.hrms.serviceimpl.AddJobTitleServiceImpl;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/addjobtitle")
@@ -26,7 +28,7 @@ public class AddJobTitleController {
 	
 	@PostMapping("/save")
 	
-	public ResponseEntity<AddJobTitleDto> saveTitle(@RequestBody AddJobTitleDto addJobTitleDto)
+	public ResponseEntity<AddJobTitleDto> saveTitle(@Valid @RequestBody AddJobTitleDto addJobTitleDto)
 	{
 		addJobTitleService.saveTitle(addJobTitleDto); 
 		return new ResponseEntity<>(addJobTitleDto,HttpStatus.CREATED);

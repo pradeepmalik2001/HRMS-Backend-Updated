@@ -1,6 +1,7 @@
 package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.dto.WorkInformationDto;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,14 @@ public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterSe
 
 	//save data
 	public void saveEmployement(EmployementTypeMasterDto employementTypeMasterDto) {
-		employementTypeMasterRepository.save(employementTypeMasterDtoToEmployementTypeMaster(employementTypeMasterDto));
+		EmployementTypeMaster typeMaster=employementTypeMasterRepository.findByEmploymentType(employementTypeMasterDto.getEmploymentType());
+		if(typeMaster==null)
+		{
+			employementTypeMasterRepository.save(employementTypeMasterDtoToEmployementTypeMaster(employementTypeMasterDto));
+		}
+		else {
+			throw new CustomException("Employment Type is already present");
+		}
 	}
 
 	//converting DTO
@@ -38,14 +46,23 @@ public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterSe
 	}
 
 //fetch
-	public List<EmployementTypeMasterDto> getAll() {
-		List list=employementTypeMasterRepository.findAll();
-		return list;
-	}
+public List<EmployementTypeMasterDto> getAll() {
+	List list=employementTypeMasterRepository.findAll();
+	return list;
+}
 
 	@Override
-	public void deleteEMployement(int id) {
-		employementTypeMasterRepository.deleteById(id);
+	public EmployementTypeMaster deleteEMployement(int id)
+	{
+		EmployementTypeMaster employementTypeMaster=employementTypeMasterRepository.findById(id).orElse(null);
+		if(employementTypeMaster!=null)
+		{
+			employementTypeMasterRepository.deleteById(id);
+			throw new CustomException("Deleted Successful");
+		}
+		else {
+			throw new CustomException("Employment Type is not Present");
+		}
 	}
 
 }

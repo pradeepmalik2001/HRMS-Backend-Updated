@@ -1,8 +1,13 @@
 package com.ahom.hrms.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class EmployementTypeMasterDto {
 	private  int id;
+
+	@NotEmpty(message = "Employment Type is not empty")
 	private String employmentType;
+	@NotEmpty(message = "Write some description here")
 	private String description;
 
 

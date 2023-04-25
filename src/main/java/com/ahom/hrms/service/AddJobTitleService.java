@@ -17,4 +17,5 @@ AddJobTitle addJobTitleDtoToaddJobTitle(AddJobTitleDto addJobTitleDto);
 
 AddJobTitleDto jobToJobDto(AddJobTitle addJobTitle);
 
+
 }

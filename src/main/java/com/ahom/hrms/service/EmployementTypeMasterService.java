@@ -16,5 +16,5 @@ public interface EmployementTypeMasterService {
 	///
 	List<EmployementTypeMasterDto> getAll();
 
-	void deleteEMployement(int id);
+	EmployementTypeMaster deleteEMployement(int id);
 }

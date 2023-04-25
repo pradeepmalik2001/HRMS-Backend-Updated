@@ -3,6 +3,7 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.EventNameRepository;
 import com.ahom.hrms.dto.EventNameDto;
 import com.ahom.hrms.entities.EventName;
+import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.EventNameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,16 @@ public class EventNameServiceImpl implements EventNameService {
     }
 
     @Override
-    public void saveEventName(EventNameDto eventNameDto) {
-        eventNameRepository.save(eventNameDtoToEventName(eventNameDto));
+    public void saveEventName(EventNameDto eventNameDto)
+    {
+        EventName eventName=eventNameRepository.findByName(eventNameDto.getName());
+        if(eventName==null)
+        {
+            eventNameRepository.save(eventNameDtoToEventName(eventNameDto));
+        }
+        else {
+            throw new CustomException("Event Already Exist");
+        }
     }
 
     //fetch

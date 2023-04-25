@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class EventName {
@@ -11,7 +12,9 @@ public class EventName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
+    @NotEmpty(message = "Please Fill Event Here")
     private String name;
+    @NotEmpty(message = "Please Write some description")
     private String description;
 
 

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +19,7 @@ public class BranchController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<BranchDto> saveBranch(@RequestBody BranchDto branchDto){
+    public ResponseEntity<BranchDto> saveBranch(@Valid @RequestBody BranchDto branchDto){
         branchService.saveBranch(branchDto);
         return new ResponseEntity<>(branchDto, HttpStatus.ACCEPTED);
     }
