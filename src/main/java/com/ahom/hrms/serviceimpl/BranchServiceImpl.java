@@ -2,6 +2,7 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.BranchRepository;
 import com.ahom.hrms.dto.BranchDto;
 import com.ahom.hrms.entities.Branch;
+import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.BranchService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,16 @@ public class BranchServiceImpl implements BranchService {
 
 
     @Override
-    public void saveBranch(BranchDto branchDto){
-        branchRepository.save(branchDtoToBranch(branchDto));
+    public void saveBranch(BranchDto branchDto)
+    {
+        Branch branch=branchRepository.findByName(branchDto.getName());
+        if(branch==null)
+        {
+            branchRepository.save(branchDtoToBranch(branchDto));
+        }else{
+            throw new CustomException("Branch is Already Present");
+        }
+
     }
 
     @Override

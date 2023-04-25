@@ -1,9 +1,13 @@
 package com.ahom.hrms.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class EventNameDto {
 
     private  int id;
+    @NotEmpty(message = "Please Fill Event Here")
     private String name;
+    @NotEmpty(message = "Please Write some description")
     private String description;
 
 

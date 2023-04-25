@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-public interface AddJobTitleRepo extends JpaRepository<AddJobTitle, Integer> {
+public interface AddJobTitleRepo extends JpaRepository<AddJobTitle, Integer>
+{
 
+    AddJobTitle findByjobTitles(String jobTitles);
 }

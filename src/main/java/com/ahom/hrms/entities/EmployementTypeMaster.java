@@ -3,6 +3,7 @@ package com.ahom.hrms.entities;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -12,9 +13,9 @@ public class EmployementTypeMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  int id;
-
-	@NotNull(message = "Employement Type is not Null")
+    @NotEmpty(message = "Employment Type is not empty")
 	private String employmentType;
+	@NotEmpty(message = "Write some description here")
 	private String description;
 
 	public int getId() {

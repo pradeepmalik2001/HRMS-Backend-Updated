@@ -1,8 +1,12 @@
 package com.ahom.hrms.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 public class BranchDto {
 
     private int id;
+    @NotBlank(message = "Branch Can`t be empty")
     private String name;
 
     public int getId() {
