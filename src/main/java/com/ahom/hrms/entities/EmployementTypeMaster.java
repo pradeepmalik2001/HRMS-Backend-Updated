@@ -1,6 +1,9 @@
 package com.ahom.hrms.entities;
 
+
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "employment_type_master")
@@ -9,6 +12,8 @@ public class EmployementTypeMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  int id;
+
+	@NotNull(message = "Employement Type is not Null")
 	private String employmentType;
 	private String description;
 
@@ -21,14 +26,15 @@ public class EmployementTypeMaster {
 	}
 
 	public EmployementTypeMaster() {
-		
+
+		employmentType = null;
 	}
 
-		public String getEmploymentType() {
+		public @NotNull String getEmploymentType() {
 			return employmentType;
 		}
 
-	public void setEmploymentType(String employmentType) {
+	public void setEmploymentType(@NotNull String employmentType) {
 		this.employmentType = employmentType;
 	}
 
@@ -40,7 +46,7 @@ public class EmployementTypeMaster {
 		this.description = description;
 	}
 
-	public EmployementTypeMaster(int id, String employmentType, String description) {
+	public EmployementTypeMaster(int id, @NotNull String employmentType, String description) {
 		this.id = id;
 		this.employmentType = employmentType;
 		this.description = description;

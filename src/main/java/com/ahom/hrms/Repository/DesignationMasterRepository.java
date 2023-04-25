@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @EnableJpaRepositories
-public interface DesignationMasterRepository extends JpaRepository<DesignationMaster, Integer>{
-
+public interface DesignationMasterRepository extends JpaRepository<DesignationMaster, Integer>
+{
+    DesignationMaster findByDesignationName(String designatioName);
 }

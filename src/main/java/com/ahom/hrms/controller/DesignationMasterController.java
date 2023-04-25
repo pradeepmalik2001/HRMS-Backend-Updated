@@ -34,7 +34,7 @@ public class DesignationMasterController {
 		return ResponseEntity.of(Optional.of(allEmployee));
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/designation/{id}")
 	public void delete(@PathVariable int id){
 		designationMasterService.deleteDesignation(id);
 	}
