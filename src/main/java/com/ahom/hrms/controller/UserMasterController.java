@@ -65,7 +65,7 @@ public class UserMasterController {
 	
 	//save data
 	@PostMapping("/saveuser")
-	public ResponseEntity<UserMaster> saveUsers(@Valid @RequestBody UserMaster userMasterDto){
+	public ResponseEntity<UserMaster> saveUsers(@Valid @RequestBody UserMaster userMasterDto) throws IllegalAccessException {
 //		String pwd = userMasterDto.getPassword();
 //		String encryptpwd = passwordEncoder.encode(pwd);
 		userMasterDto.setPassword(passwordEncoder.encode(userMasterDto.getPassword()));

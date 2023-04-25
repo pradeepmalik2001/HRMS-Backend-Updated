@@ -6,21 +6,17 @@ import lombok.Data;
 
 @Data
 public class BankingInfoDto {
-	
+	private int employeeId;
 	private String bankAccountNo;
 	private String bankName;
 	private String bankBranch;
 	private String ifscCode;
-//	private String paymentType;
 	private String name;
-	private int employeeId;
+
 
 	private double basicSalary;
 	private double grossSalary;
-
-
-//	private String pfAcc;
-	private BasicEmployee basicEmployee1;
+//	private BasicEmployee basicEmployee1;
 
 
 
