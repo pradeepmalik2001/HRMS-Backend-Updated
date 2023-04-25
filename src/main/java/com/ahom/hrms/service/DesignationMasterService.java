@@ -15,7 +15,7 @@ public interface DesignationMasterService {
 	
 	DesignationMasterDto designationMasterToDesignationMasterDto(DesignationMaster designationMaster);
 
-	void deleteDesignation(int id);
+	DesignationMaster deleteDesignation(int id);
 
 
 }

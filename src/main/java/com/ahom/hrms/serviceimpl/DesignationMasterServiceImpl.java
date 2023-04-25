@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.ahom.hrms.Repository.DesignationMasterRepository;
 import com.ahom.hrms.entities.DesignationMaster;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,14 @@ public class DesignationMasterServiceImpl implements DesignationMasterService{
 
 	//save data
 	public void saveDesignation(DesignationMasterDto designationMasterDto) {
-		designationMasterRepository.save(designationMasterDtoToDesignationMaster(designationMasterDto));
+		DesignationMaster designationMaster=designationMasterRepository.findByDesignationName(designationMasterDto.getDesignationName());
+		if(designationMaster==null)
+		{
+			designationMasterRepository.save(designationMasterDtoToDesignationMaster(designationMasterDto));
+		}
+		else{
+			throw new CustomException("Designation Already Present");
+		}
 	}
 
 	//fetch all data
@@ -47,8 +55,17 @@ public class DesignationMasterServiceImpl implements DesignationMasterService{
 	}
 
 	@Override
-	public void deleteDesignation(int id) {
-		designationMasterRepository.deleteById(id);
+	public DesignationMaster deleteDesignation(int id)
+	{
+		DesignationMaster designationMaster=designationMasterRepository.findById(id).orElse(null);
+		if(designationMaster!=null)
+		{
+			designationMasterRepository.deleteById(id);
+			throw new CustomException("Deleted Successful");
+		}
+		else {
+			throw new CustomException("Designation Not Present");
+		}
 	}
 
 }
