@@ -31,7 +31,7 @@ public class UserMasterServiceImpl implements UserMasterService{
 
 	
 	//save data
-	public UserMaster saveUser(UserMaster userMasterDto) {
+	public UserMaster saveUser(UserMaster userMasterDto) throws IllegalAccessException {
 
 
 		Role role=roleRepository.findByRoleName(userMasterDto.getRoleName());
@@ -39,20 +39,18 @@ public class UserMasterServiceImpl implements UserMasterService{
 		if (userMaster==null)
 		{
 
-		if (role==null) {
-			throw new CustomException("No role present");
-		}
-		else {
-//			userMasterDto.setRoleName(role.getRoleName());
+		if (role!=null) {
 			userMasterDto.setRoles(Collections.singletonList(role));
 			userMasterDto.setRoleName(userMasterDto.getRoleName());
-
 			userMasterRepository.save(userMasterDto);
-
+		}
+		else {
+			throw new CustomException("no role");
 		}
 		}else {
-			throw new CustomException("User Name can not be repeated");
+			throw new CustomException("User Name can not be same");
 		}
+
 		return userMasterDto;
 	}
 	

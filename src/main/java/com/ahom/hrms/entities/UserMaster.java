@@ -7,9 +7,7 @@ import org.springframework.security.core.parameters.P;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "user_master")
@@ -18,19 +16,21 @@ public class  UserMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotNull(message = "dkshd")
+	@NotBlank(message = "Department name is mandatory")
 
 	private String departmentName;
 //	@NotNull(message="employee name shouldn't be null")
 	@Column(nullable = false)
+	@NotBlank(message = "Name can not be empty")
 	private String employeeName;
-	@NotNull(message="employee name shouldn't be null")
-
-	@NotBlank(message = "it is mandatory")
+	@NotBlank(message = "user name is mandatory")
 	@Column(unique = true)
+	@Email
 	private String userName;
-//	@JsonProperty(access = JsonProperty.Access.AUTO)
-	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{5,}$")
+	@JsonProperty(access = JsonProperty.Access.AUTO)
+	@Pattern(regexp = "^.*(?=.{5,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$" ,
+			message = "must contain one upperCase and special character")
+//	@Min(5)
 	private String password;
 //	private  String aadhaarNumber;
 //	private String panNumber;

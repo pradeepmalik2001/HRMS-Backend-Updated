@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserMasterService {
 	
-	UserMaster saveUser(UserMaster userMasterDto);
+	UserMaster saveUser(UserMaster userMasterDto) throws IllegalAccessException;
 	
 	UserMasterDto fetchByUser(String userName);
 	

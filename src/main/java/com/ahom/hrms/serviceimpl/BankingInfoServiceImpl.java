@@ -45,23 +45,10 @@ WorkInformationRepository workInformationRepository;
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
 		if(basicEmployee!=null) {
 			bankingInfo.setBasicEmployee1(basicEmployee);
-
-//			double ctc=basicEmployee.getCtc();
 			bankingInfo.setGrossSalary((double) basicEmployee.getCtc() /12);
 
 			bankingInfo.setBasicSalary(((double) basicEmployee.getCtc() /12)*0.6);
 
-//			if (((double) basicEmployee.getCtc() /12)*0.6<10500 ){
-//				bankingInfo.setBasicSalary(((double) basicEmployee.getCtc() /12));
-//			}
-//
-//			System.out.println("gross salary"+ " " + grossSalary);
-//			System.out.println("basicSalary" + " " + basicSalary);
-//
-//			bankingInfo.setBasicSalary(bankingInfoDto.getBasicSalary());
-//			bankingInfo.setGrossSalary(bankingInfo.getGrossSalary());
-//			String pfAcc=workInformation.getPfAccountNo();
-//           bankingInfoDto.setPfAcc(pfAcc);
 		} else {
 			throw new Exception("employee name not found!!");
 		}
@@ -74,16 +61,6 @@ WorkInformationRepository workInformationRepository;
 
 		int empId=bankingInfoDto.getEmployeeId();
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(empId).orElse(null);
-		WorkInformation workInformation=workInformationRepository.findById(empId).orElse(null);
-//		String pfAcc=workInformation.getPfAccountNo();
-		if( workInformation!=null) {
-
-			bankingInfoDto.setBasicEmployee1(basicEmployee);
-
-//			bankingInfoDto.setPfAcc(pfAcc);
-		} else {
-			throw new Exception("employee id not found!!");
-		}
 		return bankingInfoDto;
 	}
 

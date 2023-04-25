@@ -18,10 +18,10 @@ public class BankingInfo {
 	private String bankName;
 	private String bankBranch;
 	private String ifscCode;
-	//	private String paymentType;
 	private String name;
 	@OneToOne(targetEntity = BasicEmployee.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "basic_employee_employee_id")
+
 
 //	@JsonBackReference
 	private BasicEmployee basicEmployee1;
