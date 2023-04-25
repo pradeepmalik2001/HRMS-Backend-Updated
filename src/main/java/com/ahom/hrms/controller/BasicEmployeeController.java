@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -35,7 +36,7 @@ public class BasicEmployeeController {
 
 	//save data
 	@PostMapping("/saveemployee")
-	public ResponseEntity<BasicEmployeeDto> saveEmployees(@RequestBody BasicEmployeeDto basicEmployeeDto){
+	public ResponseEntity<BasicEmployeeDto> saveEmployees(@Valid @RequestBody BasicEmployeeDto basicEmployeeDto){
 		basicEmployeeService.saveEmployee(basicEmployeeDto);
 		return new ResponseEntity<>(basicEmployeeDto, HttpStatus.CREATED);
 	}

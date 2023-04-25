@@ -27,7 +27,12 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	//save data
 	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) {
-		basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
+		BasicEmployee basicEmployee=basicEmployeeRepository.findByEmployeeName(basicEmployeeDto.getEmployeeName());
+		if (basicEmployee==null) {
+
+			basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
+		}
+//		if (basicEmployee==basicEmployeeDto.)
 	}
 
 	//fetch data by employee id
@@ -37,8 +42,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	}
 
 
-	public List<BasicEmployee> getAllEmployee()
-	{
+	public List<BasicEmployee> getAllEmployee() {
 
 		return this.basicEmployeeRepository.findAll();
 	}
@@ -73,8 +77,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		System.out.println(list);
 		List<BasicEmployee>filterData=new ArrayList<>();
 
-		for (BasicEmployee basicEmployee:list)
-		{
+		for (BasicEmployee basicEmployee:list) {
 			filterData.add(basicEmployee);
 			System.out.println(basicEmployee);
 
