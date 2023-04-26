@@ -23,8 +23,17 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	ModelMapper modelMapper;
 
 
-	public void SaveAddHolidayDetail(AddHolidayDto addHolidayDto) {
-		addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+	public void SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
+	{
+		List<AddHoliday> addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate(addHolidayDto.getHolidayName(),addHolidayDto.getFromDate(), addHolidayDto.getToDate());
+		if(addHolidays==null)
+		{
+			addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+		}
+		else
+		{
+			throw  new CustomException("Data Already Exist");
+		}
 	}
 
 	public List<AddHolidayDto>getAllLeaveDetail(){
@@ -36,16 +45,15 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	public void deleteLaeveDetail(int i) {
 		AddHoliday addHoliday=addHolidayRepository.findById(i).orElse(null);
 		if (addHoliday!=null){
-		addHolidayRepository.deleteById(i);
-		throw new CustomException("deleted successfully");
+			addHolidayRepository.deleteById(i);
+			throw new CustomException("deleted successfully");
 		}else {
 			throw new CustomException("No Particular holiday present");
 		}
 
 	}
 
-	public void updateLeaveDetail(AddHolidayDto addHolidayDto ,int id)
-	{
+	public void updateLeaveDetail(AddHolidayDto addHolidayDto ,int id) {
 
 		AddHoliday addHolidayDto1=addHolidayRepository.findById(id).orElse(null);
 
@@ -64,6 +72,7 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 		//	addjobtitle.setjobTitle(addJobTitleDto.getJobTitle());
 		return addholiday;
 	}
+
 	public AddHolidayDto addHolidaytoAddHolidayDto(AddHoliday title) {
 		AddHolidayDto addjobtitledto=this.modelMapper.map(title, AddHolidayDto.class);
 		//	addjobtitledto.setId(addjobtitle.getId());

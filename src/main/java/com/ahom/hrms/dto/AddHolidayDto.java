@@ -1,10 +1,16 @@
 package com.ahom.hrms.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class AddHolidayDto {
 	private int id;
+	@NotEmpty(message="Holiday Name is Mandatory")
 	private String holidayName;
+	@NotEmpty(message="Holiday Type is Mandatory")
 	private String holidayType;
+	@NotEmpty(message = "From Date is Mandatory")
 	private String fromDate;
+	@NotEmpty(message="To Date is Mandatory")
 	private String toDate;
 	/**
 	 * @return the id
