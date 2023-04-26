@@ -3,6 +3,7 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.SalarySetupRepository;
 import com.ahom.hrms.entities.BasicEmployee;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.ahom.hrms.service.BasicEmployeeService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
@@ -27,12 +29,30 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	//save data
 	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) {
-		BasicEmployee basicEmployee=basicEmployeeRepository.findByEmployeeName(basicEmployeeDto.getEmployeeName());
-		if (basicEmployee==null) {
+		BasicEmployee basicEmployee = basicEmployeeRepository.
+				findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
+						basicEmployeeDto.getAadhaarNumber(),
+						basicEmployeeDto.getPanNumber(),
+						basicEmployeeDto.getPfnumber(),
+						basicEmployeeDto.getMobile(),
+						basicEmployeeDto.getEmail());
 
+		if (basicEmployee==null){
 			basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
+		}else {
+			throw
+					new CustomException("something went wrong");
 		}
-//		if (basicEmployee==basicEmployeeDto.)
+
+//		if (Objects.equals(basicEmployeeDto.getAadhaarNumber(), basicEmployee.getAadhaarNumber()))
+//		{
+//			if (Objects.equals(basicEmployeeDto.getPanNumber(),basicEmployee.getPanNumber()))
+//			{
+//			throw new CustomException("Pan preent");
+//			}
+//
+//		}	throw new CustomException("aadhaar present");
+
 	}
 
 	//fetch data by employee id
@@ -56,21 +76,6 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	public BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee) {
 		return this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
 	}
-//	public double hraCalculation(int id)
-//	{
-//		// int empId= salarySetupDtoTosalarySetup().getId();
-//		BasicEmployee basId=basicEmployeeRepository.findById(id).orElseThrow(null);
-//		SalarySetup byEmpId = salarySetupRepository.findById(basId.getEmployeeId());
-//		double annualSalary = byEmpId.getAnnualSalary();
-//		double hra=(annualSalary / 100) * 15;
-//		return hra;+
-//	}
-
-
-//	public List<BasicEmployeeDto> getAll() {
-//		List list=basicEmployeeRepository.findAll();
-//		return list;
-//	}
 
 	public List<BasicEmployee>details(int id){
 		List<BasicEmployee>list=basicEmployeeRepository.findAllByDetails(id);

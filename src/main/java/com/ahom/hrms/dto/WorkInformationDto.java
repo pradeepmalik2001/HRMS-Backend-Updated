@@ -6,30 +6,29 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkInformationDto {
-	private String employeeName;
-	private String employmentType;
-	private String officeBranch;
-	private String employeeGrade;
-	private String employeeGroup;
-	
-	private String insuranceAvail;
-	private String gender;
-	private String bloodGroup;
-	private long incentive;
-	private String employeeType;
-	private int value;
-	private String effectiveDate;
-	private String pfAccountNo;
-	private String esiNo;
-	private String cinNo;
-	private String leavingDate;
-	private String address;
-	private String description;
 
-	//private BasicEmployee basicEmployee;
+	private int workId;
+	@NotEmpty(message = "Employee name can not be null")
+	private String employeeName;
+	@NotEmpty(message = "Employment type can not be null")
+	private String employmentType;
+	@NotEmpty(message = "Branch required")
+	private String officeBranch;
+	@NotEmpty(message = "specify gender")
+	private String gender;
+	@NotEmpty(message = "Blood Group needed")
+	private String bloodGroup;
+	@NotEmpty(message = "Specify Employment type")
+	private String employeeType;
+	@NotEmpty(message = "Fill the address")
+	private String address;
+	@NotEmpty(message = "Description is empty")
+	private String description;
 	
 }

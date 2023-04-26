@@ -4,6 +4,7 @@ import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.WorkInformationRepository;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.WorkInformation;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,29 +21,35 @@ public class WorkInformationServiceImpl implements WorkInformationService {
 
     @Autowired
     WorkInformationRepository workInformationRepository;
-    
+
     @Autowired
-    private BasicEmployeeRepository basicEmployeeRepository;
+    BasicEmployeeRepository basicEmployeeRepository;
 
     @Autowired
     ModelMapper modelMapper;
 
     //save data
     public void saveWorkInfo(WorkInformationDto workInformationDto) throws Exception {
-        workInformationRepository.save(workInformationDtoToWorkInformation(workInformationDto));
+
+            workInformationRepository.save(workInformationDtoToWorkInformation(workInformationDto));
            
     }
 
     //converting DTO
     public WorkInformation workInformationDtoToWorkInformation(WorkInformationDto workInformationDto) throws Exception {
         WorkInformation workInformation = this.modelMapper.map(workInformationDto, WorkInformation.class);
-        BasicEmployee basicEmployee=basicEmployeeRepository.findByEmployeeName(workInformationDto.getEmployeeName());
-        if(basicEmployee!=null)
+        BasicEmployee basicEmployee=basicEmployeeRepository.findById(workInformationDto.getWorkId()).orElse(null);
+        WorkInformation workInformation1=workInformationRepository.findById(workInformation.getWorkId()).orElse(null);
+        if(workInformation1==null)
         {
-        	workInformation.setBasicEmployee(basicEmployee);
+            if (basicEmployee!=null) {
+                workInformation.setBasicEmployee(basicEmployee);
+            }else {
+                throw new CustomException("employee not found for particular Id" +" "+workInformation.getWorkId());
+            }
         }else
         {
-        	throw new Exception("employee not found!!");
+            throw new CustomException("Record for Id" + " " + workInformationDto.getWorkId()+" " + "is already present");
         }
         return workInformation;
     }

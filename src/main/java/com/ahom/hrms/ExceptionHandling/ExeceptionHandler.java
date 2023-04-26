@@ -25,6 +25,21 @@ public class ExeceptionHandler {
             return errorMap;
         }
 
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ResponseBody
+//    public Map<String, String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+//        Map<String, String> errors = new HashMap<>();
+//        String message = ex.getCause().getMessage();
+//        if (message.contains("Duplicate entry")) {
+//            String field = message.substring(message.lastIndexOf("for key") + 8);
+//            errors.put(field, "This value already exists");
+//        } else {
+//            errors.put("error", "An error occurred while processing your request");
+//        }
+//        return errors;
+//    }
+
 
     @ExceptionHandler(value =com.ahom.hrms.exception.AuthenticationException.class)
     public final ResponseEntity<String> handelAuthenticationFailException
