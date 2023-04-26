@@ -39,10 +39,11 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     public WorkInformation workInformationDtoToWorkInformation(WorkInformationDto workInformationDto) throws Exception {
         WorkInformation workInformation = this.modelMapper.map(workInformationDto, WorkInformation.class);
         BasicEmployee basicEmployee=basicEmployeeRepository.findById(workInformationDto.getWorkId()).orElse(null);
-        WorkInformation workInformation1=workInformationRepository.findById(workInformation.getWorkId()).orElse(null);
+        WorkInformation workInformation1=workInformationRepository.findById(workInformationDto.getWorkId()).orElse(null);
         if(workInformation1==null)
         {
             if (basicEmployee!=null) {
+                workInformation.setWorkId(workInformationDto.getWorkId());
                 workInformation.setBasicEmployee(basicEmployee);
             }else {
                 throw new CustomException("employee not found for particular Id" +" "+workInformation.getWorkId());
@@ -55,8 +56,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     }
 
     public WorkInformationDto workInformationToWorkInformationDto(WorkInformation workInformation) {
-        WorkInformationDto workInformationDto = this.modelMapper.map(workInformation, WorkInformationDto.class);
-        return workInformationDto;
+        return this.modelMapper.map(workInformation, WorkInformationDto.class);
     }
 
 
