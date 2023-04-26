@@ -16,6 +16,9 @@ public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, In
 
 BasicEmployee findByEmployeeName(String employeeName);
 
+BasicEmployee findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail( String aadhaarNumber ,String panNumber,
+													   String pfnumber,String mobile,String email);
+
 	@Query (value = "SELECT * FROM basic_employee INNER JOIN banking_info on basic_employee.employee_id =banking_info.id where basic_employee.employee_id=:id",
 			nativeQuery = true)
 	List<BasicEmployee> findAllByDetails(@Param("id")int id);

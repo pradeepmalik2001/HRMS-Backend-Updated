@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.WorkInformationDto;
 import com.ahom.hrms.service.WorkInformationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class WorkInformationController {
 
 	//save data
 	@PostMapping("/savework")
-	public ResponseEntity<WorkInformationDto> saveWork(@RequestBody WorkInformationDto workInformationDto) throws Exception{
+	public ResponseEntity<WorkInformationDto> saveWork(@Valid @RequestBody WorkInformationDto workInformationDto) throws Exception{
 		workInformationService.saveWorkInfo(workInformationDto);
 		return new ResponseEntity<>(workInformationDto, HttpStatus.CREATED);
 	}
