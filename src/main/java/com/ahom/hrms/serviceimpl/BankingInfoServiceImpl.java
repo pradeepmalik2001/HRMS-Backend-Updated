@@ -6,6 +6,7 @@ import com.ahom.hrms.Repository.WorkInformationRepository;
 import com.ahom.hrms.entities.BankingInfo;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.WorkInformation;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,22 @@ WorkInformationRepository workInformationRepository;
 
 	//save data
 	public void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-		bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
-
-		bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
+		BasicEmployee employee=basicEmployeeRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
+		BankingInfo bankingInfo=bankingInfoRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
+		if(bankingInfo==null) {
+				if(employee!=null)
+				{
+					bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
+					bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
+					throw new CustomException("Data Saved");
+				}
+				else {
+					throw  new CustomException("Employee Not Found");
+				}
+		}
+		else{
+			throw new CustomException("Data is Already Present");
+		}
 	}
 
 	//converting DTO

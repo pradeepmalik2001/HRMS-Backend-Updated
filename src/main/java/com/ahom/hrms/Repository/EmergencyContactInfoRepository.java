@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @EnableJpaRepositories
-public interface EmergencyContactInfoRepository extends JpaRepository<EmergencyContactInfo, String> {
-
+public interface EmergencyContactInfoRepository extends JpaRepository<EmergencyContactInfo, Integer>
+{
+    EmergencyContactInfo findByEmployeeName(String employeeName);
 
 }

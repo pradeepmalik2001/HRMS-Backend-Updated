@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.BankingInfoDto;
 import com.ahom.hrms.service.BankingInfoService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class BankingInfoController {
 
 	//save data
 	@PostMapping("/savebankinginfo")
-	public ResponseEntity<BankingInfoDto> saveBankingInfo(@RequestBody BankingInfoDto bankingInfoDto) throws Exception{
+	public ResponseEntity<BankingInfoDto> saveBankingInfo(@Valid @RequestBody BankingInfoDto bankingInfoDto) throws Exception{
 		bankingInfoService.saveBankingInfo(bankingInfoDto);
 		return new ResponseEntity<>(bankingInfoDto, HttpStatus.CREATED);
 	}

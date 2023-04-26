@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ahom.hrms.dto.AddHolidayDto;
 import com.ahom.hrms.serviceimpl.AddHolidayServiceImpl;
+
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/holiday")
@@ -18,7 +21,7 @@ public class AddHolidayController {
 @Autowired
 AddHolidayServiceImpl addHolidayService;
 @PostMapping("/leaveDetail")
-public ResponseEntity<AddHolidayDto>SaveAddHolidayDetail(@RequestBody AddHolidayDto addHolidayDto){
+public ResponseEntity<AddHolidayDto>SaveAddHolidayDetail(@Valid @RequestBody AddHolidayDto addHolidayDto){
 	addHolidayService.SaveAddHolidayDetail(addHolidayDto);
 	return new ResponseEntity<>(addHolidayDto,HttpStatus.CREATED);
 }

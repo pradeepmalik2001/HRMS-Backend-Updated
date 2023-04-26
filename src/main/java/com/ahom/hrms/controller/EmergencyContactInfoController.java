@@ -15,6 +15,8 @@ import com.ahom.hrms.dto.BankingInfoDto;
 import com.ahom.hrms.dto.EmergencyContactInfoDto;
 import com.ahom.hrms.service.EmergencyContactInfoService;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 public class EmergencyContactInfoController {
@@ -24,7 +26,7 @@ public class EmergencyContactInfoController {
 
 	//save data
 	@PostMapping("/saveemergencycontact")
-	public ResponseEntity<EmergencyContactInfoDto> saveEmergencyContact(@RequestBody EmergencyContactInfoDto emergencyContactInfoDto) throws Exception{
+	public ResponseEntity<EmergencyContactInfoDto> saveEmergencyContact(@Valid @RequestBody EmergencyContactInfoDto emergencyContactInfoDto) throws Exception{
 		emergencyContactInfoService.saveEmergencyContact(emergencyContactInfoDto);
 		return new ResponseEntity<>(emergencyContactInfoDto, HttpStatus.CREATED);
 	}
