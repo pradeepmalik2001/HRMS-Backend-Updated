@@ -16,6 +16,7 @@ import com.lowagie.text.DocumentException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class BasicEmployeeController {
 
 	//save data
 	@PostMapping("/saveemployee")
-	public ResponseEntity<BasicEmployeeDto> saveEmployees(@Valid @RequestBody BasicEmployeeDto basicEmployeeDto){
+	public ResponseEntity<BasicEmployeeDto> saveEmployees(@Valid @RequestBody BasicEmployeeDto basicEmployeeDto) throws ParseException {
 		basicEmployeeService.saveEmployee(basicEmployeeDto);
 		return new ResponseEntity<>(basicEmployeeDto, HttpStatus.CREATED);
 	}
