@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -22,9 +23,11 @@ public class ShiftManagement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String shiftName;
+	private String country;
 	private String employee;
 	private String date;
+	private String startTime;
+	private String endTime;
 	
 	
 
