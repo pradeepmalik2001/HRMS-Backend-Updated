@@ -13,7 +13,10 @@ import com.ahom.hrms.dto.BasicEmployeeDto;
 
 import com.ahom.hrms.service.BasicEmployeeService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +31,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	ModelMapper modelMapper;
 
 	//save data
-	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) {
+	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
 		BasicEmployee basicEmployee = basicEmployeeRepository.
 				findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
 						basicEmployeeDto.getAadhaarNumber(),
@@ -38,6 +41,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 						basicEmployeeDto.getEmail());
 
 		if (basicEmployee==null){
+
 			basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
 		}else {
 			throw
@@ -69,7 +73,11 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 
 	//converting DTO
-	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) {
+	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
+		BasicEmployee basicEmployee=new BasicEmployee();
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+		Date date=dateFormat.parse(basicEmployeeDto.getJoiningDate());
+		basicEmployee.setJoiningDate(String.valueOf(date));
 		return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
 	}
 
@@ -92,7 +100,13 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	@Override
 	public void deleteEmployee(int id) {
-		basicEmployeeRepository.deleteById(id);
+		BasicEmployee basicEmployee=basicEmployeeRepository.findById(id).orElse(null);
+		if (basicEmployee!=null) {
+
+			basicEmployeeRepository.deleteById(id);
+			throw new CustomException("Employee with ID"+" " +id + " " + "& name" + " " +
+					basicEmployee.getEmployeeName()+ " " + " Deleted Successfully");
+		}
 	}
 
 

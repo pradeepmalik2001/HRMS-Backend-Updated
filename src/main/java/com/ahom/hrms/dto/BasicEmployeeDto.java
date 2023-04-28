@@ -3,6 +3,7 @@ package com.ahom.hrms.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.validation.constraints.*;
@@ -33,6 +34,7 @@ public class BasicEmployeeDto {
 	private String mobile;
 
 	@NotBlank(message = "Joining Date Required")
+	@DateTimeFormat(fallbackPatterns = "yyyy-mm-dd")
 	private String joiningDate;
 
 	@NotBlank(message = "Reporting To Required")

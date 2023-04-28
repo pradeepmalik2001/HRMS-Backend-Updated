@@ -80,14 +80,6 @@ public class JWTUtils {
         }catch(JwtException | IllegalArgumentException e){
             throw new RuntimeException("saffdas");
         }
-
-
-
-//        boolean verify=Signature(token).equals(extractSignature(token));
-//        String [] chunks=token.split("//")
-
-
-//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
 
