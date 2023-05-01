@@ -8,6 +8,9 @@ import com.ahom.hrms.entities.UserMaster;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 
@@ -29,6 +32,17 @@ public class UserMasterServiceImpl implements UserMasterService{
 	@Autowired
 	RoleRepository roleRepository;
 
+	@Autowired
+	JavaMailSender mailSender;
+	@Value("${mail.from}")
+	private String fromEmail; // Set from email address in application.properties file
+
+	//    @Value("${mail.hr}")
+//	String hrEmail="malikpradeep2001@gmail.com"; // Set HR email address in application.properties file
+
+	@Value("${mail.subject}")
+	private String emailSubject;
+
 	
 	//save data
 	public UserMaster saveUser(UserMaster userMasterDto) throws IllegalAccessException {
@@ -42,7 +56,19 @@ public class UserMasterServiceImpl implements UserMasterService{
 		if (role!=null) {
 			userMasterDto.setRoles(Collections.singletonList(role));
 			userMasterDto.setRoleName(userMasterDto.getRoleName());
-			userMasterRepository.save(userMasterDto);
+
+			String userName = userMasterDto.getUserName();
+			String password=userMasterDto.getPassword();
+			SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+			messageToEmployee.setFrom(fromEmail);
+			messageToEmployee.setTo(userName);
+			messageToEmployee.setSubject(emailSubject);
+			messageToEmployee.setText("/n Your Username is : "+userMasterDto.getUserName()+"/nYour Login Password is :" +
+					" "+password);
+			mailSender.send(messageToEmployee);
+			System.out.println(messageToEmployee);
+
+			userMasterRepository.saveAndFlush(userMasterDto);
 		}
 		else {
 			throw new CustomException("no role");

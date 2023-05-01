@@ -1,13 +1,12 @@
 package com.ahom.hrms.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.Parameter;
-import org.springframework.security.core.parameters.P;
-
-import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Entity
 @Table(name = "user_master")
@@ -32,6 +31,9 @@ public class  UserMaster {
 			message = "must contain one upperCase and special character")
 //	@Min(5)
 	private String password;
+
+
+
 //	private  String aadhaarNumber;
 //	private String panNumber;
 
