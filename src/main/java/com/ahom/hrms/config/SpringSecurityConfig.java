@@ -82,7 +82,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasRole("ADMIN")
 
 
-				.antMatchers("/usermaster/authenticate").hasRole("EMPLOYEE")
+//				.antMatchers("/usermaster/authenticate").hasRole("EMPLOYEE")
 				.anyRequest().authenticated().and().formLogin().and()
 				.httpBasic().and().logout().permitAll()
 				;

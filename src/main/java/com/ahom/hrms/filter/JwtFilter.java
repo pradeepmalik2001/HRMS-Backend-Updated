@@ -28,6 +28,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     CustomUserService customUserService;
 
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain)
@@ -42,7 +44,7 @@ public class JwtFilter extends OncePerRequestFilter {
             token = requesttoken.substring(7);
 
             try {
-                jwtUtils.extractUsername(token);
+               username= jwtUtils.extractUsername(token);
             } catch (IllegalArgumentException e) {
                 System.out.println("unable to get jwt token");
             } catch (ExpiredJwtException e) {
@@ -72,5 +74,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
 }
+
 
