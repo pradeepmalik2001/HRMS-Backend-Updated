@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AddDepartmentService {
 	
-	void saveDepartment(AddDepartmentDto addDepartmentDto);
+	AddDepartmentDto saveDepartment(AddDepartmentDto addDepartmentDto);
 	
 	AddDepartment addDepartmentDtoToAddDepartment(AddDepartmentDto addDepartmentDto);
 	

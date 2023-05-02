@@ -1,6 +1,5 @@
 package com.ahom.hrms.serviceimpl;
 
-import com.ahom.hrms.exception.AuthenticationException;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +22,14 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 	ModelMapper modelMapper;
 
 	//save data
-	public void saveDepartment(AddDepartmentDto addDepartmentDto) {
+	public AddDepartmentDto saveDepartment(AddDepartmentDto addDepartmentDto)  {
 		AddDepartment byName = addDepartmentRepository.findByDepartmentName(addDepartmentDto.getDepartmentName());
 		if (byName==null) {
 			addDepartmentRepository.save(addDepartmentDtoToAddDepartment(addDepartmentDto));
 		}else {
 			throw new CustomException("Department already exist");
 		}
+		return addDepartmentDto;
 	}
 
 	//converting DTO

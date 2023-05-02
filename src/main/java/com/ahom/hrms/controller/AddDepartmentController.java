@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.AddDepartmentDto;
 import com.ahom.hrms.service.AddDepartmentService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class AddDepartmentController {
 
 	//save data
 	@PostMapping("/savedepartment")
-	public ResponseEntity<AddDepartmentDto> saveDepartments(@RequestBody AddDepartmentDto addDepartmentDto){
+	public ResponseEntity<AddDepartmentDto> saveDepartments(@Valid @RequestBody AddDepartmentDto addDepartmentDto) throws Exception {
 		addDepartmentService.saveDepartment(addDepartmentDto);
 		return new ResponseEntity<>(addDepartmentDto, HttpStatus.CREATED);
 	}

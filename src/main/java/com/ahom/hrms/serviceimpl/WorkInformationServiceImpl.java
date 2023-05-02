@@ -86,7 +86,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     }
 
 
-    @Scheduled(cron = "40 47 10 * * ?")
+    @Scheduled(cron = "30 45 17 * * ?")
     public void checkProbation()
     {
         List<WorkInformation>workInformation=workInformationRepository.findAll();
