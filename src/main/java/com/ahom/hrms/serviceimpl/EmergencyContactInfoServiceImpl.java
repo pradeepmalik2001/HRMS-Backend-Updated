@@ -33,13 +33,11 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 		BasicEmployee employee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
 		EmergencyContactInfo contactInfo=emergencyContactInfoRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
 		if(employee!=null) {
-			if(contactInfo!=null)
-			{
+			if(contactInfo!=null) {
 				throw new CustomException("Data Already Exist");
 			}
 			emergencyContactInfoRepository.save(emergencyContactInfoDtoToEmergencyContactInfo(emergencyContactInfoDto));
-		} else
-		{
+		} else {
 			throw new CustomException("Please Enter Correct Name");
 		}
 
@@ -50,6 +48,7 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 		EmergencyContactInfo emergencyContactInfo = this.modelMapper.map(emergencyContactInfoDto, EmergencyContactInfo.class);
 		BasicEmployee basicEmployee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
 		if(basicEmployee!=null) {
+			emergencyContactInfo.setId(basicEmployee.getEmployeeId());
 			emergencyContactInfo.setBasicEmployee(basicEmployee);
 		} else {
 			throw new Exception("employee name not found!!");

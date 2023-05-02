@@ -15,70 +15,69 @@ import com.ahom.hrms.service.CreateLeaveRequestService;
 
 @Service
 public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
-	
+
 	@Autowired
 	CreateLeaveRequestRepository createLeaveRequestRepository;
 
 	@Override
-	 public void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto)
-	    {
-	        createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
+	public void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+		createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
 
-	    }
+	}
 
-	 @Override
-	 public List<CreateLeaveRequestDto> getAllCreateLeaveRequest(){
-	        List<CreateLeaveRequest> listCreateLeaveRequest= this.createLeaveRequestRepository.findAll();
-	        List<CreateLeaveRequestDto> createLeaveRequestDtoList = listCreateLeaveRequest.stream().map(emp -> this.createLeaveRequesttoCreateLeaveRequestdto(emp)).collect(Collectors.toList());
-	        //employeeReposatory.findAll().forEach(l1->listEmployee.add(l1));
-	        return createLeaveRequestDtoList;
-	    }
-	 
-//	 public void deleteCreateLeaveRequest(int empId){
+	@Override
+	public List<CreateLeaveRequestDto> getAllCreateLeaveRequest(){
+		List<CreateLeaveRequest> listCreateLeaveRequest= this.createLeaveRequestRepository.findAll();
+		List<CreateLeaveRequestDto> createLeaveRequestDtoList = listCreateLeaveRequest.stream().map(emp -> this.createLeaveRequesttoCreateLeaveRequestdto(emp)).collect(Collectors.toList());
+		//employeeReposatory.findAll().forEach(l1->listEmployee.add(l1));
+		return createLeaveRequestDtoList;
+	}
+
+	//	 public void deleteCreateLeaveRequest(int empId){
 //
 //	        createLeaveRequestRepository.deleteById(empId);
 //
 //	    }
-	 @Override
-	  public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto)
-	    {
-	     createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
-	    return createLeaveRequestDto;
+	@Override
+	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+		createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
+		return createLeaveRequestDto;
 
-	    }
+	}
 
-	  public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto)
-	    {
-	        CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
+	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+		CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
 //	        createLeaveRequest.setAvailableBalance(createLeaveRequestDto.getAvailableBalance());
-			createLeaveRequest.setId(createLeaveRequestDto.getId());
-	        createLeaveRequest.setDays(createLeaveRequestDto.getDays());
-	        createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
-	        createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
+		createLeaveRequest.setId(createLeaveRequestDto.getId());
+//		createLeaveRequest.setDays(createLeaveRequestDto.getDays());
+		createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
+		createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
 //	        createLeaveRequest.setLeaveFor(createLeaveRequestDto.getLeaveFor());
-	        createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
-	        createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
-	        createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
-	        createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
+		createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
+		createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
+		createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
+		createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
+		createLeaveRequest.setApprove(createLeaveRequestDto.isApprove());
 
 
-	        return createLeaveRequest;
-	    }
-	  
-	  public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest) {
-		  CreateLeaveRequestDto createLeaveRequestDto= new CreateLeaveRequestDto();
-		  
+		return createLeaveRequest;
+	}
+
+	public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest) {
+		CreateLeaveRequestDto createLeaveRequestDto= new CreateLeaveRequestDto();
+
 //		  createLeaveRequestDto.setAvailableBalance(createLeaveRequest.getAvailableBalance());
-		  createLeaveRequestDto.setDays(createLeaveRequest.getDays());
-		  createLeaveRequestDto.setEndDate(createLeaveRequest.getEndDate());
-		  createLeaveRequestDto.setLeaveApprover(createLeaveRequest.getLeaveApprover());
+//		createLeaveRequestDto.setDays(createLeaveRequest.getDays());
+		createLeaveRequestDto.setEndDate(createLeaveRequest.getEndDate());
+		createLeaveRequestDto.setLeaveApprover(createLeaveRequest.getLeaveApprover());
 //		  createLeaveRequestDto.setLeaveFor(createLeaveRequest.getLeaveFor());
-		  createLeaveRequestDto.setLeaveType(createLeaveRequest.getLeaveType());
-		  createLeaveRequestDto.setReasonForLeave(createLeaveRequest.getReasonForLeave());
-		  createLeaveRequestDto.setSelectEmployee(createLeaveRequest.getSelectEmployee());
-		  createLeaveRequestDto.setStartDate(createLeaveRequest.getStartDate());
- 		  return createLeaveRequestDto;
-		  
-	  }
+		createLeaveRequestDto.setLeaveType(createLeaveRequest.getLeaveType());
+		createLeaveRequestDto.setReasonForLeave(createLeaveRequest.getReasonForLeave());
+		createLeaveRequestDto.setSelectEmployee(createLeaveRequest.getSelectEmployee());
+		createLeaveRequestDto.setStartDate(createLeaveRequest.getStartDate());
+		createLeaveRequestDto.setApprove(createLeaveRequest.isApprove());
+		return createLeaveRequestDto;
+
+	}
 
 }

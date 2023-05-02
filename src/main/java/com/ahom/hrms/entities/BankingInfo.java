@@ -13,7 +13,7 @@ import lombok.Data;
 public class BankingInfo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@NotEmpty(message = "Please Enter Account Number")

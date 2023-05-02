@@ -1,6 +1,9 @@
 package com.ahom.hrms.serviceimpl;
 
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,49 +18,48 @@ import com.ahom.hrms.entities.ShiftManagement;
 
 @Service
 public class AddShiftServiceimpl implements AddShiftService {
-	
-	 @Autowired
-	 AddShiftRepo addShiftRepo;
+
+	@Autowired
+	AddShiftRepo addShiftRepo;
 
 
         @Override
-	    public void saveAddShift(AddShiftDto addShiftDto)
-	    {
-	        addShiftRepo.save(addShiftDtoToAddShift(addShiftDto));
-	        
-	        
-	    }
-	    @Override
-	    public List<AddShiftDto> getAllAddShift(){
+		public void saveAddShift(AddShiftDto addShiftDto) {
 
-	        List<ShiftManagement> listAddShifts= this.addShiftRepo.findAll();
+			addShiftRepo.save(addShiftDtoToAddShift(addShiftDto));
+		}
 
-	        List<AddShiftDto> addShiftDtoList = listAddShifts.stream().map(emp -> this.addShiftToAddShiftDto(emp)).collect(Collectors.toList());
+	@Override
+	public List<AddShiftDto> getAllAddShift(){
 
-	        //employeeReposatory.findAll().forEach(l1->listEmployee.add(l1));
+		List<ShiftManagement> listAddShifts= this.addShiftRepo.findAll();
 
-	        return addShiftDtoList;
-	    }
-	    
+		List<AddShiftDto> addShiftDtoList = listAddShifts.stream().map(emp -> this.addShiftToAddShiftDto(emp)).collect(Collectors.toList());
 
-	    // delete
-	    @Override
-	    public void deleteAddShift(int Id){
+		//employeeReposatory.findAll().forEach(l1->listEmployee.add(l1));
 
-	        addShiftRepo.deleteById(Id);
+		return addShiftDtoList;
+	}
 
-	    }
-	    //put
 
-	   @Override
-	    public void updateAddshift(ShiftManagement shiftManagement,int id) {
-	    	//List<ShiftManagement> listAddShifts1= this.addShiftRepo.findAll();
-	    	
-	    	//listAddShifts1=listAddShifts1.stream().map(b->{
-	    	ShiftManagement abc = addShiftRepo.findById(id).get();
-	    	abc.setShiftName(shiftManagement.getShiftName());
-			abc.setEmployee(shiftManagement.getEmployee());
-			abc.setDate(shiftManagement.getDate());
+	// delete
+	@Override
+	public void deleteAddShift(int Id){
+
+		addShiftRepo.deleteById(Id);
+
+	}
+	//put
+
+	@Override
+	public void updateAddshift(ShiftManagement shiftManagement,int id) {
+		//List<ShiftManagement> listAddShifts1= this.addShiftRepo.findAll();
+
+		//listAddShifts1=listAddShifts1.stream().map(b->{
+		ShiftManagement abc = addShiftRepo.findById(id).get();
+		abc.setCountry(shiftManagement.getCountry());
+		abc.setEmployee(shiftManagement.getEmployee());
+		abc.setDate(shiftManagement.getDate());
 //	    		if(abc.getId()==id)
 //	    		{
 //	    			abc.setShiftName(shiftManagement.getShiftName());
@@ -67,49 +69,76 @@ public class AddShiftServiceimpl implements AddShiftService {
 //	    		}
 //	    		return abc;
 //	    	}).collect(Collectors.toList());
-	    	addShiftRepo.save(abc);
-	    }
-	    
+		addShiftRepo.save(abc);
+	}
+
 //	    public AddShiftDto updateAddShift(AddShiftDto addShiftDto)
 //	    {
 //	    addShiftRepo.save(addShiftDtoToAddShift(addShiftDto));
 //	    return addShiftDto;
 //
 //	    }
-	    
-	    @Override
-	    public AddShiftDto addShiftById(Integer id)
-	    {
-	       ShiftManagement addShift = this.addShiftRepo.findById(id).get();
-	        // Optional<Employee> byId = employeeReposatory.findById(employeeId);
-	        return this.addShiftToAddShiftDto(addShift);
 
-	    }
+	@Override
+	public AddShiftDto addShiftById(Integer id) {
+		ShiftManagement addShift = this.addShiftRepo.findById(id).get();
+		// Optional<Employee> byId = employeeReposatory.findById(employeeId);
+		return this.addShiftToAddShiftDto(addShift);
+
+	}
 
 
-	    public ShiftManagement addShiftDtoToAddShift(AddShiftDto addShiftDto)
-	    {
-	        ShiftManagement addShift=new ShiftManagement();
+	public ShiftManagement addShiftDtoToAddShift(AddShiftDto addShiftDto) {
+		ShiftManagement addShift=new ShiftManagement();
 
-	        addShift.setId(addShiftDto.getId());
-	        addShift.setDate(addShiftDto.getDate());
-	        addShift.setShiftName(addShiftDto.getShiftName());
-	        addShift.setEmployee(addShiftDto.getEmployee());
-	        return addShift;
-	    }
+		String timeZone = getTimeZoneForCountry(addShiftDto.getCountry());
+		LocalDateTime localDateTime=LocalDateTime.now(ZoneId.of(timeZone));
+		DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter1=DateTimeFormatter.ofPattern("HH:mm:ss");
+		String formattedDateTime=localDateTime.format(formatter);
 
-	    public AddShiftDto addShiftToAddShiftDto(ShiftManagement addShift)
-	    {
-	    	AddShiftDto  addShiftDto = new AddShiftDto ();
 
-	        addShiftDto.setId(addShift.getId());;
-	        addShiftDto.setDate(addShift.getDate());
-	        addShiftDto.setEmployee(addShift.getEmployee());
-	        addShiftDto.setShiftName(addShift.getShiftName());
+		addShift.setStartTime(addShiftDto.getStartTime());
+		addShift.setEndTime(addShiftDto.getEndTime());
+		addShift.setId(addShiftDto.getId());
+		addShift.setDate(formattedDateTime);
+		addShift.setCountry(addShiftDto.getCountry());
+		addShift.setEmployee(addShiftDto.getEmployee());
+		return addShift;
+	}
 
-	        return addShiftDto;
-	    }
+	public AddShiftDto addShiftToAddShiftDto(ShiftManagement addShift) {
+		AddShiftDto  addShiftDto = new AddShiftDto ();
 
-	
+
+		addShiftDto.setId(addShift.getId());;
+		addShiftDto.setDate(addShift.getDate());
+		addShiftDto.setEmployee(addShift.getEmployee());
+		addShiftDto.setCountry(addShift.getCountry());
+		addShiftDto.setStartTime(addShift.getStartTime());
+		addShiftDto.setEndTime(addShift.getEndTime());
+
+		return addShiftDto;
+	}
+
+	private String getTimeZoneForCountry(String country) {
+		String timeZone;
+		switch (country) {
+			case "USA":
+				timeZone = "America/New_York";
+				break;
+			case "India":
+				timeZone = "Asia/Kolkata";
+				break;
+			case "Japan":
+				timeZone = "Asia/Tokyo";
+				break;
+			// add more cases for other countries
+			default:
+				timeZone = "UTC";
+				break;
+		}
+		return timeZone;
+	}
 
 }

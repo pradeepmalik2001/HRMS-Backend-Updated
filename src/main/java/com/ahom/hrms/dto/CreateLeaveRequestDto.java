@@ -18,8 +18,9 @@ public class CreateLeaveRequestDto {
 
 	private String startDate;
 	private String endDate;
-	private String days;
+//	private String days;
 	private String reasonForLeave;
+	private boolean approve;
 	
 
 }
