@@ -21,9 +21,16 @@ public class JWTUtils {
 
     private String secret = "savit";
 
-        public void extractUsername(String token) {
-            extractClaim(token, Claims::getSubject);
+        public String extractUsername(String token) {
+//            extractClaim(token, Claims::getSubject);
+            Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+            return claims.getSubject();
         }
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
@@ -80,14 +87,6 @@ public class JWTUtils {
         }catch(JwtException | IllegalArgumentException e){
             throw new RuntimeException("saffdas");
         }
-
-
-
-//        boolean verify=Signature(token).equals(extractSignature(token));
-//        String [] chunks=token.split("//")
-
-
-//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
 
