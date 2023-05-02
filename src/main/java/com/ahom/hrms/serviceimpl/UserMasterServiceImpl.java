@@ -2,7 +2,6 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.RoleRepository;
 import com.ahom.hrms.Repository.UserMasterRepository;
-import com.ahom.hrms.dto.RoleDto;
 import com.ahom.hrms.entities.Role;
 import com.ahom.hrms.entities.UserMaster;
 import com.ahom.hrms.exception.CustomException;
@@ -23,10 +22,10 @@ import java.util.List;
 
 @Service
 public class UserMasterServiceImpl implements UserMasterService{
-	
+
 	@Autowired
 	UserMasterRepository userMasterRepository;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
 	@Autowired
@@ -43,60 +42,66 @@ public class UserMasterServiceImpl implements UserMasterService{
 	@Value("${mail.subject}")
 	private String emailSubject;
 
-	
+
 	//save data
 	public UserMaster saveUser(UserMaster userMasterDto) throws IllegalAccessException {
 
 
 		Role role=roleRepository.findByRoleName(userMasterDto.getRoleName());
 		UserMaster userMaster=userMasterRepository.findByUserName(userMasterDto.getUserName());
-		if (userMaster==null)
-		{
+		if (userMaster==null) {
 
-		if (role!=null) {
-			userMasterDto.setRoles(Collections.singletonList(role));
-			userMasterDto.setRoleName(userMasterDto.getRoleName());
+			if (role!=null) {
+				userMasterDto.setRoles(Collections.singletonList(role));
+				userMasterDto.setRoleName(userMasterDto.getRoleName());
 
-			String userName = userMasterDto.getUserName();
-			String password=userMasterDto.getPassword();
-			SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-			messageToEmployee.setFrom(fromEmail);
-			messageToEmployee.setTo(userName);
-			messageToEmployee.setSubject(emailSubject);
-			messageToEmployee.setText("/n Your Username is : "+userMasterDto.getUserName()+"/nYour Login Password is :" +
-					" "+password);
-			mailSender.send(messageToEmployee);
-			System.out.println(messageToEmployee);
 
-			userMasterRepository.saveAndFlush(userMasterDto);
-		}
-		else {
-			throw new CustomException("no role");
-		}
+
+					String userName = userMasterDto.getUserName();
+					SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+					messageToEmployee.setFrom(fromEmail);
+					messageToEmployee.setTo(userName);
+					messageToEmployee.setSubject(emailSubject);
+					messageToEmployee.setText("Login Credentials for : " + userMasterDto.getEmployeeName()+ " "
+							+ "\n"
+							+"\n"
+							+"User Name = "
+							+ userMasterDto.getUserName() +" " +
+							 " "+
+							"\n" +
+							"Password :" +
+							" " + userMasterDto.getConfirmPassword());
+					mailSender.send(messageToEmployee);
+					System.out.println(messageToEmployee);
+
+					userMasterRepository.saveAndFlush(userMasterDto);
+			} else {
+				throw new CustomException("no role");
+			}
 		}else {
 			throw new CustomException("User Name can not be same");
 		}
 
 		return userMasterDto;
 	}
-	
+
 	//fetch data by UserName
 	public UserMasterDto fetchByUser(String userName) {
 		UserMaster userMaster = this.userMasterRepository.findByUserName(userName);
 		return userMasterToUserMasterDto(userMaster);
 	}
-	
+
 	//update data
 	public UserMasterDto updateUser(UserMasterDto userMasterDto) {
 		userMasterRepository.save(userMasterDtoToUserMaster(userMasterDto));
 		return userMasterDto;
 	}
-	
+
 	//converting DTO
 	public UserMaster userMasterDtoToUserMaster(UserMasterDto userMasterDto) {
 		return this.modelMapper.map(userMasterDto, UserMaster.class);
 	}
-	
+
 	public UserMasterDto userMasterToUserMasterDto(UserMaster userMaster) {
 		return this.modelMapper.map(userMaster, UserMasterDto.class);
 	}
@@ -117,6 +122,6 @@ public class UserMasterServiceImpl implements UserMasterService{
 			throw new CustomException("No User present");
 		}
 	}
-	
+
 
 }

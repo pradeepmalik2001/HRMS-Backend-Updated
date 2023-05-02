@@ -31,9 +31,16 @@ public class  UserMaster {
 			message = "must contain one upperCase and special character")
 //	@Min(5)
 	private String password;
+	@Transient
+	private String confirmPassword;
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
 
-
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 //	private  String aadhaarNumber;
 //	private String panNumber;
 
