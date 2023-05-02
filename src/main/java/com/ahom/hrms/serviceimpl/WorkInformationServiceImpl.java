@@ -86,7 +86,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     }
 
 
-    @Scheduled(cron = "30 45 17 * * ?")
+    @Scheduled(cron = "00 19 14 * * ?")
     public void checkProbation()
     {
         List<WorkInformation>workInformation=workInformationRepository.findAll();
@@ -105,10 +105,11 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                     SimpleMailMessage simpleMailMessageToHr = new SimpleMailMessage();
 
                     simpleMailMessageToHr.setFrom(fromEmail);
-                    simpleMailMessageToHr.setFrom(fromEmail);
                     simpleMailMessageToHr.setTo(hrEmail);
                     simpleMailMessageToHr.setSubject(emailSubject);
-                    simpleMailMessageToHr.setText("Probation period of employee " + workInformation1.getBasicEmployee().getEmployeeName() + " will end in one week.");
+                    simpleMailMessageToHr.setText("Probation period of employee "
+                            + workInformation1.getBasicEmployee().getEmployeeName()
+                            + " will end in one week.");
                     mailSender.send(simpleMailMessageToHr);
 
                     System.out.println(simpleMailMessageToHr);

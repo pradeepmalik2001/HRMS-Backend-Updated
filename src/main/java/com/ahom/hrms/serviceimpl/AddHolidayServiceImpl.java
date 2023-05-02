@@ -1,6 +1,7 @@
 package com.ahom.hrms.serviceimpl;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.ahom.hrms.Repository.AddHolidayRepository;
@@ -25,8 +26,11 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 
 	public void SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
 	{
-		List<AddHoliday> addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate(addHolidayDto.getHolidayName(),addHolidayDto.getFromDate(), addHolidayDto.getToDate());
-		if(addHolidays==null)
+		 AddHoliday addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate
+				(addHolidayDto.getHolidayName(),
+						addHolidayDto.getFromDate(),
+						addHolidayDto.getToDate());
+		if(Objects.isNull(addHolidays))
 		{
 			addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
 		}
