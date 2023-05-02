@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "designation_master")
@@ -15,6 +16,7 @@ public class DesignationMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 	@Column(unique=true)
+	@NotEmpty(message = "mandatory")
 	private String designationName;
 	
 	public DesignationMaster() {

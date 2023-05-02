@@ -1,8 +1,11 @@
 package com.ahom.hrms.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class DesignationMasterDto {
-	
+
 	private int Id;
+	@NotEmpty(message = "mandatory")
 	private String designationName;
 	
 	public DesignationMasterDto() {
