@@ -1,8 +1,12 @@
 package com.ahom.hrms.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class AddDepartmentDto {
 
+	@NotEmpty(message = "Department name can't be null")
 	private String departmentName;
+	@NotEmpty(message = "Description is null")
 	private String description;
 	
 	public AddDepartmentDto() {
