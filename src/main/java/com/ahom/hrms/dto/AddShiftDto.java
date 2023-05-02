@@ -18,5 +18,4 @@ public class AddShiftDto {
 	private String date;
 	private String startTime;
 	private String endTime;
-
 }
