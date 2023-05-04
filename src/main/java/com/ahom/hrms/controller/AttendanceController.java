@@ -1,5 +1,6 @@
 package com.ahom.hrms.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +11,8 @@ import java.util.Map;
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.entities.Attendance;
 import com.ahom.hrms.entities.OverTime;
+import com.ahom.hrms.exception.CustomException;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +39,55 @@ public class AttendanceController {
 		attendanceService.saveEmplAttendance(attendancedto);
 		 return new ResponseEntity<>(attendancedto ,HttpStatus.CREATED);
 	}
+//	@PostMapping("/upload")
+//	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file){
+//		if (Excel.checkFormat(file))
+//		{
+//			attendanceService.saveExcel(file);
+//			String originalFilename = file.getOriginalFilename();
+//			return  ResponseEntity.ok(Map.of("message","file uploaded successfully"));
+//		}
+//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
+//	}
+
 	@PostMapping("/upload")
-	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file){
-		if (Excel.checkFormat(file))
-		{
-			attendanceService.saveExcel(file);
-			String originalFilename = file.getOriginalFilename();
-			return  ResponseEntity.ok(Map.of("message","file uploaded successfully"));
-		}
+	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file) throws IOException {
+		if (Excel.checkFormat(file)) {
+			try {
+				Workbook workbook = WorkbookFactory.create(file.getInputStream());
+				Sheet sheet = workbook.getSheetAt(0);
+
+				// Identify the header row based on its content
+				Row headerRow = sheet.getRow(0);
+				if (headerRow == null) {
+					throw new CustomException("Header Row not found. Please upload Valid file");
+				}
+
+				String[] expectedColumns = {"selectEmployee", "date", "inTime","outTime","status"};
+				for (int i = 0; i < expectedColumns.length; i++) {
+					Cell cell = headerRow.getCell(i);
+					if (cell == null || !cell.getStringCellValue().equals(expectedColumns[i])) {
+						throw new CustomException("Header Row is not Valid. Please upload Valid file");
+					}
+				}
+
+				// Iterate over the remaining rows and perform processing/validation
+				for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+					Row row = sheet.getRow(i);
+					if (row == null) {
+						continue;
+					}
+
+					attendanceService.saveExcel(file);
+					String originalFilename = file.getOriginalFilename();
+					return ResponseEntity.ok(Map.of("message", "file uploaded successfully"));
+
+				}
+			}catch(IOException e){
+					throw new RuntimeException(e);
+				}
+//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
+			}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
 	}
 
