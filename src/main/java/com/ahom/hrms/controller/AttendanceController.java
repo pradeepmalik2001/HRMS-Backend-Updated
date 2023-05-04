@@ -98,4 +98,15 @@ public class AttendanceController {
 		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
 	}
 
+	@GetMapping("/statusof")
+	public ResponseEntity<List<Attendance>> statusOf (@RequestParam String name,
+												      @RequestParam String status,
+													  @RequestParam String date) throws ParseException {
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+		Date date1=format.parse(date);
+		return new ResponseEntity<>(attendanceService.status(name, status,date1),HttpStatus.OK);
+	}
+
+
+
 }

@@ -24,5 +24,7 @@ public interface AttendanceService {
 	public List<Attendance>getByStatus(Date startdate,
 									   Date enddate,String name,
 									   String status);
+
+	public List <Attendance> status(String name , String status,Date date);
 	
 }

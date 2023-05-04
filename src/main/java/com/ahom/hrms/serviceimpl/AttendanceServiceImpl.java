@@ -1,23 +1,20 @@
 package com.ahom.hrms.serviceimpl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.Repository.AttendanceRepository;
+import com.ahom.hrms.dto.AttendanceDto;
 import com.ahom.hrms.entities.Attendance;
-import com.ahom.hrms.entities.OverTime;
+import com.ahom.hrms.service.AttendanceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ahom.hrms.dto.AttendanceDto;
-
-
-import com.ahom.hrms.service.AttendanceService;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -98,6 +95,30 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return filterAttendance;
 	}
 
+	@Override
+	public List <Attendance> status(String name, String status,Date date)  {
+
+	List<Attendance> byEmployeeName = attendanceRpository.findBySelectEmployeeAndStatusAndDate
+			(name,status,date);
+		LocalDate localDate=LocalDate.now();
+		int year = localDate.getYear();
+		System.out.println(year);
+		int monthValue = localDate.getMonthValue();
+		System.out.println(monthValue);
+		int lengthOfMonth = localDate.lengthOfMonth();
+		System.out.println(lengthOfMonth);
+
+		ArrayList <Attendance> filterAttendance=new ArrayList<>();
+		for (Attendance attendance:byEmployeeName) {
+			if (attendance.getStatus().equals(status)){
+				filterAttendance.add(attendance);
+				System.out.println(filterAttendance.size());
+			}
+
+		}
+		return filterAttendance ;
+	}
+
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
@@ -121,6 +142,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 		 public Integer countAttendance(Date startdate, Date enddate, String name,String status){
 			 return attendanceRpository.getOneSelectEmployee(startdate, enddate, name, status);
 	 }
+
+
+
 
 
 }
