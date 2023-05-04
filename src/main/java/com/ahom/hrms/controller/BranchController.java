@@ -29,7 +29,11 @@ public class BranchController {
     public List<BranchDto> getBranch(){
         List<BranchDto> allBranchDto=branchService.getAll();
         return allBranchDto;
-
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteBranch(@PathVariable int id)
+    {
+        branchService.deleteBranch(id);
+    }
 }

@@ -12,4 +12,6 @@ public interface BranchService {
 
     //get data
     List<BranchDto> getAll();
+
+    void deleteBranch(int id);
 }

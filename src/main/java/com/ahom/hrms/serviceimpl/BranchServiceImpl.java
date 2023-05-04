@@ -51,4 +51,9 @@ public class BranchServiceImpl implements BranchService {
         List list=branchRepository.findAll();
         return list;
     }
+
+    @Override
+    public void deleteBranch(int id) {
+        branchRepository.deleteById(id);
+    }
 }
