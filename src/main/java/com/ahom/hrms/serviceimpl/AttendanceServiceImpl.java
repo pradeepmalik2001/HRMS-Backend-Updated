@@ -11,10 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -96,25 +99,32 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public List <Attendance> status(String name, String status,Date date)  {
+	public List <Attendance> status(String name, String status,String month)  {
 
-	List<Attendance> byEmployeeName = attendanceRpository.findBySelectEmployeeAndStatusAndDate
-			(name,status,date);
-		LocalDate localDate=LocalDate.now();
-		int year = localDate.getYear();
-		System.out.println(year);
-		int monthValue = localDate.getMonthValue();
-		System.out.println(monthValue);
-		int lengthOfMonth = localDate.lengthOfMonth();
-		System.out.println(lengthOfMonth);
+		DateFormat dateFormat=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+		Date startDate,endDate;
+		try
+		{
+			month = month.toUpperCase();
+			startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(startDate);
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			endDate = calendar.getTime();
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+
+		 List<Attendance>byEmployeeName=attendanceRpository.
+				 findBySelectEmployeeAndStatusAndDateBetween(name,status,startDate,endDate);
 
 		ArrayList <Attendance> filterAttendance=new ArrayList<>();
 		for (Attendance attendance:byEmployeeName) {
 			if (attendance.getStatus().equals(status)){
 				filterAttendance.add(attendance);
+				long count= filterAttendance.size();
 				System.out.println(filterAttendance.size());
 			}
-
 		}
 		return filterAttendance ;
 	}
@@ -139,8 +149,22 @@ public class AttendanceServiceImpl implements AttendanceService {
 	    
          }
 
-		 public Integer countAttendance(Date startdate, Date enddate, String name,String status){
-			 return attendanceRpository.getOneSelectEmployee(startdate, enddate, name, status);
+		 public Integer countAttendance(String month, String name,String status){
+			 DateFormat dateFormat=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+			 Date startDate,endDate;
+			 try
+			 {
+				 month = month.toUpperCase();
+				 startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+				 Calendar calendar = Calendar.getInstance();
+				 calendar.setTime(startDate);
+				 calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				 endDate = calendar.getTime();
+			 } catch (ParseException e) {
+				 throw new RuntimeException(e);
+			 }
+
+			 return attendanceRpository.getOneSelectEmployee(startDate,endDate, name, status);
 	 }
 
 

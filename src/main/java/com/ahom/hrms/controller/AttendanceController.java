@@ -2,6 +2,7 @@ package com.ahom.hrms.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -87,24 +88,21 @@ public class AttendanceController {
 		return new ResponseEntity<>(statusFetch,HttpStatus.ACCEPTED);
 	}
 	@PostMapping("/count")
-	public ResponseEntity<Integer>countAttendance(@RequestParam String startdate,
-															  @RequestParam String enddate,
+	public ResponseEntity<Integer>countAttendance(@RequestParam String month,
 															  @RequestParam String name,
 															  @RequestParam String status) throws ParseException {
-		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-		Date startDate=format.parse(startdate);
-		Date endDate=format.parse(enddate);
-		Integer attendance = attendanceService.countAttendance(startDate, endDate, name, status);
+//		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+//		Date startDate=format.parse(startdate);
+//		Date endDate=format.parse(enddate);
+		Integer attendance = attendanceService.countAttendance(month, name, status);
 		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/statusof")
 	public ResponseEntity<List<Attendance>> statusOf (@RequestParam String name,
 												      @RequestParam String status,
-													  @RequestParam String date) throws ParseException {
-		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-		Date date1=format.parse(date);
-		return new ResponseEntity<>(attendanceService.status(name, status,date1),HttpStatus.OK);
+													  @RequestParam String month) throws ParseException {
+		return new ResponseEntity<>(attendanceService.status(name, status,month),HttpStatus.OK);
 	}
 
 
