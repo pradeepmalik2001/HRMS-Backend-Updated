@@ -13,6 +13,14 @@ import java.util.List;
 
 @EnableJpaRepositories
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer>{
+
+  List  <Attendance> findBySelectEmployeeAndStatusAndDate(
+          @Param("selectEmployee") String selectEmployee,
+          @Param("status")String status,
+          @Param("date")Date date
+      );
+
+
     @Query(value= "Select * FROM attendance o WHERE o.select_employee=:name AND o.date BETWEEN :startdate AND :enddate",
             nativeQuery = true)
     List<Attendance> findByNameAndDateRange(@Param("startdate") Date startdate,
