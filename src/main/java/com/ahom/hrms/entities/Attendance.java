@@ -9,7 +9,16 @@ public class Attendance {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int Id;	
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String selectEmployee;
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -17,6 +26,18 @@ public class Attendance {
 	private String outTime;
 
 	private String status;
+
+	@OneToOne(targetEntity = UserMaster.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_master_id")
+	private UserMaster userMaster;
+
+	public UserMaster getUserMaster() {
+		return userMaster;
+	}
+
+	public void setUserMaster(UserMaster userMaster) {
+		this.userMaster = userMaster;
+	}
 
 	public String getStatus() {
 		return status;
@@ -26,12 +47,7 @@ public class Attendance {
 		this.status = status;
 	}
 
-	public int getId() {
-		return Id;
-	}
-	public void setId(int id) {
-		Id = id;
-	}
+
 	public String getSelectEmployee() {
 		return selectEmployee;
 	}
@@ -60,11 +76,7 @@ public class Attendance {
 		this.outTime = outTime;
 	}
 	
-	@Override
-	public String toString() {
-		return "Attendance [Id=" + Id + ", selectEmployee=" + selectEmployee + ", date=" + date + ", inTime=" + inTime
-				+ ", outTime=" + outTime + "]";
-	}
+
 
 	
 }

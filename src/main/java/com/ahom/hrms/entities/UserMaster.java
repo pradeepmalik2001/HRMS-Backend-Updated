@@ -1,5 +1,6 @@
 package com.ahom.hrms.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -34,6 +35,13 @@ public class  UserMaster {
 	@Transient
 	private String confirmPassword;
 
+	@OneToOne(mappedBy = "userMaster",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "attendance_id")
+	@JsonBackReference
+	private Attendance attendance;
+
+
+
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
@@ -41,24 +49,6 @@ public class  UserMaster {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-//	private  String aadhaarNumber;
-//	private String panNumber;
-
-//	public String getAadhaarNumber() {
-//		return aadhaarNumber;
-//	}
-//
-//	public void setAadhaarNumber(String aadhaarNumber) {
-//		this.aadhaarNumber = aadhaarNumber;
-//	}
-//
-//	public String getPanNumber() {
-//		return panNumber;
-//	}
-//
-//	public void setPanNumber(String panNumber) {
-//		this.panNumber = panNumber;
-//	}
 
 	public int getId() {
 		return id;
@@ -108,6 +98,13 @@ public class  UserMaster {
 //	@Transient
 	private String roleName;
 
+	public Attendance getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(Attendance attendance) {
+		this.attendance = attendance;
+	}
 
 
 	public String getRoleName() {

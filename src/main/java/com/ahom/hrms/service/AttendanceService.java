@@ -25,6 +25,6 @@ public interface AttendanceService {
 									   Date enddate,String name,
 									   String status);
 
-	public List <Attendance> status(String name , String status,String date);
+	public List <Attendance> status(String name, String username,String status,String month);
 	
 }

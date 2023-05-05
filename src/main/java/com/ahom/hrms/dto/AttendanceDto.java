@@ -1,5 +1,7 @@
 package com.ahom.hrms.dto;
 
+import com.ahom.hrms.entities.UserMaster;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -7,13 +9,31 @@ import java.util.Date;
 public class 	AttendanceDto {
 
 	
-	private int Id;	
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String selectEmployee;
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String inTime;
 	private String outTime;
 	private String status;
+	private UserMaster userMaster;
+
+	public UserMaster getUserMaster() {
+		return userMaster;
+	}
+
+	public void setUserMaster(UserMaster userMaster) {
+		this.userMaster = userMaster;
+	}
 
 	public String getStatus() {
 		return status;
@@ -23,13 +43,7 @@ public class 	AttendanceDto {
 		this.status = status;
 	}
 
-	public int getId() {
-		return Id;
-	}
 
-	public void setId(int id) {
-		Id = id;
-	}
 
 	public String getSelectEmployee() {
 		return selectEmployee;
