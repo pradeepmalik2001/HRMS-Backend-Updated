@@ -30,8 +30,6 @@ public class AttendanceController {
 	@Autowired
 	AttendanceServiceImpl attendanceService;
 
-//	@Autowired
-//	AttendanceServiceImpl attendanceServiceimpl;
 
 	@PostMapping("/save")
 	public ResponseEntity<AttendanceDto> saveEmp(@RequestBody AttendanceDto attendancedto) {
@@ -39,16 +37,7 @@ public class AttendanceController {
 		attendanceService.saveEmplAttendance(attendancedto);
 		 return new ResponseEntity<>(attendancedto ,HttpStatus.CREATED);
 	}
-//	@PostMapping("/upload")
-//	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file){
-//		if (Excel.checkFormat(file))
-//		{
-//			attendanceService.saveExcel(file);
-//			String originalFilename = file.getOriginalFilename();
-//			return  ResponseEntity.ok(Map.of("message","file uploaded successfully"));
-//		}
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
-//	}
+
 
 	@PostMapping("/upload")
 	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file) throws IOException {
@@ -134,19 +123,23 @@ public class AttendanceController {
 	@PostMapping("/count")
 	public ResponseEntity<Integer>countAttendance(@RequestParam String month,
 															  @RequestParam String name,
-															  @RequestParam String status) throws ParseException {
+															  @RequestParam String status,
+												  @RequestParam String userName) throws ParseException {
 //		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
 //		Date startDate=format.parse(startdate);
 //		Date endDate=format.parse(enddate);
-		Integer attendance = attendanceService.countAttendance(month, name, status);
+		Integer attendance = attendanceService.countAttendance(month, name, status,userName);
 		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/statusof")
 	public ResponseEntity<List<Attendance>> statusOf (@RequestParam String name,
-												      @RequestParam String status,
-													  @RequestParam String month) throws ParseException {
-		return new ResponseEntity<>(attendanceService.status(name, status,month),HttpStatus.OK);
+													  @RequestParam String userName,
+													  @RequestParam String month ,
+													  @RequestParam String status
+													   )
+			throws ParseException {
+		return new ResponseEntity<>(attendanceService.status(name,userName,status,month),HttpStatus.OK);
 	}
 
 

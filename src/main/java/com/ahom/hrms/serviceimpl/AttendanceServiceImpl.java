@@ -2,8 +2,11 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.Repository.AttendanceRepository;
+import com.ahom.hrms.Repository.UserMasterRepository;
 import com.ahom.hrms.dto.AttendanceDto;
 import com.ahom.hrms.entities.Attendance;
+import com.ahom.hrms.entities.UserMaster;
+import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.AttendanceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +27,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired
 	AttendanceRepository attendanceRpository;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
+	@Autowired
+	private UserMasterRepository userMasterRepository;
 
 	@Override
 	public void saveEmplAttendance(AttendanceDto attendancedto) {
@@ -48,7 +53,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 		attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
 	}
 
-	String originalFilename="";
 	@Override
 	public void saveExcel(MultipartFile file) {
 
@@ -99,73 +103,92 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public List <Attendance> status(String name, String status,String month)  {
+	public List <Attendance> status( String name, String username,String status,String month) {
 
-		DateFormat dateFormat=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
-		Date startDate,endDate;
-		try
-		{
-			month = month.toUpperCase();
-			startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(startDate);
-			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-			endDate = calendar.getTime();
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
+		Attendance attendance1 = attendanceRpository.findBySelectEmployee(name);
+		ArrayList<Attendance> filterAttendance = null;
+		if (attendance1 != null) {
+			DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+			Date startDate, endDate;
+			try {
+				month = month.toUpperCase();
+				startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(startDate);
+				calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				endDate = calendar.getTime();
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
+			}
 
-		 List<Attendance>byEmployeeName=attendanceRpository.
-				 findBySelectEmployeeAndStatusAndDateBetween(name,status,startDate,endDate);
+			List<Attendance> byEmployeeName = attendanceRpository.
+					findBySelectEmployeeAndStatusAndDateBetween(name, status, startDate, endDate);
 
-		ArrayList <Attendance> filterAttendance=new ArrayList<>();
-		for (Attendance attendance:byEmployeeName) {
-			if (attendance.getStatus().equals(status)){
-				filterAttendance.add(attendance);
-				long count= filterAttendance.size();
-				System.out.println(filterAttendance.size());
+			filterAttendance = new ArrayList<>();
+
+			for (Attendance attendance : byEmployeeName) {
+				if (Objects.equals(username, attendance.getUserMaster().getUserName())) {
+					if (attendance.getStatus().equals(status) || attendance.getStatus().equals("WFH")) {
+						filterAttendance.add(attendance);
+						long count = filterAttendance.size();
+						System.out.println(filterAttendance.size());
+					} else {
+						throw new CustomException("dsdsa");
+					}
+				}
 			}
 		}
-		return filterAttendance ;
+		return filterAttendance;
 	}
-
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
-	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto)
-	{
-		Attendance attendance =this.modelMapper.map(attendancedto , Attendance.class);
-		
-		return attendance;
+	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto) {
+		UserMaster userMaster = userMasterRepository.findById(attendancedto.getId()).orElse(null);
+
+		if (userMaster != null) {
+			attendancedto.setUserMaster(userMaster);
+			return this.modelMapper.map(attendancedto, Attendance.class);
+		}
+		else {
+			throw new CustomException("No user Found");
+		}
 	}
 
 	/** ------------ Using DTO Class in AttendanceToAttendanceDto --------------------------*/
 	
 	 public AttendanceDto AttendanceToAttendanceDto(Attendance attendance)
 	    {
-
-
 			return this.modelMapper.map(attendance , AttendanceDto.class);
-	    
-         }
+	             }
 
-		 public Integer countAttendance(String month, String name,String status){
+		 public Integer countAttendance(String month, String name,String status,String username){
 			 DateFormat dateFormat=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
 			 Date startDate,endDate;
-			 try
-			 {
-				 month = month.toUpperCase();
-				 startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
-				 Calendar calendar = Calendar.getInstance();
-				 calendar.setTime(startDate);
-				 calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-				 endDate = calendar.getTime();
-			 } catch (ParseException e) {
-				 throw new RuntimeException(e);
-			 }
+				 try {
+					 month = month.toUpperCase();
+					 startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+					 Calendar calendar = Calendar.getInstance();
+					 calendar.setTime(startDate);
+					 calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+					 endDate = calendar.getTime();
+				 } catch (ParseException e) {
+					 throw new RuntimeException(e);
+				 }
+				 Attendance attendance
+						 =attendanceRpository.findBySelectEmployee(name);
 
-			 return attendanceRpository.getOneSelectEmployee(startDate,endDate, name, status);
-	 }
+				 if (attendance!=null){
+					 if (Objects.equals(username, attendance.getUserMaster().getUserName())) {
+
+						 return attendanceRpository.getOneSelectEmployee(startDate, endDate, name, status);
+					 }
+					 else {
+						 throw new CustomException("username not correct");
+					 }
+				 }
+				 throw new CustomException("user not matched");
+		 }
 
 
 

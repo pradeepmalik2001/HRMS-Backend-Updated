@@ -14,6 +14,7 @@ import java.util.List;
 @EnableJpaRepositories
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer>{
 
+  Attendance findBySelectEmployee(String name);
   List  <Attendance> findBySelectEmployeeAndStatusAndDateBetween(
           @Param("selectEmployee") String selectEmployee,
           @Param("status")String status,
