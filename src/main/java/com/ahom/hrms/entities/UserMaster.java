@@ -35,10 +35,10 @@ public class  UserMaster {
 	@Transient
 	private String confirmPassword;
 
-	@OneToOne(mappedBy = "userMaster",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinColumn(name = "attendance_id")
-	@JsonBackReference
-	private Attendance attendance;
+//	@OneToOne(mappedBy = "userMaster",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//	@JoinColumn(name = "attendance_id")
+//	@JsonBackReference
+//	private Attendance attendance;
 
 
 
@@ -98,13 +98,13 @@ public class  UserMaster {
 //	@Transient
 	private String roleName;
 
-	public Attendance getAttendance() {
-		return attendance;
-	}
-
-	public void setAttendance(Attendance attendance) {
-		this.attendance = attendance;
-	}
+//	public Attendance getAttendance() {
+//		return attendance;
+//	}
+//
+//	public void setAttendance(Attendance attendance) {
+//		this.attendance = attendance;
+//	}
 
 
 	public String getRoleName() {

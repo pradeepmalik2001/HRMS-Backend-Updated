@@ -14,12 +14,12 @@ import java.util.List;
 @EnableJpaRepositories
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer>{
 
-  Attendance findBySelectEmployee(String name);
-  List  <Attendance> findBySelectEmployeeAndStatusAndDateBetween(
+ List <Attendance> findBySelectEmployeeAndUserName(String name,String userName);
+  List  <Attendance> findBySelectEmployeeAndDateBetween(
           @Param("selectEmployee") String selectEmployee,
-          @Param("status")String status,
           @Param("date")Date startDate,
           @Param("endDate") Date endDate
+
       );
 
 
@@ -40,10 +40,9 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 
     @Query(value = "SELECT count(*) FROM attendance ud WHERE ud.select_employee=:name " +
             "AND ud.date BETWEEN :startDate AND " +
-            ":endDate AND status=:status",nativeQuery = true)
+            ":endDate",nativeQuery = true)
     Integer getOneSelectEmployee(@Param("startDate") Date startDate,
                                  @Param("endDate")Date endDate,
-                                 @Param("name") String name,
-                                 @Param("status") String status);
+                                 @Param("name") String name);
 
 }
