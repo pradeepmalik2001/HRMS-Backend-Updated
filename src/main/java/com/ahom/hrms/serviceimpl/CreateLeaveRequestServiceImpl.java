@@ -7,6 +7,7 @@ import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.CreateLeaveRequest;
+import com.ahom.hrms.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,42 +28,51 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Autowired
 	JavaMailSender mailSender;
 	@Value("${mail.from}")
-	private String fromEmail; // Set from email address in application.properties file
-
-	//    @Value("${mail.hr}")
-//	String hrEmail="malikpradeep2001@gmail.com"; // Set HR email address in application.properties file
+	private String fromEmail;
 
 	@Value("${mail.subject}")
 	private String emailSubject;
+	@Autowired
+	private BasicEmployeeRepository basicEmployeeRepository;
 
 	@Override
 	public void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+		BasicEmployee basicEmployee=basicEmployeeRepository.findById(createLeaveRequestDto.getId()).orElse(null);
 
-		String fromEmail=createLeaveRequestDto.getBasicEmployee().getEmail();
-		SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-		messageToEmployee.setFrom(fromEmail);
-		messageToEmployee.setTo("pradeep.malik@skillzamp.com");
-		messageToEmployee.setSubject(emailSubject);
-		messageToEmployee.setText("Request for leave");
-		mailSender.send(messageToEmployee);
-		System.out.println(messageToEmployee);
-		createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
+		if (basicEmployee!=null) {
+			createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
+			try {
+
+
+//				String fromEmail =
+
+//			String fromEmail = createLeaveRequestDto.getBasicEmployee().getEmail();
+				SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+				messageToEmployee.setFrom(fromEmail);
+				messageToEmployee.setTo("pradeep.malik@skillzamp.com");
+				messageToEmployee.setSubject(emailSubject);
+				messageToEmployee.setText("Request for leave");
+				mailSender.send(messageToEmployee);
+				System.out.println(messageToEmployee);
+			}catch (RuntimeException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+		else {
+			throw new CustomException("no employee");
+		}
 
 	}
 
 	@Override
 	public List<CreateLeaveRequestDto> getAllCreateLeaveRequest(){
 		List<CreateLeaveRequest> listCreateLeaveRequest= this.createLeaveRequestRepository.findAll();
-		List<CreateLeaveRequestDto> createLeaveRequestDtoList = listCreateLeaveRequest.stream().map(emp -> this.createLeaveRequesttoCreateLeaveRequestdto(emp)).collect(Collectors.toList());
-		//employeeReposatory.findAll().forEach(l1->listEmployee.add(l1));
-		return createLeaveRequestDtoList;
+		return listCreateLeaveRequest.stream().map(this::createLeaveRequesttoCreateLeaveRequestdto).collect(Collectors.toList());
 	}
 
-	//	 public void deleteCreateLeaveRequest(int empId){
-//
-//	        createLeaveRequestRepository.deleteById(empId);
-//
-//	    }
+
 	@Override
 	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
 		createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
