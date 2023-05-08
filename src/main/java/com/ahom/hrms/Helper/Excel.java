@@ -1,7 +1,6 @@
 package com.ahom.hrms.Helper;
 
 import com.ahom.hrms.entities.Attendance;
-import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.serviceimpl.AttendanceServiceImpl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,7 +9,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,21 +27,7 @@ public class Excel {
         }
     }
 
-//    public void  setResponseHeader(HttpServletResponse response,String contentType,String extension,
-//                                  String prefix)
-//    {
-//        String fileName =prefix+extension;
-//        response.setContentType(contentType);
-//
-//        String headerKey ="Content-Disposition";
-//        String headerValue="attachment;fileName="+ fileName;
-//        response.setHeader(headerKey,headerValue);
-//
-//    }
-//    public void exportToCsv(List<BasicEmployee>basicEmployeeList,HttpServletResponse response)
-//    {
-//        setResponseHeader(response,"text/csv",".csv","Employee_");
-//    }
+
 
     @Autowired
     AttendanceServiceImpl attendanceService;
@@ -69,27 +53,14 @@ public class Excel {
                 while (cell.hasNext()) {
                     Cell cells = cell.next();
                     switch (cid) {
-//                        case 0:
-//                            attendance.setId((int) cells.getNumericCellValue());
-//                            break;
-                        case 0:
-                            attendance.setSelectEmployee(cells.getStringCellValue());
-                            break;
-                        case 1:
-                            attendance.setDate((Date) cells.getDateCellValue());
-                            break;
-                        case 2:
-                            attendance.setInTime((String) cells.getStringCellValue());
-                            break;
-
-                        case 3:
-                            attendance.setOutTime((String) cells.getStringCellValue());
-                            break;
-                        case 4:
-                            attendance.setStatus(cells.getStringCellValue());
-                        default:
-
-
+                        case 0 -> attendance.setSelectEmployee(cells.getStringCellValue());
+                        case 1 -> attendance.setDate((Date) cells.getDateCellValue());
+                        case 2 -> attendance.setInTime((String) cells.getStringCellValue());
+                        case 3 -> attendance.setOutTime((String) cells.getStringCellValue());
+                        case 4 -> attendance.setStatus(cells.getStringCellValue());
+                        case 5 -> attendance.setUserName(cells.getStringCellValue());
+                        default -> {
+                        }
                     }
                     cid++;
                 }

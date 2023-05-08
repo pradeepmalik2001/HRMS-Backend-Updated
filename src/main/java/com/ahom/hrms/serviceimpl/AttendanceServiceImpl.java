@@ -102,9 +102,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public List <Attendance> status( String name, String userName,String month) {
 
-		List<Attendance> attendance1 = attendanceRpository.findBySelectEmployeeAndUserName(name,userName);
+		List<Attendance> attendance1 = attendanceRpository.findByUserName(userName);
 		ArrayList<Attendance> filterAttendance = null;
 		if (attendance1 != null) {
+
 			DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
 			Date startDate, endDate;
 			try {
@@ -155,9 +156,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 			return this.modelMapper.map(attendance , AttendanceDto.class);
 	             }
 
-		 public Integer countAttendance(String month, String name,String userName){
-			 DateFormat dateFormat=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
-			 Date startDate,endDate;
+		 public Integer countAttendance(String month,String userName){
+			 List<Attendance> attendance1 = attendanceRpository.findByUserName(userName);
+			 ArrayList<Attendance> filterAttendance = null;
+			 if (attendance1 != null) {
+
+				 DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+				 Date startDate, endDate;
 				 try {
 					 month = month.toUpperCase();
 					 startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
@@ -168,29 +173,21 @@ public class AttendanceServiceImpl implements AttendanceService {
 				 } catch (ParseException e) {
 					 throw new RuntimeException(e);
 				 }
-				 List<Attendance> attendance =  attendanceRpository.findBySelectEmployeeAndUserName(name,userName);
-				 ArrayList<Attendance> list=new ArrayList<>();
 
-				 if (attendance!=null){
-					 for (Attendance attendance1:attendance) {
-						 if (attendance1.getStatus().equals("Present")||attendance1.getStatus().equals("WFH"))
-						 {
-							 list.add(attendance1);
-							 System.out.println(list);
-							 System.out.println(list.size());
-							 return list.size();
-//							 return attendanceRpository.getOneSelectEmployee(startDate, endDate, name);
+				 List<Attendance> byEmployeeName = attendanceRpository.findByUserName(userName);
+
+				 filterAttendance = new ArrayList<>();
+				 if (byEmployeeName!=null) {
+					 for (Attendance attendance : byEmployeeName) {
+						 if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
+							 filterAttendance.add(attendance);
+							 long count = filterAttendance.size();
+							 System.out.println(filterAttendance.size());
 						 }
-
 					 }
-
-					 }
-				 else {
-					 throw new CustomException("name not correct");
-				 }
-
+				 }return filterAttendance.size();
+			 }
 			 return null;
 		 }
-
 		 }
 

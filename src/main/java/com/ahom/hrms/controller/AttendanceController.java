@@ -122,10 +122,10 @@ public class AttendanceController {
 	}
 	@PostMapping("/count")
 	public ResponseEntity<Integer>countAttendance(@RequestParam String month,
-															  @RequestParam String name,
+
 												  @RequestParam String userName) throws ParseException {
 
-		Integer attendance = attendanceService.countAttendance(month, name,userName);
+		Integer attendance = attendanceService.countAttendance(month,userName);
 		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
 	}
 
