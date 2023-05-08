@@ -23,6 +23,6 @@ public class CreateLeaveRequestDto {
 	private String reasonForLeave;
 	private boolean approve;
 
-	private BasicEmployee basicEmployee;
+//	private BasicEmployee basicEmployee;
 
 }

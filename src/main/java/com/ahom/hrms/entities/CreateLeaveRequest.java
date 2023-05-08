@@ -24,6 +24,6 @@ public class CreateLeaveRequest {
 	private String reasonForLeave;
 	private boolean approve;
 
-	@OneToOne(targetEntity = BasicEmployee.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private BasicEmployee basicEmployee;
+//	@OneToOne(targetEntity = BasicEmployee.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//	private BasicEmployee basicEmployee;
 }

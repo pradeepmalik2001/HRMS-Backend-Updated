@@ -17,8 +17,6 @@ public class HrmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HrmsApplication.class, args);
 
-//		SalarySetupServiceimpl str= new SalarySetupServiceimpl();
-//		str.grossEarning(1);
 	}
 
 	@Bean
