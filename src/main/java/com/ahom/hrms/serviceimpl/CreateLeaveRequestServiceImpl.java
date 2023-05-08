@@ -3,9 +3,14 @@ package com.ahom.hrms.serviceimpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
+import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.CreateLeaveRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 
@@ -19,8 +24,28 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Autowired
 	CreateLeaveRequestRepository createLeaveRequestRepository;
 
+	@Autowired
+	JavaMailSender mailSender;
+	@Value("${mail.from}")
+	private String fromEmail; // Set from email address in application.properties file
+
+	//    @Value("${mail.hr}")
+//	String hrEmail="malikpradeep2001@gmail.com"; // Set HR email address in application.properties file
+
+	@Value("${mail.subject}")
+	private String emailSubject;
+
 	@Override
 	public void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+
+		String fromEmail=createLeaveRequestDto.getBasicEmployee().getEmail();
+		SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+		messageToEmployee.setFrom(fromEmail);
+		messageToEmployee.setTo("pradeep.malik@skillzamp.com");
+		messageToEmployee.setSubject(emailSubject);
+		messageToEmployee.setText("Request for leave");
+		mailSender.send(messageToEmployee);
+		System.out.println(messageToEmployee);
 		createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
 
 	}
@@ -47,6 +72,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
 		CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
+
+
 //	        createLeaveRequest.setAvailableBalance(createLeaveRequestDto.getAvailableBalance());
 		createLeaveRequest.setId(createLeaveRequestDto.getId());
 //		createLeaveRequest.setDays(createLeaveRequestDto.getDays());

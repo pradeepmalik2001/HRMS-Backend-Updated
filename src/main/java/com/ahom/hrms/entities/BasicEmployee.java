@@ -82,7 +82,9 @@ public class BasicEmployee {
 	@JsonBackReference
 	EmergencyContactInfo emergencyContactInfo;
 
-	
+	@OneToOne(mappedBy = "basicEmployee",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JsonBackReference
+	CreateLeaveRequest createLeaveRequest;
 
 
 }
