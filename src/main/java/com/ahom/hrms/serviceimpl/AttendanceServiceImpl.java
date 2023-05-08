@@ -17,9 +17,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -103,9 +100,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public List <Attendance> status( String name, String username,String status,String month) {
+	public List <Attendance> status( String name, String userName,String month) {
 
-		Attendance attendance1 = attendanceRpository.findBySelectEmployee(name);
+		List<Attendance> attendance1 = attendanceRpository.findBySelectEmployeeAndUserName(name,userName);
 		ArrayList<Attendance> filterAttendance = null;
 		if (attendance1 != null) {
 			DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
@@ -122,32 +119,28 @@ public class AttendanceServiceImpl implements AttendanceService {
 			}
 
 			List<Attendance> byEmployeeName = attendanceRpository.
-					findBySelectEmployeeAndStatusAndDateBetween(name, status, startDate, endDate);
+					findBySelectEmployeeAndDateBetween(name,startDate, endDate);
 
 			filterAttendance = new ArrayList<>();
 
 			for (Attendance attendance : byEmployeeName) {
-				if (Objects.equals(username, attendance.getUserMaster().getUserName())) {
-					if (attendance.getStatus().equals(status) || attendance.getStatus().equals("WFH")) {
+					if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
 						filterAttendance.add(attendance);
 						long count = filterAttendance.size();
 						System.out.println(filterAttendance.size());
-					} else {
-						throw new CustomException("dsdsa");
+					}
 					}
 				}
-			}
-		}
 		return filterAttendance;
 	}
+
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
 	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto) {
-		UserMaster userMaster = userMasterRepository.findById(attendancedto.getId()).orElse(null);
+		UserMaster userMaster = userMasterRepository.findByUserName(attendancedto.getUserName());
 
 		if (userMaster != null) {
-			attendancedto.setUserMaster(userMaster);
 			return this.modelMapper.map(attendancedto, Attendance.class);
 		}
 		else {
@@ -162,7 +155,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 			return this.modelMapper.map(attendance , AttendanceDto.class);
 	             }
 
-		 public Integer countAttendance(String month, String name,String status,String username){
+		 public Integer countAttendance(String month, String name,String userName){
 			 DateFormat dateFormat=new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
 			 Date startDate,endDate;
 				 try {
@@ -175,23 +168,29 @@ public class AttendanceServiceImpl implements AttendanceService {
 				 } catch (ParseException e) {
 					 throw new RuntimeException(e);
 				 }
-				 Attendance attendance
-						 =attendanceRpository.findBySelectEmployee(name);
+				 List<Attendance> attendance =  attendanceRpository.findBySelectEmployeeAndUserName(name,userName);
+				 ArrayList<Attendance> list=new ArrayList<>();
 
 				 if (attendance!=null){
-					 if (Objects.equals(username, attendance.getUserMaster().getUserName())) {
+					 for (Attendance attendance1:attendance) {
+						 if (attendance1.getStatus().equals("Present")||attendance1.getStatus().equals("WFH"))
+						 {
+							 list.add(attendance1);
+							 System.out.println(list);
+							 System.out.println(list.size());
+							 return list.size();
+//							 return attendanceRpository.getOneSelectEmployee(startDate, endDate, name);
+						 }
 
-						 return attendanceRpository.getOneSelectEmployee(startDate, endDate, name, status);
 					 }
-					 else {
-						 throw new CustomException("username not correct");
+
 					 }
+				 else {
+					 throw new CustomException("name not correct");
 				 }
-				 throw new CustomException("user not matched");
+
+			 return null;
 		 }
 
+		 }
 
-
-
-
-}

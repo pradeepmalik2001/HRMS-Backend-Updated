@@ -1,5 +1,7 @@
 package com.ahom.hrms.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -26,18 +28,28 @@ public class Attendance {
 	private String outTime;
 
 	private String status;
+	private String userName;
 
-	@OneToOne(targetEntity = UserMaster.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_master_id")
-	private UserMaster userMaster;
-
-	public UserMaster getUserMaster() {
-		return userMaster;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserMaster(UserMaster userMaster) {
-		this.userMaster = userMaster;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
+//	@OneToOne(targetEntity = UserMaster.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//	@JoinColumn(name = "user_master_id")
+//	@JsonBackReference
+//	private UserMaster userMaster;
+//
+//	public UserMaster getUserMaster() {
+//		return userMaster;
+//	}
+//
+//	public void setUserMaster(UserMaster userMaster) {
+//		this.userMaster = userMaster;
+//	}
 
 	public String getStatus() {
 		return status;

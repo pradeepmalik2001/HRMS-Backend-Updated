@@ -123,23 +123,19 @@ public class AttendanceController {
 	@PostMapping("/count")
 	public ResponseEntity<Integer>countAttendance(@RequestParam String month,
 															  @RequestParam String name,
-															  @RequestParam String status,
 												  @RequestParam String userName) throws ParseException {
-//		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-//		Date startDate=format.parse(startdate);
-//		Date endDate=format.parse(enddate);
-		Integer attendance = attendanceService.countAttendance(month, name, status,userName);
+
+		Integer attendance = attendanceService.countAttendance(month, name,userName);
 		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/statusof")
 	public ResponseEntity<List<Attendance>> statusOf (@RequestParam String name,
 													  @RequestParam String userName,
-													  @RequestParam String month ,
-													  @RequestParam String status
+													  @RequestParam String month
 													   )
 			throws ParseException {
-		return new ResponseEntity<>(attendanceService.status(name,userName,status,month),HttpStatus.OK);
+		return new ResponseEntity<>(attendanceService.status(name,userName,month),HttpStatus.OK);
 	}
 
 
