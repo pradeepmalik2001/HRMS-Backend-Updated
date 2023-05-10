@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,7 +42,7 @@ public class BasicEmployeeDto {
 	private String reportingTo;
 
 	@NotBlank(message = "DOB Required")
-	private String dob;
+	private LocalDate dob;
 
 	@NotBlank(message = "Work Type Required")
 	private String workType;
