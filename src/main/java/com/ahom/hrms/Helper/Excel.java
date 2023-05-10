@@ -53,14 +53,29 @@ public class Excel {
                 while (cell.hasNext()) {
                     Cell cells = cell.next();
                     switch (cid) {
-                        case 0 -> attendance.setSelectEmployee(cells.getStringCellValue());
-                        case 1 -> attendance.setDate((Date) cells.getDateCellValue());
-                        case 2 -> attendance.setInTime((String) cells.getStringCellValue());
-                        case 3 -> attendance.setOutTime((String) cells.getStringCellValue());
-                        case 4 -> attendance.setStatus(cells.getStringCellValue());
-                        case 5 -> attendance.setUserName(cells.getStringCellValue());
-                        default -> {
-                        }
+
+                        case 0:
+                            attendance.setSelectEmployee(cells.getStringCellValue());
+                            break;
+                        case 1:
+                            attendance.setDate((Date) cells.getDateCellValue());
+                            break;
+                        case 2:
+                            attendance.setInTime((String) cells.getStringCellValue());
+                            break;
+
+                        case 3:
+                            attendance.setOutTime((String) cells.getStringCellValue());
+                            break;
+                        case 4:
+                            attendance.setStatus(cells.getStringCellValue());
+                            break;
+                        case 5:
+                            attendance.setUserName(cells.getStringCellValue());
+                            break;
+                        default:
+
+
                     }
                     cid++;
                 }
