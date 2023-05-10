@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.BasicEmployeeDto;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.service.BasicEmployeeService;
-import com.ahom.hrms.util.PdfGenerator;
 import com.lowagie.text.DocumentException;
 
 import java.io.FileNotFoundException;
@@ -49,19 +48,19 @@ public class BasicEmployeeController {
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.ok(basicEmployeeDto);
 	}
-	@GetMapping("/export-to-pdf")
-	public void getAll(HttpServletResponse response) throws DocumentException, IOException
-	{
-		 response.setContentType("application/pdf");
-		    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
-		    String currentDateTime = dateFormat.format(new Date());
-		    String headerkey = "Content-Disposition";
-		    String headervalue = "attachment; filename=student" + currentDateTime + ".pdf";
-		    response.setHeader(headerkey, headervalue);
-	        List<BasicEmployee> allEmployee = this.basicEmployeeService.getAllEmployee();
-	        PdfGenerator generator = new PdfGenerator();
-		    generator.generate(allEmployee, response);
-	}
+//	@GetMapping("/export-to-pdf")
+//	public void getAll(HttpServletResponse response) throws DocumentException, IOException
+//	{
+//		 response.setContentType("application/pdf");
+//		    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+//		    String currentDateTime = dateFormat.format(new Date());
+//		    String headerkey = "Content-Disposition";
+//		    String headervalue = "attachment; filename=student" + currentDateTime + ".pdf";
+//		    response.setHeader(headerkey, headervalue);
+//	        List<BasicEmployee> allEmployee = this.basicEmployeeService.getAllEmployee();
+//	        PdfGenerator generator = new PdfGenerator();
+//		    generator.generate(allEmployee, response);
+//	}
 //	@PostMapping("/hra/{id}")
 //	public double  hra(@PathVariable int id)
 //	{

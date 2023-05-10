@@ -10,6 +10,8 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -48,7 +50,7 @@ public class BasicEmployee {
 	private String reportingTo;
 
 	@NotBlank(message = "DOB Required")
-	private String dob;
+	private LocalDate dob;
 
 	@NotBlank(message = "Work Type Required")
 	private String workType;
