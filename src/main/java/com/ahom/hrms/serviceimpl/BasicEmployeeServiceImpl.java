@@ -135,7 +135,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 		for (BasicEmployee basicEmployee1:basicEmployee)
 		{
-			if(basicEmployee1.getDob().equals(localDate))
+			if(basicEmployee1.getDob().getMonth().equals(localDate.getMonth())&& basicEmployee1.getDob().getDayOfMonth()== localDate.getDayOfMonth())
 			{
 				SimpleMailMessage mailMessage=new SimpleMailMessage();
 
