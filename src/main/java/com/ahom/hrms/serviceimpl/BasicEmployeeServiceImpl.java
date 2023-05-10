@@ -6,6 +6,10 @@ import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
@@ -15,6 +19,9 @@ import com.ahom.hrms.service.BasicEmployeeService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +36,17 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	SalarySetupRepository salarySetupRepository;
 	@Autowired
 	ModelMapper modelMapper;
+
+	@Autowired
+	JavaMailSender mailSender;
+	@Value("${mail.from}")
+	private String fromEmail; // Set from email address in application.properties file
+
+	//    @Value("${mail.hr}")
+	String hrEmail="malikpradeep2001@gmail.com"; // Set HR email address in application.properties file
+
+	@Value("${mail.subject}")
+	private String emailSubject;
 
 	//save data
 	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
@@ -108,6 +126,35 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 					basicEmployee.getEmployeeName()+ " " + " Deleted Successfully");
 		}
 	}
+	@Scheduled(cron = "00 19 16 * * ?")
+	public void checkBirthday()
+	{
+		List<BasicEmployee> basicEmployee=basicEmployeeRepository.findAll();
+
+		LocalDate localDate=LocalDate.now();
+
+		for (BasicEmployee basicEmployee1:basicEmployee)
+		{
+			if(basicEmployee1.getDob().equals(localDate))
+			{
+				SimpleMailMessage mailMessage=new SimpleMailMessage();
+
+				mailMessage.setFrom(fromEmail);
+				mailMessage.setTo(basicEmployee1.getEmail());
+				mailMessage.setSubject(emailSubject);
+				mailMessage.setText("Today is Birthday of : "+basicEmployee1.getEmployeeName());
+				mailSender.send(mailMessage);
+				System.out.println(mailMessage);
+			}
+		}
+	}
+
+//	public void checkBirthdayDate()
+//	{
+//		List<BasicEmployee> basicEmployees= (List<BasicEmployee>) basicEmployeeRepository.findByDob(LocalDate.now().withYear(Year.now().getValue()));
+//
+//
+//	}
 
 
 }
