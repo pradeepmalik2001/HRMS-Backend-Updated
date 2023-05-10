@@ -60,8 +60,6 @@ public class BasicEmployee {
 
 	@Column(nullable = false,unique = true)
 	@NotBlank(message = "PAN Number Required")
-//	@Min(10)
-//	@Max(10)
 	@Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}",message = "PAN number should be in proper format like ABCDE1234A ")
 	private String panNumber;
 
@@ -82,9 +80,6 @@ public class BasicEmployee {
 	@JsonBackReference
 	EmergencyContactInfo emergencyContactInfo;
 
-//	@OneToOne(mappedBy = "basicEmployee",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//	@JsonBackReference
-//	CreateLeaveRequest createLeaveRequest;
 
 
 }

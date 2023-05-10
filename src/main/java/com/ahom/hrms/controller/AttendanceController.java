@@ -52,7 +52,7 @@ public class AttendanceController {
 					throw new CustomException("Header Row not found. Please upload Valid file");
 				}
 
-				String[] expectedColumns = {"selectEmployee", "date", "inTime","outTime","status"};
+				String[] expectedColumns = {"selectEmployee", "date", "inTime","outTime","status","userName"};
 				for (int i = 0; i < expectedColumns.length; i++) {
 					Cell cell = headerRow.getCell(i);
 					if (cell == null || !cell.getStringCellValue().equals(expectedColumns[i])) {

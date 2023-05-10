@@ -127,7 +127,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 			for (Attendance attendance : byEmployeeName) {
 					if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
 						filterAttendance.add(attendance);
-						long count = filterAttendance.size();
 						System.out.println(filterAttendance.size());
 					}
 					}
