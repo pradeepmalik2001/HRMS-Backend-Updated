@@ -126,7 +126,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 					basicEmployee.getEmployeeName()+ " " + " Deleted Successfully");
 		}
 	}
-	@Scheduled(cron = "00 19 16 * * ?")
+	@Scheduled(cron = "00 16 18 * * ?")
 	public void checkBirthday()
 	{
 		List<BasicEmployee> basicEmployee=basicEmployeeRepository.findAll();
@@ -135,7 +135,8 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 		for (BasicEmployee basicEmployee1:basicEmployee)
 		{
-			if(basicEmployee1.getDob().getMonth().equals(localDate.getMonth())&& basicEmployee1.getDob().getDayOfMonth()== localDate.getDayOfMonth())
+			if(basicEmployee1.getDob().getMonth().equals(localDate.getMonth())
+					&& basicEmployee1.getDob().getDayOfMonth()== localDate.getDayOfMonth())
 			{
 				SimpleMailMessage mailMessage=new SimpleMailMessage();
 
