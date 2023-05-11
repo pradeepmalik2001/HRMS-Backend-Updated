@@ -41,7 +41,6 @@ public class BasicEmployeeDto {
 	@NotBlank(message = "Reporting To Required")
 	private String reportingTo;
 
-	@NotBlank(message = "DOB Required")
 	private LocalDate dob;
 
 	@NotBlank(message = "Work Type Required")
