@@ -1,22 +1,18 @@
 package com.ahom.hrms.serviceimpl;
 
+import com.ahom.hrms.Repository.LeaveTypeRepository;
+import com.ahom.hrms.dto.LeaveTypeDto;
+import com.ahom.hrms.entities.LeaveType;
+import com.ahom.hrms.service.LeaveTypeService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ahom.hrms.Repository.LeaveTypeRepository;
-import com.ahom.hrms.entities.LeaveType;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+@Component
 
-
-
-import com.ahom.hrms.dto.LeaveTypeDto;
-
-
-import com.ahom.hrms.service.LeaveTypeService;
-
-@Service
 public class LeaveTypeServiceImpl implements LeaveTypeService {
 	@Autowired
 	LeaveTypeRepository leaveTypeRepository;

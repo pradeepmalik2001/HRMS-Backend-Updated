@@ -34,25 +34,24 @@ WorkInformationRepository workInformationRepository;
 
 	//save data
 	public void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-		BasicEmployee employee=basicEmployeeRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
-		BankingInfo bankingInfo=bankingInfoRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
-		if(bankingInfo==null) {
-			if(employee!=null) {
-				bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
-				bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
-				throw new CustomException("Data Saved");
-			} else {
-				throw  new CustomException("Employee Not Found");
-			}
-		} else{
+//		BasicEmployee employee=basicEmployeeRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
+		BankingInfo bankingInfo = bankingInfoRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
+		if (bankingInfo == null) {
+
+			bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
+			bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
+			throw new CustomException("Data Saved");
+		} else {
 			throw new CustomException("Data is Already Present");
 		}
 	}
 
+
 	//converting DTO
 	public BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
 		int empId=bankingInfoDto.getEmployeeId();
-		BasicEmployee basicEmployee = basicEmployeeRepository.findByEmployeeName(bankingInfoDto.getName());
+		BasicEmployee basicEmployee = basicEmployeeRepository.findById(bankingInfoDto.getEmployeeId())
+				.orElse(null);
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
 		if(basicEmployee!=null) {
 			bankingInfo.setId(basicEmployee.getEmployeeId());
