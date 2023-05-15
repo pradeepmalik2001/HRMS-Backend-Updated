@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -60,7 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf()
 				.disable()
 				.authorizeRequests()
-				.antMatchers("/usermaster/**", "/saveapproval/**","/bank/**",
+				.antMatchers("/usermaster/**", "/saveapproval/**","/bank/**","/approve/**","/disApprove/**",
 						"/holiday/**", "/addjobtitle/**", "/shiftmanagement/**", "/allowance/**",
 						"/application/**", "/attendence/status**"
 						, "/attendance/**", "/AttendanceDetails/**", "/savebankinginfo/**", "/basic/**",
@@ -78,11 +79,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				)
 				.permitAll()
 				.antMatchers()
-
 				.hasRole("ADMIN")
-
-
-//				.antMatchers("/usermaster/authenticate").hasRole("EMPLOYEE")
 				.anyRequest().authenticated().and().formLogin().and()
 				.httpBasic().and().logout().permitAll()
 				;
