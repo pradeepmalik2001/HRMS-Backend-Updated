@@ -26,6 +26,6 @@ BasicEmployee findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail( Strin
 	List<BasicEmployee> findAllByDetails(@Param("id")int id);
 
 
-//	BasicEmployee findByDob(LocalDate dob);
+	BasicEmployee findByDob(LocalDate dob);
 
 }
