@@ -63,7 +63,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/usermaster/**", "/saveapproval/**","/bank/**","/approve/**","/disApprove/**",
 						"/holiday/**", "/addjobtitle/**", "/shiftmanagement/**", "/allowance/**",
-						"/application/**", "/attendence/status**","/notification/token"
+						"/application/**", "/attendence/status**","/send-notification"
 						, "/attendance/**", "/AttendanceDetails/**", "/savebankinginfo/**", "/basic/**",
 						"/CreateLeaveRequest/**","/getBankInfo/",
 						"/deductions/**", "/designation/**", "/saveemergencycontact/**",
