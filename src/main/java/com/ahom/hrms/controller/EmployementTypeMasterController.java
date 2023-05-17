@@ -15,20 +15,21 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("employment")
 public class EmployementTypeMasterController {
 
 	@Autowired
 	EmployementTypeMasterService employementTypeMasterService;
 
 	//save data
-	@PostMapping("/saveemployement")
+	@PostMapping("/saveEmployment")
 	public ResponseEntity<EmployementTypeMasterDto> saveEmployement(@Valid @RequestBody EmployementTypeMasterDto employementTypeMasterDto){
 		employementTypeMasterService.saveEmployement(employementTypeMasterDto);
 		return new ResponseEntity<>(employementTypeMasterDto, HttpStatus.CREATED);
 	}
 
 //	rePush
-	@GetMapping("/getallEmp")
+	@GetMapping("/getAllEmp")
 	public List<EmployementTypeMasterDto> getTypeMaster(){
 		List<EmployementTypeMasterDto> allEmployementTypeMasterDto=employementTypeMasterService.getAll();
 		return allEmployementTypeMasterDto;

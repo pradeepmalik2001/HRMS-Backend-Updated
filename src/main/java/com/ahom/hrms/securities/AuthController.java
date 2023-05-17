@@ -6,8 +6,11 @@ import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.serviceimpl.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
+
 @RestController
 
 public class AuthController {
@@ -31,6 +36,17 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+    @Autowired
+    JavaMailSender mailSender;
+    @Value("${mail.from}")
+    private String fromEmail; // Set from email address in application.properties file
+
+
+
+
 
     @Autowired
     private EmployeeService userService;
@@ -67,8 +83,31 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<Employee> registerUser(@Valid @RequestBody Employee UserDTO) {
-        Employee createUser= userService.saveEmployee(UserDTO);
-        return new ResponseEntity<Employee>(createUser, HttpStatus.CREATED);
+        Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
+        if (employee.isEmpty()) {
+
+
+            SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+            messageToEmployee.setFrom(fromEmail);
+            messageToEmployee.setTo(UserDTO.getUsername());
+            messageToEmployee.setSubject("Login Credentials");
+            messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName()+ " "
+                    + "\n"
+                    +"\n"
+                    +"User Name = "
+                    + UserDTO.getUsername() +" " +
+                    " "+
+                    "\n" +
+                    "Password :" +
+                    " " + UserDTO.getConfirmPassword());
+            mailSender.send(messageToEmployee);
+            System.out.println(messageToEmployee);
+
+            Employee createUser = userService.saveEmployee(UserDTO);
+            return new ResponseEntity<Employee>(createUser, HttpStatus.CREATED);
+        }else {
+            throw new CustomException("Employee already exist");
+        }
     }
 
     // get loggedin user data

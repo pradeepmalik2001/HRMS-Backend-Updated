@@ -22,7 +22,7 @@ public class BankingInfoController {
 	BankingInfoService bankingInfoService;
 
 	//save data
-	@PostMapping("/savebankinginfo")
+	@PostMapping("/saveBankingInfo")
 	public ResponseEntity<BankingInfoDto> saveBankingInfo(@Valid @RequestBody BankingInfoDto bankingInfoDto) throws Exception{
 		bankingInfoService.saveBankingInfo(bankingInfoDto);
 		return new ResponseEntity<>(bankingInfoDto, HttpStatus.CREATED);

@@ -98,7 +98,7 @@ public class AttendanceController {
 
 		return new ResponseEntity<> (attendancedto,HttpStatus.OK);
 	}
-	@PostMapping("/bydate")
+	@PostMapping("/byDate")
 	@ResponseBody
 	public ResponseEntity<List<Attendance>> ot(@RequestParam String startdate,
 											 @RequestParam String enddate,
@@ -129,7 +129,7 @@ public class AttendanceController {
 		return new ResponseEntity<>(attendance,HttpStatus.ACCEPTED);
 	}
 
-	@GetMapping("/statusof")
+	@GetMapping("/statusOf")
 	public ResponseEntity<List<Attendance>> statusOf (@RequestParam String name,
 													  @RequestParam String userName,
 													  @RequestParam String month

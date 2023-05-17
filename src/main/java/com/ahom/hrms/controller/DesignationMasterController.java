@@ -22,14 +22,14 @@ public class DesignationMasterController {
 	DesignationMasterService designationMasterService;
 
 	//save data
-	@PostMapping("/savedesignation")
+	@PostMapping("/saveDesignation")
 	public ResponseEntity<DesignationMasterDto> saveDesignation(@Valid @RequestBody DesignationMasterDto designationMasterDto){
 		designationMasterService.saveDesignation(designationMasterDto);
 		return new ResponseEntity<>(designationMasterDto, HttpStatus.CREATED);
 	}
 
 	//fetch all data from database
-	@GetMapping("/fetchalldesignation")
+	@GetMapping("/fetchAllDesignation")
 	public ResponseEntity<List<DesignationMasterDto>> getDesignation(){
 		List<DesignationMasterDto> allEmployee = designationMasterService.getAllEmployee();
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();

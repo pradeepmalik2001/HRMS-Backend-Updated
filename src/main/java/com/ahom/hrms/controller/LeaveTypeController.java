@@ -26,7 +26,7 @@ public class LeaveTypeController {
 		List<LeaveTypeDto>alljob=leaveTypeService.getAllLeaveDetail();
 		return alljob; 
 	}
-	@DeleteMapping("/leavetype/{deletei}")
+	@DeleteMapping("/leaveType/{deletei}")
 	public void delete(@PathVariable ("deletei")int i) {
 	leaveTypeService.deleteLaeveDetail(i);
 	
