@@ -2,17 +2,13 @@ package com.ahom.hrms.controller;
 
 import com.ahom.hrms.Repository.RoleRepository;
 import com.ahom.hrms.Repository.UserMasterRepository;
-import com.ahom.hrms.dto.JwtTokenResponse;
 import com.ahom.hrms.dto.UserMasterDto;
 import com.ahom.hrms.entities.UserMaster;
 import com.ahom.hrms.service.UserMasterService;
-import com.ahom.hrms.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +25,8 @@ public class UserMasterController {
 	
 	@Autowired
 	UserMasterService userMasterService;
-	@Autowired
-	JWTUtils jwtUtils;
+//	@Autowired
+//	JWTUtils jwtUtils;
 	@Autowired
 	AuthenticationManager authenticationManager;
 	@Autowired
@@ -43,25 +39,25 @@ public class UserMasterController {
 	@Autowired
 	UserDetailsService userDetailsService;
 
-	@PostMapping("/authenticate")
-		public ResponseEntity<?> generateToken(@RequestBody UserMaster authRequest) throws Exception {
-
-		UserDetails userDetails;
-		try {
-			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
-
-			userDetails = this.userDetailsService.loadUserByUsername(authRequest.getUserName());
-
-		} catch (Exception ex) {
-			throw new Exception("invalid username/password");
-		}
-		String Token = jwtUtils.generateToken(userDetails);
-		JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
-		jwtTokenResponse.setToken(Token);
-		jwtTokenResponse.setUser(this.userMasterRepository.findByUserName(authRequest.getUserName()));
-		return ResponseEntity.ok(jwtTokenResponse);
-	}
+//	@PostMapping("/authenticate")
+//		public ResponseEntity<?> generateToken(@RequestBody UserMaster authRequest) throws Exception {
+//
+//		UserDetails userDetails;
+//		try {
+//			authenticationManager.authenticate(
+//					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
+//
+//			userDetails = this.userDetailsService.loadUserByUsername(authRequest.getUserName());
+//
+//		} catch (Exception ex) {
+//			throw new Exception("invalid username/password");
+//		}
+//		String Token = jwtUtils.generateToken(userDetails);
+//		JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
+//		jwtTokenResponse.setToken(Token);
+//		jwtTokenResponse.setUser(this.userMasterRepository.findByUserName(authRequest.getUserName()));
+//		return ResponseEntity.ok(jwtTokenResponse);
+//	}
 	
 	//save data
 	@PostMapping("/saveuser")
