@@ -19,7 +19,7 @@ public class AddApprovalController {
 	AddApprovalService addApprovalService;
 
 	//save data
-	@PostMapping("/saveapproval")
+	@PostMapping("/saveApproval")
 	public ResponseEntity<AddApprovalDto> saveApproval(@RequestBody AddApprovalDto addApprovalDto){
 		addApprovalService.saveAddApproval(addApprovalDto);
 		return new ResponseEntity<>(addApprovalDto, HttpStatus.CREATED);

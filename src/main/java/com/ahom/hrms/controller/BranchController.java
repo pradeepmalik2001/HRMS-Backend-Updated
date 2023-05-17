@@ -25,7 +25,7 @@ public class BranchController {
     }
 
 
-    @GetMapping("/fetchdata")
+    @GetMapping("/fetchData")
     public List<BranchDto> getBranch(){
         List<BranchDto> allBranchDto=branchService.getAll();
         return allBranchDto;

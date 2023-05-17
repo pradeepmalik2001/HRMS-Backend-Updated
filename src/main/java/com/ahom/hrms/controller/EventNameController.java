@@ -20,13 +20,13 @@ public class EventNameController {
     EventNameServiceImpl eventNameService;
 
 
-    @PostMapping("/savedata")
+    @PostMapping("/saveData")
     public ResponseEntity<EventNameDto> saveEvent(@Valid @RequestBody EventNameDto eventNameDto){
         eventNameService.saveEventName(eventNameDto);
         return new ResponseEntity<>(eventNameDto, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/fetchdata")
+    @GetMapping("/fetchData")
     public List<EventNameDto> getEventName(){
         List<EventNameDto> allEventNameDto=eventNameService.getAll();
         return allEventNameDto;

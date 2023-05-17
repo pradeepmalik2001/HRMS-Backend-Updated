@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/addjobtitle")
+@RequestMapping("/addJobTitle")
 public class AddJobTitleController {
 
 	@Autowired
@@ -34,14 +34,14 @@ public class AddJobTitleController {
 		return new ResponseEntity<>(addJobTitleDto,HttpStatus.CREATED);
 		
 	}
-	@GetMapping("/getjob")
+	@GetMapping("/getJob")
 	public List<AddJobTitleDto>get()
 	{
 		List<AddJobTitleDto>getDto=this.addJobTitleService.getJob();
 		return getDto;
 	}
-	@GetMapping("/{getid}")
-	public List<AddJobTitleDto>add(@PathVariable("getid")int id)
+	@GetMapping("/{getId}")
+	public List<AddJobTitleDto>add(@PathVariable("getId")int id)
 	{
 		return addJobTitleService.getById(id);
 	}

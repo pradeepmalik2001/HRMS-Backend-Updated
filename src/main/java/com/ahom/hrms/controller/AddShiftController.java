@@ -24,7 +24,7 @@ import com.ahom.hrms.entities.ShiftManagement;
 
 @RestController
 @CrossOrigin 
-@RequestMapping("/shiftmanagement")
+@RequestMapping("/shiftManagement")
 public class AddShiftController {
 
 
@@ -35,7 +35,7 @@ public class AddShiftController {
 //	    @Autowired
 //		private AddShiftDto addShiftDto;
 
-	@PostMapping("/addshift")
+	@PostMapping("/addShift")
 	public ResponseEntity<AddShiftDto> saveAddShift(@RequestBody AddShiftDto addShiftDto) {
 
 		addShiftService.saveAddShift(addShiftDto);
@@ -43,7 +43,7 @@ public class AddShiftController {
 	}
 
 
-	@GetMapping("/viewshift")
+	@GetMapping("/viewShift")
 	public List<AddShiftDto> getAddShift() {
 		List<AddShiftDto> allEmployee = addShiftService.getAllAddShift();
 
@@ -53,13 +53,13 @@ public class AddShiftController {
 	}
 
 
-	@GetMapping("/viewemployee/{Id}")
+	@GetMapping("/viewEmployee/{Id}")
 	public AddShiftDto getAddShiftById(@PathVariable("Id") int Id) {
 		return addShiftService.addShiftById(Id);
 	}
 
 
-	@DeleteMapping("/addshift/{Id}")
+	@DeleteMapping("/addShift/{Id}")
 	public void deleteaddShift(@PathVariable("Id") int Id){
 		addShiftService.deleteAddShift(Id);
 	}

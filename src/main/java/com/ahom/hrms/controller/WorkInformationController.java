@@ -20,12 +20,12 @@ public class WorkInformationController {
 	WorkInformationService workInformationService;
 
 	//save data
-	@PostMapping("/savework")
+	@PostMapping("/saveWork")
 	public ResponseEntity<WorkInformationDto> saveWork(@Valid @RequestBody WorkInformationDto workInformationDto) throws Exception{
 		workInformationService.saveWorkInfo(workInformationDto);
 		return new ResponseEntity<>(workInformationDto, HttpStatus.CREATED);
 	}
-	@GetMapping("/fetchdata")
+	@GetMapping("/fetchData")
 	public List<WorkInformationDto> getWorkInformation(){
 		List<WorkInformationDto> allWorkInformationDto=workInformationService.getAll();
 		return allWorkInformationDto;

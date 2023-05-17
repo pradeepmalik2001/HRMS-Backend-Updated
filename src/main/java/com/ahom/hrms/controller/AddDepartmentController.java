@@ -22,13 +22,13 @@ public class AddDepartmentController {
 	AddDepartmentService addDepartmentService;
 
 	//save data
-	@PostMapping("/savedepartment")
+	@PostMapping("/saveDepartment")
 	public ResponseEntity<AddDepartmentDto> saveDepartments(@Valid @RequestBody AddDepartmentDto addDepartmentDto) throws Exception {
 		addDepartmentService.saveDepartment(addDepartmentDto);
 		return new ResponseEntity<>(addDepartmentDto, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public ResponseEntity<List<AddDepartmentDto>> getALlUser()
 	{
 		return new ResponseEntity<>(this.addDepartmentService.getALlUser(),HttpStatus.CREATED);

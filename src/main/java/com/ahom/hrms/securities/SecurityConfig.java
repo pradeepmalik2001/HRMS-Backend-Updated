@@ -29,8 +29,20 @@ import org.springframework.web.filter.CorsFilter;
                 "/login",
                 "/signup"
         };
+        public static final String [] ADMIN_URLS= {
+                "/saveApproval","/department","/holiday/leaveDetail","/holiday/{deletei}","/holiday/edit/{id}",
+                "/addJobTitle/**","/attendance/save","/attendance/upload","/attendance",
+                "/attendance/fetch","/attendance/Delete/{employeeId}","/attendance/update","/bank/**",
+                "/basic/**","/branch/**","/designation/**","disApprove/**","approve/**","/emergency/**",
+                "/employees/**","/employee/**","/employment/**","/event/**","/leave/**","/OverTime/**",
+                "/training/**","/trainingName/**","/TravelOverview/**","/work/**"
 
 
+        };
+        public static final String [] EMPLOYEE_URLS={
+                "/holiday/leaveDetails","/shiftManagement/**","/attendance/byDate","/attendance/status",
+                "/attendance/count","/attendance/statusOf","/CreateLeaveRequest/**"
+        };
         @Autowired
         private CustomUserDetailService customUserDetailService;
 
@@ -50,9 +62,9 @@ import org.springframework.web.filter.CorsFilter;
                     .authorizeHttpRequests()
                     .antMatchers(PUBLIC_URLS)
                     .permitAll()
-                    .antMatchers("/employees/**")
-                    .hasRole("EMPLOYEE")
-                    .antMatchers("/department/**")
+                    .antMatchers(EMPLOYEE_URLS)
+                    .hasAnyRole("EMPLOYEE","ADMIN")
+                    .antMatchers(ADMIN_URLS)
                     .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated()

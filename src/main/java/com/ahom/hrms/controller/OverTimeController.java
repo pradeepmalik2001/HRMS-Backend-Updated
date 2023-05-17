@@ -38,7 +38,7 @@ public class OverTimeController {
 		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
 	}
 
-	@PostMapping("/bydate")
+	@PostMapping("/byDate")
 	@ResponseBody
 	public ResponseEntity<List<OverTime>> ot(@RequestParam String startdate,
 												@RequestParam String enddate,
