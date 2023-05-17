@@ -24,4 +24,5 @@ public class PushNotification {
     private String message;
     private String topic;
     private String token;
+    public  String body;
 }
