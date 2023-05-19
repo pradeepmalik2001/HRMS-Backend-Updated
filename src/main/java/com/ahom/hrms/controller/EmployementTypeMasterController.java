@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("employment")
+	@RequestMapping("employment")
 public class EmployementTypeMasterController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class EmployementTypeMasterController {
 
 	}
 
-	@DeleteMapping("/employment/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteEmployement(@PathVariable int id)
 	{
 		employementTypeMasterService.deleteEMployement(id);

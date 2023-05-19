@@ -60,6 +60,8 @@ public class AddShiftServiceimpl implements AddShiftService {
 		abc.setCountry(shiftManagement.getCountry());
 		abc.setEmployee(shiftManagement.getEmployee());
 		abc.setDate(shiftManagement.getDate());
+		abc.setStartTime(shiftManagement.getStartTime());
+		abc.setEndTime(shiftManagement.getEndTime());
 //	    		if(abc.getId()==id)
 //	    		{
 //	    			abc.setShiftName(shiftManagement.getShiftName());
