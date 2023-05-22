@@ -1,4 +1,5 @@
 package com.ahom.hrms.controller;
+import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,12 @@ public class WorkInformationController {
 
 	//save data
 	@PostMapping("/saveWork")
-	public ResponseEntity<WorkInformationDto> saveWork(@Valid @RequestBody WorkInformationDto workInformationDto) throws Exception{
-		workInformationService.saveWorkInfo(workInformationDto);
-		return new ResponseEntity<>(workInformationDto, HttpStatus.CREATED);
+	public ResponseEntity<Object> saveWork(@Valid @RequestBody WorkInformationDto workInformationDto) throws Exception{
+		return ResponseHandler.responseBuilder("Work information of employee"+ " "+workInformationDto.getEmployeeName(),
+				HttpStatus.OK,workInformationService.saveWorkInfo(workInformationDto));
 	}
 	@GetMapping("/fetchData")
 	public List<WorkInformationDto> getWorkInformation(){
-		List<WorkInformationDto> allWorkInformationDto=workInformationService.getAll();
-		return allWorkInformationDto;
+		return workInformationService.getAll();
 	}
 }

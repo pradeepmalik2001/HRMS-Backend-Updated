@@ -1,6 +1,7 @@
 package com.ahom.hrms.securities;
 
 import com.ahom.hrms.Repository.EmployeeRepository;
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.serviceimpl.EmployeeService;
@@ -78,31 +79,32 @@ public class AuthController {
     // register new user api
 
     @PostMapping("/signup")
-    public ResponseEntity<Employee> registerUser(@Valid @RequestBody Employee UserDTO) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody Employee UserDTO) {
         Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
         if (employee.isEmpty()) {
 
 
-            SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-            messageToEmployee.setFrom(fromEmail);
-            messageToEmployee.setTo(UserDTO.getUsername());
-            messageToEmployee.setSubject("Login Credentials");
-            messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName()+ " "
-                    + "\n"
-                    +"\n"
-                    +"User Name = "
-                    + UserDTO.getUsername() +" " +
-                    " "+
-                    "\n" +
-                    "Password :" +
-                    " " + UserDTO.getConfirmPassword());
-            mailSender.send(messageToEmployee);
-            System.out.println(messageToEmployee);
+//            SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+//            messageToEmployee.setFrom(fromEmail);
+//            messageToEmployee.setTo(UserDTO.getUsername());
+//            messageToEmployee.setSubject("Login Credentials");
+//            messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName()+ " "
+//                    + "\n"
+//                    +"\n"
+//                    +"User Name = "
+//                    + UserDTO.getUsername() +" " +
+//                    " "+
+//                    "\n" +
+//                    "Password :" +
+//                    " " + UserDTO.getConfirmPassword());
+//            mailSender.send(messageToEmployee);
+//            System.out.println(messageToEmployee);
 
             Employee createUser = userService.saveEmployee(UserDTO);
-            return new ResponseEntity<Employee>(createUser, HttpStatus.CREATED);
+            return ResponseHandler.responseBuilder("Employee registered successfully",
+                    HttpStatus.CREATED,createUser);
         }else {
-            throw new CustomException("Employee already exist");
+            throw new RuntimeException("Employee already exist");
         }
     }
 

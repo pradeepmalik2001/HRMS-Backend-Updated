@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BasicEmployeeService {
 	
-	void saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException;
+	Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException;
 	
 	BasicEmployeeDto employeeById(int employeeId);
 	
@@ -19,6 +19,6 @@ public interface BasicEmployeeService {
 	List<BasicEmployee> getAllEmployee();
 	List<BasicEmployee>details(int id);
 
-	void deleteEmployee(int id);
+	Object deleteEmployee(int id);
 
 }

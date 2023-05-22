@@ -30,7 +30,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/signup"
         };
         public static final String [] ADMIN_URLS= {
-                "/saveApproval","/department","/holiday/leaveDetail","/holiday/{deletei}","/holiday/edit/{id}",
+                "/saveApproval","/department","/holiday/leaveDetail","/holiday/{id}","/holiday/edit/{id}",
                 "/addJobTitle/**","/attendance/save","/attendance/upload","/attendance",
                 "/attendance/fetch","/attendance/Delete/{employeeId}","/attendance/update","/bank/**",
                 "/basic/**","/branch/**","/designation/**","disApprove/**","approve/**","/emergency/**",

@@ -3,15 +3,16 @@ package com.ahom.hrms.service;
 import java.util.List;
 
 import com.ahom.hrms.dto.AddHolidayDto;
+import com.ahom.hrms.entities.AddHoliday;
 
 public interface AddHolidayService {
 
-	void SaveAddHolidayDetail(AddHolidayDto addHolidayDto);
+	Object SaveAddHolidayDetail(AddHolidayDto addHolidayDto);
 
 	List<AddHolidayDto> getAllLeaveDetail();
 
-	void deleteLaeveDetail(int i);
+	AddHoliday  deleteLaeveDetail(int id);
 
-	void updateLeaveDetail(AddHolidayDto addHolidayDto,int id);
+	Object updateLeaveDetail(AddHolidayDto addHolidayDto, int id);
 
 }

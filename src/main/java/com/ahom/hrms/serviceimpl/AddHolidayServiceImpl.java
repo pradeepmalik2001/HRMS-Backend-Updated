@@ -24,63 +24,64 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	ModelMapper modelMapper;
 
 
-	public void SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
+	public Object SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
 	{
 		 AddHoliday addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate
 				(addHolidayDto.getHolidayName(),
 						addHolidayDto.getFromDate(),
 						addHolidayDto.getToDate());
-		if(Objects.isNull(addHolidays))
+
+		 if(!Objects.isNull(addHolidays))
+
 		{
-			addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+			throw  new CustomException("Data Already Exist");
+
 		}
 		else
 		{
-			throw  new CustomException("Data Already Exist");
+			 return addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+
 		}
+
 	}
 
 	public List<AddHolidayDto>getAllLeaveDetail(){
 		List<AddHoliday>jobTitles=this.addHolidayRepository.findAll();
-		List<AddHolidayDto>jobTitleToList=jobTitles.stream().map(title->this.addHolidaytoAddHolidayDto(title)).collect(Collectors.toList());
-		return jobTitleToList;
+		return jobTitles.stream().map(this::addHolidaytoAddHolidayDto).collect(Collectors.toList());
 	}
 
-	public void deleteLaeveDetail(int i) {
-		AddHoliday addHoliday=addHolidayRepository.findById(i).orElse(null);
+	public AddHoliday deleteLaeveDetail(int id) {
+		AddHoliday addHoliday=addHolidayRepository.findById(id).orElse(null);
 		if (addHoliday!=null){
-			addHolidayRepository.deleteById(i);
-			throw new CustomException("deleted successfully");
+			addHolidayRepository.deleteById(id);
+
 		}else {
-			throw new CustomException("No Particular holiday present");
+			throw new RuntimeException("No Particular holiday present");
 		}
 
+		return addHoliday;
 	}
 
-	public void updateLeaveDetail(AddHolidayDto addHolidayDto ,int id) {
+	public Object updateLeaveDetail(AddHolidayDto addHolidayDto , int id) {
 
 		AddHoliday addHolidayDto1=addHolidayRepository.findById(id).orElse(null);
 
 		addHolidayDto1.setHolidayName(addHolidayDto.getHolidayName());
-//		addHolidayDto1.setId(addHolidayDto.getId());
 		addHolidayDto1.setHolidayType(addHolidayDto.getHolidayType());
 		addHolidayDto1.setFromDate(addHolidayDto.getFromDate());
 		addHolidayDto1.setToDate(addHolidayDto.getToDate());
 
-		addHolidayRepository.saveAndFlush(addHolidayDto1);
+		return addHolidayRepository.saveAndFlush(addHolidayDto1);
+
 	}
 
 	public AddHoliday AddHolidayDtotoAddHoliday(AddHolidayDto addHolidayDto) {
 		AddHoliday addholiday=this.modelMapper.map(addHolidayDto, AddHoliday.class);
-		//	addjobtitle.setId(addJobTitleDto.getId());
-		//	addjobtitle.setjobTitle(addJobTitleDto.getJobTitle());
 		return addholiday;
 	}
 
 	public AddHolidayDto addHolidaytoAddHolidayDto(AddHoliday title) {
 		AddHolidayDto addjobtitledto=this.modelMapper.map(title, AddHolidayDto.class);
-		//	addjobtitledto.setId(addjobtitle.getId());
-		//	addjobtitledto.setJobTitle(addjobtitle.getjobTitle());
 		return addjobtitledto;
 	}
 }

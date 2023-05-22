@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BankingInfoService {
 	
-	void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception;
+	Object saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception;
 	
 	BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception;
 	

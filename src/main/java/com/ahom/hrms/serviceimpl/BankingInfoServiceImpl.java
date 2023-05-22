@@ -5,7 +5,6 @@ import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.WorkInformationRepository;
 import com.ahom.hrms.entities.BankingInfo;
 import com.ahom.hrms.entities.BasicEmployee;
-import com.ahom.hrms.entities.WorkInformation;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +26,19 @@ public class BankingInfoServiceImpl implements BankingInfoService{
 	@Autowired
 	BasicEmployeeRepository basicEmployeeRepository;
 
-//	@Autowired
-//	WorkInformation workInformation;
 @Autowired
 WorkInformationRepository workInformationRepository;
 
 	//save data
-	public void saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-//		BasicEmployee employee=basicEmployeeRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
+	public Object saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
 		BankingInfo bankingInfo = bankingInfoRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
 		if (bankingInfo == null) {
-
 			bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
 			bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
-			throw new CustomException("Data Saved");
 		} else {
-			throw new CustomException("Data is Already Present");
+			throw new RuntimeException("Data is Already Present");
 		}
+		return bankingInfoDto;
 	}
 
 
@@ -78,40 +73,17 @@ WorkInformationRepository workInformationRepository;
 	@Override
 	public List<BankingInfo> getAllInfo() {
 
-//		BasicEmployee basicEmployee= (BasicEmployee) basicEmployeeRepository.findAll();
-//		double grossSalary = (double) (basicEmployee.getCtc()) /12;
-//		double basicSalary=grossSalary*0.6;
-//		System.out.println(basicSalary);
-//		System.out.println(grossSalary);
 		return bankingInfoRepository.findAll();
 	}
 
-	//	@Override
-//	public List<BankingInfo> getBankInfo() {
-//
-//		List list=this.bankingInfoRepository.findAll();
-//		return list;
-//		List<BankingInfo>get=this.bankingInfoRepository.findAll();
-//		 List<BankingInfoDto> getBank=get.stream().map(li-> {
-//			 try {
-//				 return this.bankingInfoToBankingInfoDto(li);
-//			 } catch (Exception e) {
-//				 throw new RuntimeException(e);
-//			 }
-//		 }).collect(Collectors.toList());
-//		 return getBank;
-//	}
 	@Override
 	public BankingInfoDto getById(Integer employeeId) throws Exception {
 		BankingInfo byId = bankingInfoRepository.findAllById(employeeId);
-//		BasicEmployee basicEmployee=basicEmployeeRepository.findById(employeeId).orElse(null);
-//		if (basicEmployee!=null)
-//		{
-//			byId.setBasicEmployee1(basicEmployee);
-		return bankingInfoToBankingInfoDto(byId);
-//		}else
-//			return null;
-
+		if (byId!=null) {
+			return bankingInfoToBankingInfoDto(byId);
+		}else {
+			throw new RuntimeException("Employee With ID:" +employeeId+" not found");
+		}
 	}
 
 
