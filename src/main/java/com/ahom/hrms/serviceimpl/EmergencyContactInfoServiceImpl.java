@@ -3,7 +3,6 @@ package com.ahom.hrms.serviceimpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +28,16 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 	ModelMapper modelMapper;
 
 	//save data
-	public void saveEmergencyContact(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {
-//		BasicEmployee employee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
-		EmergencyContactInfo contactInfo = emergencyContactInfoRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
+	public Object saveEmergencyContact(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {
+
+		EmergencyContactInfo contactInfo = emergencyContactInfoRepository.
+				findById(emergencyContactInfoDto.getId()).orElse(null);
 
 		if (contactInfo != null) {
-			throw new CustomException("Data Already Exist");
+			throw new RuntimeException("Data Already Exist");
 		}
 		emergencyContactInfoRepository.save(emergencyContactInfoDtoToEmergencyContactInfo(emergencyContactInfoDto));
+		return emergencyContactInfoDto;
 	}
 
 
@@ -44,7 +45,7 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 	//converting DTO
 	public EmergencyContactInfo emergencyContactInfoDtoToEmergencyContactInfo(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {
 		EmergencyContactInfo emergencyContactInfo = this.modelMapper.map(emergencyContactInfoDto, EmergencyContactInfo.class);
-		BasicEmployee basicEmployee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
+		BasicEmployee basicEmployee=basicEmployeeRepository.findById(emergencyContactInfoDto.getId()).orElse(null);
 		if(basicEmployee!=null) {
 			emergencyContactInfo.setId(basicEmployee.getEmployeeId());
 			emergencyContactInfo.setBasicEmployee(basicEmployee);
