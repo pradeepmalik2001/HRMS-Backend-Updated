@@ -20,12 +20,9 @@ import com.ahom.hrms.service.BasicEmployeeService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
@@ -49,7 +46,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	private String emailSubject;
 
 	//save data
-	public void saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
+	public Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
 		BasicEmployee basicEmployee = basicEmployeeRepository.
 				findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
 						basicEmployeeDto.getAadhaarNumber(),
@@ -63,19 +60,10 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 			basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
 		}else {
 			throw
-					new CustomException("something went wrong");
+					new RuntimeException("Found duplicate entry");
 		}
-
-//		if (Objects.equals(basicEmployeeDto.getAadhaarNumber(), basicEmployee.getAadhaarNumber()))
-//		{
-//			if (Objects.equals(basicEmployeeDto.getPanNumber(),basicEmployee.getPanNumber()))
-//			{
-//			throw new CustomException("Pan preent");
-//			}
-//
-//		}	throw new CustomException("aadhaar present");
-
-	}
+        return basicEmployeeDto;
+    }
 
 	//fetch data by employee id
 	public BasicEmployeeDto employeeById(int employeeId){
@@ -93,6 +81,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	//converting DTO
 	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
 		BasicEmployee basicEmployee=new BasicEmployee();
+		basicEmployeeDto.setEmployeeId(basicEmployee.getEmployeeId());
 		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		Date date=dateFormat.parse(basicEmployeeDto.getJoiningDate());
 		basicEmployee.setJoiningDate(String.valueOf(date));
@@ -117,14 +106,18 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	}
 
 	@Override
-	public void deleteEmployee(int id) {
+	public Object deleteEmployee(int id) {
 		BasicEmployee basicEmployee=basicEmployeeRepository.findById(id).orElse(null);
 		if (basicEmployee!=null) {
 
 			basicEmployeeRepository.deleteById(id);
-			throw new CustomException("Employee with ID"+" " +id + " " + "& name" + " " +
-					basicEmployee.getEmployeeName()+ " " + " Deleted Successfully");
+//			throw new RuntimeException("Employee with ID"+" " +id + " " + "& name" + " " +
+//					basicEmployee.getEmployeeName()+ " " + " Deleted Successfully");
 		}
+		else {
+			throw new RuntimeException("Employee with ID:" + id + " " + "not found");
+		}
+		return null;
 	}
 	@Scheduled(cron = "00 33 18 * * ?")
 	public void checkBirthday()

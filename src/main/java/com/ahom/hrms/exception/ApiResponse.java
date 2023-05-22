@@ -10,15 +10,7 @@ public class ApiResponse {
     private String error_message;
 
     private int status_code;
-//    private Object data;
-//
-//    public Object getData() {
-//        return data;
-//    }
-//
-//    public void setData(Object data) {
-//        this.data = data;
-//    }
+
 
     public String getError_message() {
         return error_message;

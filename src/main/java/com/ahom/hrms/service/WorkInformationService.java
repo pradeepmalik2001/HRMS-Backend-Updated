@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WorkInformationService {
 	
-	void saveWorkInfo(WorkInformationDto workInformationDto) throws Exception;
+	WorkInformation saveWorkInfo(WorkInformationDto workInformationDto) throws Exception;
 	
 	WorkInformation workInformationDtoToWorkInformation(WorkInformationDto workInformationDto) throws Exception;
 	

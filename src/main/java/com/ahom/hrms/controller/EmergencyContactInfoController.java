@@ -2,6 +2,7 @@ package com.ahom.hrms.controller;
 
 import java.util.List;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,13 @@ public class EmergencyContactInfoController {
 
 	//save data
 	@PostMapping("/saveEmergencyContact")
-	public ResponseEntity<EmergencyContactInfoDto> saveEmergencyContact(@Valid @RequestBody EmergencyContactInfoDto emergencyContactInfoDto) throws Exception{
-		emergencyContactInfoService.saveEmergencyContact(emergencyContactInfoDto);
-		return new ResponseEntity<>(emergencyContactInfoDto, HttpStatus.CREATED);
+	public ResponseEntity<Object> saveEmergencyContact(@Valid @RequestBody EmergencyContactInfoDto emergencyContactInfoDto) throws Exception{
+
+		return ResponseHandler.responseBuilder("Emergency contact is saved for Employee"
+		+" " + emergencyContactInfoDto.getEmployeeName(),HttpStatus.OK,
+				emergencyContactInfoService.saveEmergencyContact(emergencyContactInfoDto));
+
+
 	}
 @GetMapping("/getAllEmergencyContactInfo")
 public List<EmergencyContactInfoDto> EmergencyContactInfo()

@@ -45,10 +45,12 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     private String emailSubject;
 
     //save data
-    public void saveWorkInfo(WorkInformationDto workInformationDto) throws Exception {
+    public WorkInformation saveWorkInfo(WorkInformationDto workInformationDto) throws Exception {
 
-            workInformationRepository.save(workInformationDtoToWorkInformation(workInformationDto));
-           
+         return workInformationRepository.
+                 save(workInformationDtoToWorkInformation(workInformationDto));
+
+
     }
 
     //converting DTO
@@ -64,9 +66,6 @@ public class WorkInformationServiceImpl implements WorkInformationService {
             }else {
                 throw new CustomException("employee not found for particular Id" +" "+workInformation.getWorkId());
             }
-        }else
-        {
-            throw new CustomException("Record for Id" + " " + workInformationDto.getWorkId()+" " + "is already present");
         }
         return workInformation;
     }

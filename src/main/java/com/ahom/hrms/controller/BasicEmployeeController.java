@@ -1,5 +1,6 @@
 package com.ahom.hrms.controller;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.serviceimpl.ReportXmlServiceImpl;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,10 @@ public class BasicEmployeeController {
 
 	//save data
 	@PostMapping("/saveemployee")
-	public ResponseEntity<BasicEmployeeDto> saveEmployees(@Valid @RequestBody BasicEmployeeDto basicEmployeeDto) throws ParseException {
-		basicEmployeeService.saveEmployee(basicEmployeeDto);
-		return new ResponseEntity<>(basicEmployeeDto, HttpStatus.CREATED);
+	public ResponseEntity<Object> saveEmployees(@Valid @RequestBody BasicEmployeeDto basicEmployeeDto) throws ParseException {
+		return ResponseHandler.responseBuilder("Employee Data saved Successfully",HttpStatus.CREATED,
+				basicEmployeeService.saveEmployee(basicEmployeeDto));
+
 	}
 
 	//fetch data by id
@@ -48,23 +50,6 @@ public class BasicEmployeeController {
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.ok(basicEmployeeDto);
 	}
-//	@GetMapping("/export-to-pdf")
-//	public void getAll(HttpServletResponse response) throws DocumentException, IOException
-//	{
-//		 response.setContentType("application/pdf");
-//		    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
-//		    String currentDateTime = dateFormat.format(new Date());
-//		    String headerkey = "Content-Disposition";
-//		    String headervalue = "attachment; filename=student" + currentDateTime + ".pdf";
-//		    response.setHeader(headerkey, headervalue);
-//	        List<BasicEmployee> allEmployee = this.basicEmployeeService.getAllEmployee();
-//	        PdfGenerator generator = new PdfGenerator();
-//		    generator.generate(allEmployee, response);
-//	}
-//	@PostMapping("/hra/{id}")
-//	public double  hra(@PathVariable int id)
-//	{
-//		return basicEmployeeService.
 //
 //	}
 @GetMapping("/formatof/{format}")
@@ -72,23 +57,17 @@ public String generateReport(@PathVariable String format) throws JRException, Fi
 	return reportxmlService.exportReport(format);
 }
 	@GetMapping("/fetchdata")
-	public ResponseEntity<List<BasicEmployee>> getAll()
+	public ResponseEntity<Object> getAll()
 	{
-		return new ResponseEntity<>(this.basicEmployeeService.getAllEmployee(),HttpStatus.ACCEPTED);
+		return ResponseHandler.responseBuilder("Employees Data",HttpStatus.OK,
+				basicEmployeeService.getAllEmployee());
 	}
 
-	@PostMapping("/fetchdata")
-	public ResponseEntity<List<BasicEmployee>>fetch(@RequestParam int id){
-		List<BasicEmployee>list=basicEmployeeService.details(id);
-		return new ResponseEntity<>(list,HttpStatus.OK);
-	}
-//	public ResponseEntity<List<DeptEmpDto>> getDeptEmployeesLeftJoin() {
-//		return new ResponseEntity<List<DeptEmpDto>>(joinQueryService.getDeptEmployeesLeftJoin(), HttpStatus.OK);
-//	}
 
 	@DeleteMapping("/delete/{id}")
-	void deleteEmployee(@PathVariable int id)
+	public ResponseEntity<Object> deleteEmployee(@PathVariable int id)
 	{
-		basicEmployeeService.deleteEmployee(id);
+	return ResponseHandler.responseBuilder("Employee deleted successfully",HttpStatus.OK,
+			basicEmployeeService.deleteEmployee(id));
 	}
 }

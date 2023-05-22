@@ -19,6 +19,7 @@ import javax.validation.Valid;
 @CrossOrigin
 @RequestMapping("/holiday")
 public class AddHolidayController {
+
 @Autowired
 AddHolidayServiceImpl addHolidayService;
 @PostMapping("/leaveDetail")
