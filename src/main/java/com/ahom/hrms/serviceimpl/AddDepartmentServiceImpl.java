@@ -53,21 +53,17 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 	}
 
 	@Override
-	public AddDepartment delete(int id) {
-		AddDepartment addDepartment=addDepartmentRepository.findById(id).orElse(null);
-		if (addDepartment!=null) {
+	public AddDepartmentDto delete(int id)
+	{
 			addDepartmentRepository.deleteById(id);
-			throw new CustomException("successful");
-		}else {
-			throw new CustomException("Department is not present ");
-		}
+			return null;
 	}
 
 	@Override
 	public Optional<AddDepartment> getDepartmentById(int departmentId) {
 		if(addDepartmentRepository.findById(departmentId).isEmpty())
 		{
-			throw new CustomException("Id Not found");
+			throw new RuntimeException("Id Not found");
 		}
 		else {
 			return addDepartmentRepository.findById(departmentId);

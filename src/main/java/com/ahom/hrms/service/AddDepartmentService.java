@@ -16,7 +16,7 @@ public interface AddDepartmentService {
 
 	List<AddDepartmentDto> getALlUser();
 
-	AddDepartment delete(int id);
+	AddDepartmentDto delete(int id);
 
 	public Optional<AddDepartment> getDepartmentById(int departmentId);
 
