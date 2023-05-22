@@ -1,5 +1,6 @@
 package com.ahom.hrms.ExceptionHandling;
 
+import com.ahom.hrms.exception.ApiResponse;
 import com.ahom.hrms.exception.CustomException;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
@@ -25,20 +26,6 @@ public class ExeceptionHandler {
             return errorMap;
         }
 
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ResponseBody
-//    public Map<String, String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-//        Map<String, String> errors = new HashMap<>();
-//        String message = ex.getCause().getMessage();
-//        if (message.contains("Duplicate entry")) {
-//            String field = message.substring(message.lastIndexOf("for key") + 8);
-//            errors.put(field, "This value already exists");
-//        } else {
-//            errors.put("error", "An error occurred while processing your request");
-//        }
-//        return errors;
-//    }
 
 
     @ExceptionHandler(value =com.ahom.hrms.exception.AuthenticationException.class)
@@ -51,6 +38,16 @@ public class ExeceptionHandler {
     @ExceptionHandler(value = CustomException.class)
     public final ResponseEntity<String>handleCustomException(CustomException customException){
         return new ResponseEntity<>(customException.getMessage(),HttpStatus.ALREADY_REPORTED);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public final ResponseEntity<ApiResponse>handleException(Exception e){
+        ApiResponse response = new ApiResponse(
+                e.getMessage(),
+                HttpStatus.NOT_FOUND.value()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
     }
 
     }

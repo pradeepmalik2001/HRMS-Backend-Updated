@@ -70,7 +70,7 @@ public class AuthController {
 
         } catch (BadCredentialsException e) {
             System.out.println("Invalid Details !!");
-            throw new CustomException("Invalid username or password !!");
+            throw new RuntimeException("Invalid password !!");
         }
 
     }

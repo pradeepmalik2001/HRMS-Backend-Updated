@@ -25,28 +25,29 @@ public class DesignationMasterServiceImpl implements DesignationMasterService{
 	ModelMapper modelMapper;
 
 	//save data
-	public void saveDesignation(DesignationMasterDto designationMasterDto) {
+	public Object saveDesignation(DesignationMasterDto designationMasterDto) {
 		DesignationMaster designationMaster=designationMasterRepository.findByDesignationName(designationMasterDto.getDesignationName());
-		if(designationMaster==null)
+		if(designationMaster!=null)
 		{
-			designationMasterRepository.save(designationMasterDtoToDesignationMaster(designationMasterDto));
+			throw new RuntimeException ("Designation Already Present");
 		}
 		else{
-			throw new CustomException("Designation Already Present");
+			return designationMasterRepository.
+					save(designationMasterDtoToDesignationMaster(designationMasterDto));
+
 		}
+
 	}
 
 	//fetch all data
 	public List<DesignationMasterDto> getAllEmployee(){
 		List<DesignationMaster> listDesignation = this.designationMasterRepository.findAll();
-		List<DesignationMasterDto> userToList = listDesignation.stream().map(designation -> this.designationMasterToDesignationMasterDto(designation)).collect(Collectors.toList());
-		return userToList;
+		return listDesignation.stream().map(this::designationMasterToDesignationMasterDto).collect(Collectors.toList());
 	}
 
 	//converting DTO
 	public DesignationMaster designationMasterDtoToDesignationMaster(DesignationMasterDto designationMasterDto) {
-		DesignationMaster designationMaster = this.modelMapper.map(designationMasterDto, DesignationMaster.class);
-		return designationMaster;
+		return this.modelMapper.map(designationMasterDto, DesignationMaster.class);
 	}
 
 	public DesignationMasterDto designationMasterToDesignationMasterDto(DesignationMaster designationMaster) {
@@ -61,11 +62,12 @@ public class DesignationMasterServiceImpl implements DesignationMasterService{
 		if(designationMaster!=null)
 		{
 			designationMasterRepository.deleteById(id);
-			throw new CustomException("Deleted Successful");
+
 		}
 		else {
-			throw new CustomException("Designation Not Present");
+			throw new RuntimeException("Designation for ID:"+id+ " " +"not found");
 		}
+		return designationMaster;
 	}
 
 }
