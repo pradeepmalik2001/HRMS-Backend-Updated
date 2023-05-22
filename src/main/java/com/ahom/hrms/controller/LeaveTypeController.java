@@ -16,12 +16,12 @@ import com.ahom.hrms.serviceimpl.LeaveTypeServiceImpl;
 public class LeaveTypeController {
 	@Autowired
 	LeaveTypeServiceImpl leaveTypeService;
-	@PostMapping("/LeaveType")
+	@PostMapping("/leaveType")
 	public ResponseEntity<LeaveTypeDto>SaveLeaveTypeDetail(@RequestBody LeaveTypeDto leaveTypeDto){
 		leaveTypeService.SaveLeaveTypeDetail(leaveTypeDto);
 		return new ResponseEntity<>(leaveTypeDto,HttpStatus.CREATED);
 	 }
-	@GetMapping("/LeaveType")
+	@GetMapping("/leaveType")
 	public List<LeaveTypeDto> getAll(){
 		List<LeaveTypeDto>alljob=leaveTypeService.getAllLeaveDetail();
 		return alljob; 

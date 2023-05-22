@@ -1,8 +1,12 @@
 package com.ahom.hrms.securities;
 
+import javax.validation.constraints.NotEmpty;
+
 public class JwtAuthRequest {
 
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
     public String getUsername() {
         return username;
