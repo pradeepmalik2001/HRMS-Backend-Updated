@@ -30,18 +30,16 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 
 	//save data
 	public void saveEmergencyContact(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {
-		BasicEmployee employee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
-		EmergencyContactInfo contactInfo=emergencyContactInfoRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
-		if(employee!=null) {
-			if(contactInfo!=null) {
-				throw new CustomException("Data Already Exist");
-			}
-			emergencyContactInfoRepository.save(emergencyContactInfoDtoToEmergencyContactInfo(emergencyContactInfoDto));
-		} else {
-			throw new CustomException("Please Enter Correct Name");
-		}
+//		BasicEmployee employee=basicEmployeeRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
+		EmergencyContactInfo contactInfo = emergencyContactInfoRepository.findByEmployeeName(emergencyContactInfoDto.getEmployeeName());
 
+		if (contactInfo != null) {
+			throw new CustomException("Data Already Exist");
+		}
+		emergencyContactInfoRepository.save(emergencyContactInfoDtoToEmergencyContactInfo(emergencyContactInfoDto));
 	}
+
+
 
 	//converting DTO
 	public EmergencyContactInfo emergencyContactInfoDtoToEmergencyContactInfo(EmergencyContactInfoDto emergencyContactInfoDto) throws Exception {

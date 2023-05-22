@@ -4,6 +4,7 @@ import com.ahom.hrms.dto.AddDepartmentDto;
 import com.ahom.hrms.entities.AddDepartment;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AddDepartmentService {
 	
@@ -16,5 +17,7 @@ public interface AddDepartmentService {
 	List<AddDepartmentDto> getALlUser();
 
 	AddDepartment delete(int id);
+
+	public Optional<AddDepartment> getDepartmentById(int departmentId);
 
 }
