@@ -7,7 +7,7 @@ import com.ahom.hrms.entities.DesignationMaster;
 
 public interface DesignationMasterService {
 	
-	void saveDesignation(DesignationMasterDto designationMasterDto);
+	Object saveDesignation(DesignationMasterDto designationMasterDto);
 	
 	List<DesignationMasterDto> getAllEmployee();
 	

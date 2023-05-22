@@ -1,33 +1,41 @@
 package com.ahom.hrms.exception;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiResponse {
-    private String message;
-    private Boolean status;
+    private String error_message;
 
-    public ApiResponse(String message) {
-        this.message = message;
+    private int status_code;
+//    private Object data;
+//
+//    public Object getData() {
+//        return data;
+//    }
+//
+//    public void setData(Object data) {
+//        this.data = data;
+//    }
+
+    public String getError_message() {
+        return error_message;
     }
 
-    public String getMessage() {
-        return message;
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+
+
+
+    public int getStatus_code() {
+        return status_code;
     }
 
-    public ApiResponse(String message, boolean b) {
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setStatus_code(int status_code) {
+        this.status_code = status_code;
     }
 }
