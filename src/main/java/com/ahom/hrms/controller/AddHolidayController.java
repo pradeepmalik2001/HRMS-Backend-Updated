@@ -19,32 +19,25 @@ import javax.validation.Valid;
 @CrossOrigin
 @RequestMapping("/holiday")
 public class AddHolidayController {
-	@Autowired
-	AddHolidayServiceImpl addHolidayService;
 
-	@PostMapping("/leaveDetail")
-	public ResponseEntity<Object> SaveAddHolidayDetail(@Valid @RequestBody AddHolidayDto addHolidayDto) {
-		return ResponseHandler.responseBuilder("Holiday saved successfully", HttpStatus.CREATED
-				, addHolidayService.SaveAddHolidayDetail(addHolidayDto));
-	}
+@Autowired
+AddHolidayServiceImpl addHolidayService;
+@PostMapping("/leaveDetail")
+public ResponseEntity<Object>SaveAddHolidayDetail(@Valid @RequestBody AddHolidayDto addHolidayDto){
+	return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.CREATED,addHolidayService.SaveAddHolidayDetail(addHolidayDto));
+}
+@GetMapping("/leaveDetails")
+public ResponseEntity<Object> getAllJob(){
+	return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,addHolidayService.getAllLeaveDetail());
+}
+@DeleteMapping("/leaveDetail/{deletei}")
+	public ResponseEntity<Object> delete(@PathVariable ("deletei")int i)
+{
+	return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,addHolidayService.deleteLaeveDetail(i));
+} 
+@PutMapping("/edit/{id}")
+public ResponseEntity<Object>updateall(@RequestBody AddHolidayDto addHolidayDto,@PathVariable("id") int id){
+return ResponseHandler.responseBuilder("Updated Successfully",HttpStatus.OK,addHolidayService.updateLeaveDetail(addHolidayDto,id));
+}
 
-	@GetMapping("/leaveDetails")
-	public List<AddHolidayDto> getAllJob() {
-		List<AddHolidayDto> allJob = addHolidayService.getAllLeaveDetail();
-		return allJob;
-	}
-
-	@DeleteMapping("/leaveDetail/{id}")
-	public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-		return ResponseHandler.responseBuilder("Designation for ID:" + id + " " + "deleted successfully",
-				HttpStatus.OK, addHolidayService.deleteLaeveDetail(id));
-
-	}
-
-	@PutMapping("/edit/{id}")
-	public ResponseEntity<Object> updateall(@RequestBody AddHolidayDto addHolidayDto, @PathVariable("id") int id) {
-		return ResponseHandler.responseBuilder("Holiday updated", HttpStatus.CREATED,
-				addHolidayService.updateLeaveDetail(addHolidayDto, id));
-
-	}
 }

@@ -1,6 +1,5 @@
 package com.ahom.hrms.serviceimpl;
 
-import com.ahom.hrms.dto.WorkInformationDto;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +22,16 @@ public class EmployementTypeMasterServiceImpl implements EmployementTypeMasterSe
 	ModelMapper modelMapper;
 
 	//save data
-	public void saveEmployement(EmployementTypeMasterDto employementTypeMasterDto) {
+	public Object saveEmployement(EmployementTypeMasterDto employementTypeMasterDto) {
 		EmployementTypeMaster typeMaster=employementTypeMasterRepository.findByEmploymentType(employementTypeMasterDto.getEmploymentType());
 		if(typeMaster==null)
 		{
 			employementTypeMasterRepository.save(employementTypeMasterDtoToEmployementTypeMaster(employementTypeMasterDto));
 		}
 		else {
-			throw new CustomException("Employment Type is already present");
+			throw new RuntimeException("Employment Type is already present");
 		}
+		return employementTypeMasterDto;
 	}
 
 	//converting DTO
@@ -58,11 +58,11 @@ public List<EmployementTypeMasterDto> getAll() {
 		if(employementTypeMaster!=null)
 		{
 			employementTypeMasterRepository.deleteById(id);
-			throw new CustomException("Deleted Successful");
 		}
 		else {
-			throw new CustomException("Employment Type is not Present");
+			throw new RuntimeException("Employment Type for Id : "+id+" Not Found ");
 		}
+		return employementTypeMaster;
 	}
 
 }

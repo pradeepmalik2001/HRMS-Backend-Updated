@@ -1,6 +1,7 @@
 package com.ahom.hrms.controller;
 
 
+import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,22 +24,20 @@ public class EmployementTypeMasterController {
 
 	//save data
 	@PostMapping("/saveEmployment")
-	public ResponseEntity<EmployementTypeMasterDto> saveEmployement(@Valid @RequestBody EmployementTypeMasterDto employementTypeMasterDto){
-		employementTypeMasterService.saveEmployement(employementTypeMasterDto);
-		return new ResponseEntity<>(employementTypeMasterDto, HttpStatus.CREATED);
+	public ResponseEntity<Object> saveEmployement(@Valid @RequestBody EmployementTypeMasterDto employementTypeMasterDto){
+		return ResponseHandler.responseBuilder("Data Saved",HttpStatus.OK,employementTypeMasterService.saveEmployement(employementTypeMasterDto));
 	}
 
 //	rePush
 	@GetMapping("/getAllEmp")
-	public List<EmployementTypeMasterDto> getTypeMaster(){
-		List<EmployementTypeMasterDto> allEmployementTypeMasterDto=employementTypeMasterService.getAll();
-		return allEmployementTypeMasterDto;
-
+	public ResponseEntity<Object> getTypeMaster(){
+//		List<EmployementTypeMasterDto> allEmployementTypeMasterDto=employementTypeMasterService.getAll();
+		return ResponseHandler.responseBuilder("Fetched Successfully",HttpStatus.OK,employementTypeMasterService.getAll());
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void deleteEmployement(@PathVariable int id)
+	public ResponseEntity<Object> deleteEmployement(@PathVariable int id)
 	{
-		employementTypeMasterService.deleteEMployement(id);
+		return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,employementTypeMasterService.deleteEMployement(id));
 	}
 }

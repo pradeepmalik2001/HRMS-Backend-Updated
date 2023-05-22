@@ -24,7 +24,8 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	ModelMapper modelMapper;
 
 
-	public Object SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
+	public AddHolidayDto SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
+
 	{
 		 AddHoliday addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate
 				(addHolidayDto.getHolidayName(),
@@ -39,9 +40,10 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 		}
 		else
 		{
-			 return addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
 
+			throw  new RuntimeException("Data Already Exist");
 		}
+		return addHolidayDto;
 
 	}
 
@@ -50,28 +52,35 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 		return jobTitles.stream().map(this::addHolidaytoAddHolidayDto).collect(Collectors.toList());
 	}
 
-	public AddHoliday deleteLaeveDetail(int id) {
-		AddHoliday addHoliday=addHolidayRepository.findById(id).orElse(null);
+
+	public AddHoliday deleteLaeveDetail(int i) {
+		AddHoliday addHoliday=addHolidayRepository.findById(i).orElse(null);
 		if (addHoliday!=null){
-			addHolidayRepository.deleteById(id);
-
+			addHolidayRepository.deleteById(i);
 		}else {
-			throw new RuntimeException("No Particular holiday present");
+			throw new RuntimeException("No Holiday Present");
 		}
-
 		return addHoliday;
 	}
 
-	public Object updateLeaveDetail(AddHolidayDto addHolidayDto , int id) {
+	public AddHoliday updateLeaveDetail(AddHolidayDto addHolidayDto ,int id) {
+
 
 		AddHoliday addHolidayDto1=addHolidayRepository.findById(id).orElse(null);
+		if(addHolidayDto1!=null)
+		{
+			addHolidayDto1.setHolidayName(addHolidayDto.getHolidayName());
+			addHolidayDto1.setHolidayType(addHolidayDto.getHolidayType());
+			addHolidayDto1.setFromDate(addHolidayDto.getFromDate());
+			addHolidayDto1.setToDate(addHolidayDto.getToDate());
 
-		addHolidayDto1.setHolidayName(addHolidayDto.getHolidayName());
-		addHolidayDto1.setHolidayType(addHolidayDto.getHolidayType());
-		addHolidayDto1.setFromDate(addHolidayDto.getFromDate());
-		addHolidayDto1.setToDate(addHolidayDto.getToDate());
 
-		return addHolidayRepository.saveAndFlush(addHolidayDto1);
+			addHolidayRepository.saveAndFlush(addHolidayDto1);
+		}
+		else {
+			throw new RuntimeException("Holiday for Id : "+id+" is Not Found");
+		}
+		return addHolidayDto1;
 
 	}
 

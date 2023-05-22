@@ -1,6 +1,8 @@
 package com.ahom.hrms.controller;
 
+import com.ahom.hrms.Repository.AddDepartmentRepository;
 import com.ahom.hrms.Response.ResponseHandler;
+import com.ahom.hrms.entities.AddDepartment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +12,7 @@ import com.ahom.hrms.dto.AddDepartmentDto;
 import com.ahom.hrms.service.AddDepartmentService;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/department")
@@ -21,6 +23,9 @@ public class AddDepartmentController {
 
 	@Autowired
 	AddDepartmentService addDepartmentService;
+
+	@Autowired
+	AddDepartmentRepository addDepartmentRepository;
 
 	//save data
 	@PostMapping("/saveDepartment")
@@ -36,8 +41,9 @@ public class AddDepartmentController {
 //		return new ResponseEntity<>(this.addDepartmentService.getALlUser(),HttpStatus.CREATED);
 	}
 	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable ("id") int id){
-		addDepartmentService.delete(id);
+	public ResponseEntity<Object> delete(@PathVariable ("id") int id) {
+		AddDepartment addDepartment = addDepartmentRepository.findById(id).orElse(null);
+			return ResponseHandler.responseBuilder("Deleted Successfully", HttpStatus.OK, addDepartmentService.delete(id));
 	}
 
 

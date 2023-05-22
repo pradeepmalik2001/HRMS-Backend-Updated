@@ -7,12 +7,12 @@ import com.ahom.hrms.entities.AddHoliday;
 
 public interface AddHolidayService {
 
-	Object SaveAddHolidayDetail(AddHolidayDto addHolidayDto);
+	AddHolidayDto SaveAddHolidayDetail(AddHolidayDto addHolidayDto);
 
 	List<AddHolidayDto> getAllLeaveDetail();
 
-	AddHoliday  deleteLaeveDetail(int id);
+	AddHoliday deleteLaeveDetail(int i);
 
-	Object updateLeaveDetail(AddHolidayDto addHolidayDto, int id);
+	AddHoliday updateLeaveDetail(AddHolidayDto addHolidayDto,int id);
 
 }

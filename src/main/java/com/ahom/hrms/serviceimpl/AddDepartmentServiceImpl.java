@@ -28,7 +28,7 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 		if (byName==null) {
 			addDepartmentRepository.save(addDepartmentDtoToAddDepartment(addDepartmentDto));
 		}else {
-			throw new CustomException("Department already exist");
+			throw new RuntimeException("Department Already Present");
 		}
 		return addDepartmentDto;
 	}
@@ -53,21 +53,24 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 	}
 
 	@Override
-	public AddDepartment delete(int id) {
-		AddDepartment addDepartment=addDepartmentRepository.findById(id).orElse(null);
-		if (addDepartment!=null) {
-			addDepartmentRepository.deleteById(id);
-			throw new CustomException("successful");
-		}else {
-			throw new CustomException("Department is not present ");
-		}
+	public AddDepartment delete(int id)
+	{
+			AddDepartment addDepartment=addDepartmentRepository.findById(id).orElse(null);
+			if(addDepartment!=null)
+			{
+				addDepartmentRepository.deleteById(id);
+			}
+			else {
+				throw new RuntimeException("Department for ID : "+id+ " " +"not found");
+			}
+			return addDepartment;
 	}
 
 	@Override
 	public Optional<AddDepartment> getDepartmentById(int departmentId) {
 		if(addDepartmentRepository.findById(departmentId).isEmpty())
 		{
-			throw new CustomException("Id Not found");
+			throw new RuntimeException("Id Not found");
 		}
 		else {
 			return addDepartmentRepository.findById(departmentId);

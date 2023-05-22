@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmployementTypeMasterService {
 	
-	void saveEmployement(EmployementTypeMasterDto employementTypeMasterDto);
+	Object saveEmployement(EmployementTypeMasterDto employementTypeMasterDto);
 	
 	EmployementTypeMaster employementTypeMasterDtoToEmployementTypeMaster(EmployementTypeMasterDto employementTypeMasterDto);
 	
