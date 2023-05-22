@@ -42,14 +42,8 @@ public class AddDepartmentController {
 	}
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Object> delete(@PathVariable ("id") int id) {
-		Optional<AddDepartment> addDepartment = addDepartmentRepository.findById(id);
-		if (addDepartment!=null)
-		{
+		AddDepartment addDepartment = addDepartmentRepository.findById(id).orElse(null);
 			return ResponseHandler.responseBuilder("Deleted Successfully", HttpStatus.OK, addDepartmentService.delete(id));
-		}
-		else {
-			return ResponseHandler.responseBuilder("Deleted Successfully", HttpStatus.OK, addDepartmentService);
-		}
 	}
 
 

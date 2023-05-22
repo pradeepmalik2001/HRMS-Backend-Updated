@@ -4,7 +4,7 @@ import com.ahom.hrms.entities.Branch;
 import java.util.List;
 
 public interface BranchService {
-    void saveBranch(BranchDto branchDto);
+    BranchDto saveBranch(BranchDto branchDto);
 
     Branch branchDtoToBranch(BranchDto branchDto);
 
@@ -13,5 +13,5 @@ public interface BranchService {
     //get data
     List<BranchDto> getAll();
 
-    void deleteBranch(int id);
+    Branch deleteBranch(int id);
 }

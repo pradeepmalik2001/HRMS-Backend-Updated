@@ -7,11 +7,11 @@ import com.ahom.hrms.entities.AddJobTitle;
 
 public interface AddJobTitleService {
 	
-void saveTitle(AddJobTitleDto addJobTitleDto);
+AddJobTitleDto saveTitle(AddJobTitleDto addJobTitleDto);
 
 List<AddJobTitleDto> getJob();
 
-List<AddJobTitleDto> getById(int id);
+AddJobTitle getById(int id);
 
 AddJobTitle addJobTitleDtoToaddJobTitle(AddJobTitleDto addJobTitleDto);
 

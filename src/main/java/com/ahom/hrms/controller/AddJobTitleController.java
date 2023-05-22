@@ -1,7 +1,9 @@
 package com.ahom.hrms.controller;
 
 import java.util.List;
+import java.util.Objects;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,23 +29,21 @@ public class AddJobTitleController {
 	AddJobTitleServiceImpl addJobTitleService;
 	
 	@PostMapping("/save")
-	
-	public ResponseEntity<AddJobTitleDto> saveTitle(@Valid @RequestBody AddJobTitleDto addJobTitleDto)
+	public ResponseEntity<Object> saveTitle(@Valid @RequestBody AddJobTitleDto addJobTitleDto)
 	{
-		addJobTitleService.saveTitle(addJobTitleDto); 
-		return new ResponseEntity<>(addJobTitleDto,HttpStatus.CREATED);
-		
+		return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.CREATED,addJobTitleService.saveTitle(addJobTitleDto));
 	}
+
 	@GetMapping("/getJob")
-	public List<AddJobTitleDto>get()
+	public ResponseEntity<Object> get()
 	{
-		List<AddJobTitleDto>getDto=this.addJobTitleService.getJob();
-		return getDto;
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,addJobTitleService.getJob());
 	}
+
 	@GetMapping("/{getId}")
-	public List<AddJobTitleDto>add(@PathVariable("getId")int id)
+	public ResponseEntity<Object> add(@PathVariable("getId")int id)
 	{
-		return addJobTitleService.getById(id);
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,addJobTitleService.getById(id));
 	}
 }
 

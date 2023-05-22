@@ -1,5 +1,7 @@
 package com.ahom.hrms.controller;
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.dto.BranchDto;
+import com.ahom.hrms.entities.Branch;
 import com.ahom.hrms.serviceimpl.BranchServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,21 +21,19 @@ public class BranchController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<BranchDto> saveBranch(@Valid @RequestBody BranchDto branchDto){
-        branchService.saveBranch(branchDto);
-        return new ResponseEntity<>(branchDto, HttpStatus.ACCEPTED);
+    public ResponseEntity<Object> saveBranch(@Valid @RequestBody BranchDto branchDto){
+        return ResponseHandler.responseBuilder("Branch Saved Successfully",HttpStatus.OK,branchService.saveBranch(branchDto));
     }
 
 
     @GetMapping("/fetchData")
-    public List<BranchDto> getBranch(){
-        List<BranchDto> allBranchDto=branchService.getAll();
-        return allBranchDto;
+    public ResponseEntity<Object> getBranch(){
+        return ResponseHandler.responseBuilder("Fetched Successfully",HttpStatus.OK,branchService.getAll());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteBranch(@PathVariable int id)
+    public ResponseEntity<Object> deleteBranch(@PathVariable int id)
     {
-        branchService.deleteBranch(id);
+        return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,branchService.deleteBranch(id));
     }
 }

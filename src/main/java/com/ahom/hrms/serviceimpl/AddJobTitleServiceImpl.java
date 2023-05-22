@@ -25,7 +25,7 @@ public class AddJobTitleServiceImpl implements AddJobTitleService {
 	ModelMapper mapper;
 
 	@Override
-	public void saveTitle(AddJobTitleDto addJobTitleDto) {
+	public AddJobTitleDto saveTitle(AddJobTitleDto addJobTitleDto) {
 		AddJobTitle addJobTitle=addJobTitleRepo.findByjobTitles(addJobTitleDto.getJobTitles());
 		if(addJobTitle==null)
 		{
@@ -33,8 +33,9 @@ public class AddJobTitleServiceImpl implements AddJobTitleService {
 		}
 		else
 		{
-			throw new CustomException("Job Title Already Present");
+			throw new RuntimeException("Job Title Already Present");
 		}
+		return addJobTitleDto;
 	}
 
 	@Override
@@ -46,13 +47,17 @@ public class AddJobTitleServiceImpl implements AddJobTitleService {
 	}
 
 	@Override
-	public List<AddJobTitleDto>getById(int id) {
-
-		Optional<AddJobTitle>job=this.addJobTitleRepo.findById(id);
-		List<AddJobTitleDto>addJob=job.stream().map(li -> this.jobToJobDto(li)).collect(Collectors.toList());
-
-		return addJob;
-
+	public AddJobTitle getById(int id)
+	{
+		AddJobTitle addJobTitle=addJobTitleRepo.findById(id).orElse(null);
+		if(addJobTitle!=null)
+		{
+			addJobTitleRepo.findById(id);
+		}
+		else {
+			throw new RuntimeException("Job Title for Id : "+id+" is Not Found");
+		}
+		return addJobTitle;
 	}
 
 	@Override

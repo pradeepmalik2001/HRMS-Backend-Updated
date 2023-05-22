@@ -2,7 +2,6 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.BranchRepository;
 import com.ahom.hrms.dto.BranchDto;
 import com.ahom.hrms.entities.Branch;
-import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.BranchService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +20,16 @@ public class BranchServiceImpl implements BranchService {
 
 
     @Override
-    public void saveBranch(BranchDto branchDto)
+    public BranchDto saveBranch(BranchDto branchDto)
     {
         Branch branch=branchRepository.findByName(branchDto.getName());
         if(branch==null)
         {
             branchRepository.save(branchDtoToBranch(branchDto));
         }else{
-            throw new CustomException("Branch is Already Present");
+            throw new RuntimeException("Branch is Already Present");
         }
-
+            return branchDto;
     }
 
     @Override
@@ -53,7 +52,16 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public void deleteBranch(int id) {
-        branchRepository.deleteById(id);
+    public Branch deleteBranch(int id)
+    {
+        Branch branch=branchRepository.findById(id).orElse(null);
+        if(branch!=null)
+        {
+            branchRepository.deleteById(id);
+        }
+        else {
+            throw new RuntimeException("Branch for Id : "+id+" Not Found ");
+        }
+         return branch;
     }
 }
