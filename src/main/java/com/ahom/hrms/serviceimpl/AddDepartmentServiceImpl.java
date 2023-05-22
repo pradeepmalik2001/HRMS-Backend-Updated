@@ -11,6 +11,7 @@ import com.ahom.hrms.entities.AddDepartment;
 import com.ahom.hrms.service.AddDepartmentService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddDepartmentServiceImpl implements AddDepartmentService{
@@ -59,6 +60,17 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 			throw new CustomException("successful");
 		}else {
 			throw new CustomException("Department is not present ");
+		}
+	}
+
+	@Override
+	public Optional<AddDepartment> getDepartmentById(int departmentId) {
+		if(addDepartmentRepository.findById(departmentId).isEmpty())
+		{
+			throw new CustomException("Id Not found");
+		}
+		else {
+			return addDepartmentRepository.findById(departmentId);
 		}
 	}
 
