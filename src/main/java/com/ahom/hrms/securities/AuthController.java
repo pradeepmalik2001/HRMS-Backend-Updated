@@ -44,15 +44,11 @@ public class AuthController {
     @Value("${mail.from}")
     private String fromEmail; // Set from email address in application.properties file
 
-
-
-
-
     @Autowired
     private EmployeeService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
+    public ResponseEntity<JwtAuthResponse> createToken(@Valid @RequestBody JwtAuthRequest request) throws Exception {
         this.authenticate(request.getUsername(), request.getPassword());
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
         String token = this.jwtTokenHelper.generateToken(userDetails);
@@ -73,7 +69,7 @@ public class AuthController {
             this.authenticationManager.authenticate(authenticationToken);
 
         } catch (BadCredentialsException e) {
-            System.out.println("Invalid Detials !!");
+            System.out.println("Invalid Details !!");
             throw new CustomException("Invalid username or password !!");
         }
 
@@ -110,7 +106,7 @@ public class AuthController {
         }
     }
 
-    // get loggedin user data
+    // get logged user data
     @Autowired
     private EmployeeRepository userRepo;
     @Autowired
