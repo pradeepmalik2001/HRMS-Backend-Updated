@@ -3,6 +3,9 @@ package com.ahom.hrms.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ahom.hrms.Repository.DesignationMasterRepository;
+import com.ahom.hrms.Response.ResponseHandler;
+import com.ahom.hrms.entities.DesignationMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +24,13 @@ public class DesignationMasterController {
 	@Autowired
 	DesignationMasterService designationMasterService;
 
+	@Autowired
+	DesignationMasterRepository designationMasterRepository;
 	//save data
 	@PostMapping("/saveDesignation")
-	public ResponseEntity<DesignationMasterDto> saveDesignation(@Valid @RequestBody DesignationMasterDto designationMasterDto){
-		designationMasterService.saveDesignation(designationMasterDto);
-		return new ResponseEntity<>(designationMasterDto, HttpStatus.CREATED);
+	public ResponseEntity<Object> saveDesignation(@Valid @RequestBody DesignationMasterDto designationMasterDto){
+
+		return ResponseHandler.responseBuilder("Data Saved",HttpStatus.CREATED,designationMasterService.saveDesignation(designationMasterDto));
 	}
 
 	//fetch all data from database
@@ -37,7 +42,9 @@ public class DesignationMasterController {
 	}
 
 	@DeleteMapping("/designation/{id}")
-	public void delete(@PathVariable int id){
-		designationMasterService.deleteDesignation(id);
+	public ResponseEntity<Object> delete(@PathVariable int id){
+		DesignationMaster designationMaster= designationMasterRepository.findById(id).orElse(null);
+		return ResponseHandler.responseBuilder("Designation for ID:" +id +" " +"deleted successfully",
+				HttpStatus.OK, designationMasterService.deleteDesignation(id));
 	}
 }
