@@ -82,6 +82,7 @@ public class AuthController {
     public ResponseEntity<Object> registerUser(@Valid @RequestBody Employee UserDTO) {
         Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
         if (employee.isEmpty()) {
+            if (UserDTO.getRoles()!=null) {
 
 
 //            SimpleMailMessage messageToEmployee = new SimpleMailMessage();
@@ -100,11 +101,15 @@ public class AuthController {
 //            mailSender.send(messageToEmployee);
 //            System.out.println(messageToEmployee);
 
-            Employee createUser = userService.saveEmployee(UserDTO);
-            return ResponseHandler.responseBuilder("Employee registered successfully",
-                    HttpStatus.CREATED,createUser);
+                Employee createUser = userService.saveEmployee(UserDTO);
+                return ResponseHandler.responseBuilder("Employee registered successfully",
+                        HttpStatus.OK, createUser);
+            }
+            else {
+                throw new RuntimeException("Role is Mandatory");
+            }
         }else {
-            throw new RuntimeException("Employee already exist");
+            throw new RuntimeException("UserName already existed");
         }
     }
 

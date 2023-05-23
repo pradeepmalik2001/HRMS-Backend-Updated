@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
@@ -47,6 +48,8 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	//save data
 	public Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
+
+
 		BasicEmployee basicEmployee = basicEmployeeRepository.
 				findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
 						basicEmployeeDto.getAadhaarNumber(),
@@ -55,19 +58,19 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 						basicEmployeeDto.getMobile(),
 						basicEmployeeDto.getEmail());
 
-		if (basicEmployee==null){
+		if (basicEmployee == null) {
 
 			basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
-		}else {
+		} else {
 			throw
 					new RuntimeException("Found duplicate entry");
 		}
-        return basicEmployeeDto;
-    }
+		return basicEmployeeDto;
+	}
 
 	//fetch data by employee id
 	public BasicEmployeeDto employeeById(int employeeId){
-		BasicEmployee basicEmployee = basicEmployeeRepository.findById(employeeId).get();
+		BasicEmployee basicEmployee = basicEmployeeRepository.findById(employeeId).orElse(null);
 		return basicEmployeeToBasicEmployeeDto(basicEmployee);
 	}
 

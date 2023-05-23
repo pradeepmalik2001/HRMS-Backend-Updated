@@ -1,6 +1,7 @@
 package com.ahom.hrms.controller;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -9,9 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.ahom.hrms.Helper.Excel;
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.entities.Attendance;
 import com.ahom.hrms.entities.OverTime;
 import com.ahom.hrms.exception.CustomException;
+import com.google.api.Http;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import com.ahom.hrms.dto.AttendanceDto;
 import com.ahom.hrms.serviceimpl.AttendanceServiceImpl;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/attendance")
@@ -32,16 +38,19 @@ public class AttendanceController {
 
 
 	@PostMapping("/save")
-	public ResponseEntity<AttendanceDto> saveEmp(@RequestBody AttendanceDto attendancedto) {
+	public ResponseEntity<Object> saveEmp(@RequestBody AttendanceDto attendancedto) {
 		attendancedto.setDate(new Date());
-		attendanceService.saveEmplAttendance(attendancedto);
-		 return new ResponseEntity<>(attendancedto ,HttpStatus.CREATED);
+		return ResponseHandler.responseBuilder("Attendance uploaded",HttpStatus.OK,
+				attendanceService.saveEmplAttendance(attendancedto));
+
+
 	}
 
 
 	@PostMapping("/upload")
-	public ResponseEntity<?>save(@RequestParam("file")MultipartFile file) throws IOException {
-		if (Excel.checkFormat(file)) {
+	public ResponseEntity<Object>save(@Valid @RequestParam("file")MultipartFile file) throws IOException {
+
+		if (Excel.checkFormat(file)&& file.isEmpty()) {
 			try {
 				Workbook workbook = WorkbookFactory.create(file.getInputStream());
 				Sheet sheet = workbook.getSheetAt(0);
@@ -67,17 +76,18 @@ public class AttendanceController {
 						continue;
 					}
 
-					attendanceService.saveExcel(file);
 					String originalFilename = file.getOriginalFilename();
-					return ResponseEntity.ok(Map.of("message", "file uploaded successfully"));
+					return ResponseHandler.responseBuilder("File Uploaded successfully",HttpStatus.OK,
+							attendanceService.saveExcel(file));
+
 
 				}
 			}catch(IOException e){
 					throw new RuntimeException(e);
 				}
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
 			}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please upload excel file");
+		throw new RuntimeException("Only Excel file Accepted");
+
 	}
 
 	@GetMapping("/fetch")
@@ -87,8 +97,9 @@ public class AttendanceController {
 	}
 
 	@DeleteMapping("/Delete/{employeeId}")
-	public void deleteEmp(@PathVariable("employeeId") int id) {
-		attendanceService.deleteAttendance(id);
+	public ResponseEntity<Object> deleteEmp(@PathVariable("employeeId") int id) {
+		return ResponseHandler.responseBuilder("Attendance deleted for ID:"+id
+				,HttpStatus.OK,attendanceService.deleteAttendance(id));
 	}
 
 	@PutMapping("/update")
@@ -100,7 +111,7 @@ public class AttendanceController {
 	}
 	@PostMapping("/byDate")
 	@ResponseBody
-	public ResponseEntity<List<Attendance>> ot(@RequestParam String startdate,
+	public ResponseEntity<List<Attendance>> ot(@Valid @NotEmpty @RequestParam String startdate,
 											 @RequestParam String enddate,
 											 @RequestParam String name) throws ParseException {
 		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
