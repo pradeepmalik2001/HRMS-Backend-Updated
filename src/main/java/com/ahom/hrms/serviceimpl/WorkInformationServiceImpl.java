@@ -5,7 +5,6 @@ import com.ahom.hrms.Repository.WorkInformationRepository;
 import com.ahom.hrms.dto.WorkInformationDto;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.WorkInformation;
-import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.WorkInformationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                 workInformation.setWorkId(workInformationDto.getWorkId());
                 workInformation.setBasicEmployee(basicEmployee);
             }else {
-                throw new CustomException("employee not found for particular Id" +" "+workInformation.getWorkId());
+                throw new RuntimeException("employee not found for particular Id" +" "+workInformation.getWorkId());
             }
         }
         return workInformation;
@@ -76,9 +75,8 @@ public class WorkInformationServiceImpl implements WorkInformationService {
 
 
     //fetch
-    public List<WorkInformationDto> getAll() {
-        List list=workInformationRepository.findAll();
-        return list;
+    public List getAll() {
+        return workInformationRepository.findAll();
     }
 
 
@@ -120,37 +118,10 @@ public class WorkInformationServiceImpl implements WorkInformationService {
             }
 
 
-//                {
-//                    String employeeEmail=workInformation1.getBasicEmployee().getEmail();
-//                    String hrEmail="harshniranjan@gmail.com";
-//                    String subject="Probation Period Ending Soon";
-//                    String text="Dear " + workInformation1.getBasicEmployee().getEmployeeName() +
-//                            ",\n\nYour probation period will end in two days. " +
-//                            "Please contact HR for further instructions.\n\nBest regards,\nHR department";
-//                    try {
-//                        sendMail(employeeEmail,subject,text);
-//                    }catch (MappingException e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
+
             }
         }
 
-
-//    private void sendMail(String employeeEmail, String subject, String text) {
-//        MimeMessage message = mailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//        helper.setTo(to);
-//        helper.setCc(cc);
-//        helper.setSubject(subject);
-//        helper.setText(text);
-//        mailSender.send(message);
-//
-//
-//
-//    }
 
 
 }

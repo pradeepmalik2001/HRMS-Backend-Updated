@@ -2,11 +2,11 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.Repository.AttendanceRepository;
+import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.Repository.UserMasterRepository;
 import com.ahom.hrms.dto.AttendanceDto;
 import com.ahom.hrms.entities.Attendance;
-import com.ahom.hrms.entities.UserMaster;
-import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.service.AttendanceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 	ModelMapper modelMapper;
 	@Autowired
 	private UserMasterRepository userMasterRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	@Override
-	public void saveEmplAttendance(AttendanceDto attendancedto) {
+	public Object saveEmplAttendance(AttendanceDto attendancedto) {
 		attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
+		return attendancedto;
 	}
 
 	@Override
@@ -42,8 +45,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return ListEmplAttendance;
 	}
 	@Override
-	public void deleteAttendance(int empId) {
+	public Object deleteAttendance(int empId) {
+		Attendance attendance=attendanceRpository.findById(empId).orElse(null);
+		if (attendance!=null){
 		attendanceRpository.deleteById(empId);
+		return attendance;
+		}
+		else
+			throw new RuntimeException("No Record Present for Id:"+empId);
 	}
 	@Override
 	public void updateEmployeeAttendance(AttendanceDto attendancedto) {
@@ -51,7 +60,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public void saveExcel(MultipartFile file) {
+	public Object saveExcel(MultipartFile file) {
 
 		try {
 			String originalFilename = file.getOriginalFilename();
@@ -61,6 +70,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		return null;
 	}
 
 	@Override
@@ -70,41 +80,43 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public List<Attendance> gteOt(Date startdate, Date enddate, String name) {
-		List<Attendance> list = attendanceRpository.findByNameAndDateRange(startdate, enddate, name);
+		List<Attendance> attendances=attendanceRpository.findBySelectEmployee(name);
+		if (attendances.isEmpty()) {
+			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not defined");
 
-		System.out.println(list);
-		List<Attendance> filterAttendance = new ArrayList<>();
-
-		for (Attendance attendance: list) {
-			filterAttendance.add(attendance);
-
-			System.out.println(attendance);
-
+		}else {
+			List<Attendance> list = attendanceRpository.findByNameAndDateRange(startdate, enddate, name);
+			return new ArrayList<>(list);
 		}
-		return filterAttendance;
+
 	}
 
 	@Override
 	public List<Attendance> getByStatus(Date startdate, Date enddate, String name,String status) {
-		List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name,status);
-		System.out.println(list);
-		List<Attendance> filterAttendance = new ArrayList<>();
+		List<Attendance> attendances=attendanceRpository.findBySelectEmployee(name);
+		if (!attendances.isEmpty()) {
+			List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name, status);
+			System.out.println(list);
+			List<Attendance> filterAttendance = new ArrayList<>();
 
-		for (Attendance attendance: list) {
-			filterAttendance.add(attendance);
+			for (Attendance attendance : list) {
+				filterAttendance.add(attendance);
 
-			System.out.println(attendance);
+				System.out.println(attendance);
 
-		}
-		return filterAttendance;
+			}
+			return filterAttendance;
+		}else
+			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not defined");
 	}
 
 	@Override
 	public List <Attendance> status( String name, String userName,String month) {
 
 		List<Attendance> attendance1 = attendanceRpository.findByUserName(userName);
+		List<Attendance>attendances=attendanceRpository.findBySelectEmployee(name);
 		ArrayList<Attendance> filterAttendance = null;
-		if (attendance1 != null) {
+		if (!attendance1.isEmpty()&& !attendances.isEmpty()) {
 
 			DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
 			Date startDate, endDate;
@@ -130,21 +142,26 @@ public class AttendanceServiceImpl implements AttendanceService {
 						System.out.println(filterAttendance.size());
 					}
 					}
-				}
-		return filterAttendance;
+			return filterAttendance;
+
+				}else
+					throw new RuntimeException("Record For Employee either" +" "+ userName + " " + "OR " +name+ " " + "is not defined");
+
+
+
 	}
 
 
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
 	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto) {
-		UserMaster userMaster = userMasterRepository.findByUserName(attendancedto.getUserName());
+		Optional<Employee> employee = employeeRepository.findByUserName(attendancedto.getUserName());
 
-		if (userMaster != null) {
+		if (employee.isPresent()) {
 			return this.modelMapper.map(attendancedto, Attendance.class);
 		}
 		else {
-			throw new CustomException("No user Found");
+			throw new RuntimeException("No employee found for UserName:"+ attendancedto.getUserName());
 		}
 	}
 

@@ -35,7 +35,7 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 		 if(!Objects.isNull(addHolidays))
 
 		{
-			throw  new CustomException("Data Already Exist");
+			throw  new RuntimeException("Data Already Exist");
 
 		}
 		else
@@ -43,7 +43,6 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 
 			throw  new RuntimeException("Data Already Exist");
 		}
-		return addHolidayDto;
 
 	}
 

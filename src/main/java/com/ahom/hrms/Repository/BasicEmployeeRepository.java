@@ -16,7 +16,7 @@ public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, In
 
 
 
-BasicEmployee findByEmployeeName(String employeeName);
+BasicEmployee findByMobile(String mobile);
 
 BasicEmployee findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail( String aadhaarNumber ,String panNumber,
 													   String pfnumber,String mobile,String email);
