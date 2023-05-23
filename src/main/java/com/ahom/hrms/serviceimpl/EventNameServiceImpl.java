@@ -35,7 +35,7 @@ public class EventNameServiceImpl implements EventNameService {
     }
 
     @Override
-    public void saveEventName(EventNameDto eventNameDto)
+    public EventNameDto saveEventName(EventNameDto eventNameDto)
     {
         EventName eventName=eventNameRepository.findByName(eventNameDto.getName());
         if(eventName==null)
@@ -43,8 +43,9 @@ public class EventNameServiceImpl implements EventNameService {
             eventNameRepository.save(eventNameDtoToEventName(eventNameDto));
         }
         else {
-            throw new CustomException("Event Already Exist");
+            throw new RuntimeException("Event Already Exist");
         }
+        return eventNameDto;
     }
 
     //fetch

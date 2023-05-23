@@ -24,9 +24,10 @@ public class AddShiftServiceimpl implements AddShiftService {
 
 
         @Override
-		public void saveAddShift(AddShiftDto addShiftDto) {
+		public AddShiftDto saveAddShift(AddShiftDto addShiftDto) {
 
 			addShiftRepo.save(addShiftDtoToAddShift(addShiftDto));
+			return addShiftDto;
 		}
 
 	@Override
@@ -44,42 +45,40 @@ public class AddShiftServiceimpl implements AddShiftService {
 
 	// delete
 	@Override
-	public void deleteAddShift(int Id){
-
-		addShiftRepo.deleteById(Id);
-
+	public ShiftManagement deleteAddShift(int id){
+		ShiftManagement shiftManagement=addShiftRepo.findById(id).orElse(null);
+		if(shiftManagement!=null)
+		{
+			addShiftRepo.deleteById(id);
+		}
+		else
+		{
+			throw new RuntimeException("Shift Id : "+id+" is Not Found");
+		}
+		return shiftManagement;
 	}
 	//put
 
 	@Override
-	public void updateAddshift(ShiftManagement shiftManagement,int id) {
-		//List<ShiftManagement> listAddShifts1= this.addShiftRepo.findAll();
-
-		//listAddShifts1=listAddShifts1.stream().map(b->{
-		ShiftManagement abc = addShiftRepo.findById(id).get();
-		abc.setCountry(shiftManagement.getCountry());
-		abc.setEmployee(shiftManagement.getEmployee());
-		abc.setDate(shiftManagement.getDate());
-		abc.setStartTime(shiftManagement.getStartTime());
-		abc.setEndTime(shiftManagement.getEndTime());
-//	    		if(abc.getId()==id)
-//	    		{
-//	    			abc.setShiftName(shiftManagement.getShiftName());
-//	    			abc.setEmployee(shiftManagement.getEmployee());
-//	    			abc.setDate(shiftManagement.getDate());
-//	   
-//	    		}
-//	    		return abc;
-//	    	}).collect(Collectors.toList());
-		addShiftRepo.save(abc);
+	public ShiftManagement updateAddshift(ShiftManagement shiftManagement,int id)
+	{
+		ShiftManagement abc = addShiftRepo.findById(id).orElse(null);
+		if(abc!=null)
+		{
+			abc.setCountry(shiftManagement.getCountry());
+			abc.setEmployee(shiftManagement.getEmployee());
+			abc.setDate(shiftManagement.getDate());
+			abc.setStartTime(shiftManagement.getStartTime());
+			abc.setEndTime(shiftManagement.getEndTime());
+			addShiftRepo.save(abc);
+		}
+		else
+		{
+			throw new RuntimeException("Shift Id for : "+id + " is Not Found");
+		}
+		return shiftManagement;
 	}
 
-//	    public AddShiftDto updateAddShift(AddShiftDto addShiftDto)
-//	    {
-//	    addShiftRepo.save(addShiftDtoToAddShift(addShiftDto));
-//	    return addShiftDto;
-//
-//	    }
 
 	@Override
 	public AddShiftDto addShiftById(Integer id) {

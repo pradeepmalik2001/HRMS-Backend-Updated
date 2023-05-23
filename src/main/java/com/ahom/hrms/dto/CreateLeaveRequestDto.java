@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,16 +15,24 @@ import lombok.Setter;
 public class CreateLeaveRequestDto {
 	private int id;
 
+	@NotEmpty(message = "Employee Name can`t be Empty")
 	private String selectEmployee;
+
+	@NotEmpty(message = "Approver Name can`t be Empty")
 	private String leaveApprover;
+
+	@NotEmpty(message = "Leave Type can`t be Empty")
 	private String leaveType;
 
+	@NotEmpty(message = "Start Date is Compulsory")
 	private String startDate;
-	private String endDate;
-//	private String days;
-	private String reasonForLeave;
-	private boolean approve;
 
-//	private BasicEmployee basicEmployee;
+	@NotEmpty(message = "Last Date is Compulsory")
+	private String endDate;
+
+	@NotEmpty(message = "Reason For Leave is Mandatory")
+	private String reasonForLeave;
+
+	private boolean approve;
 
 }

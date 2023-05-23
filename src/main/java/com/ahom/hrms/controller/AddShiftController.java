@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.serviceimpl.AddShiftServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ahom.hrms.dto.AddShiftDto;
 import com.ahom.hrms.entities.ShiftManagement;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin 
 @RequestMapping("/shiftManagement")
@@ -32,24 +35,16 @@ public class AddShiftController {
 	@Autowired
 	AddShiftServiceimpl addShiftService;
 
-//	    @Autowired
-//		private AddShiftDto addShiftDto;
 
 	@PostMapping("/addShift")
-	public ResponseEntity<AddShiftDto> saveAddShift(@RequestBody AddShiftDto addShiftDto) {
-
-		addShiftService.saveAddShift(addShiftDto);
-		return new ResponseEntity<>(addShiftDto, HttpStatus.CREATED);
+	public ResponseEntity<Object> saveAddShift(@Valid @RequestBody AddShiftDto addShiftDto) {
+		return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,addShiftService.saveAddShift(addShiftDto));
 	}
 
 
 	@GetMapping("/viewShift")
-	public List<AddShiftDto> getAddShift() {
-		List<AddShiftDto> allEmployee = addShiftService.getAllAddShift();
-
-		return allEmployee;
-
-		//return allEmployee;
+	public ResponseEntity<Object> getAddShift() {
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,addShiftService.getAllAddShift());
 	}
 
 
@@ -59,16 +54,15 @@ public class AddShiftController {
 	}
 
 
-	@DeleteMapping("/addShift/{Id}")
-	public void deleteaddShift(@PathVariable("Id") int Id){
-		addShiftService.deleteAddShift(Id);
+	@DeleteMapping("/addShift/{id}")
+	public ResponseEntity<Object> deleteaddShift(@PathVariable("id") int id){
+		return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,addShiftService.deleteAddShift(id));
 	}
 
 	//Update
 	@PutMapping("/update/{Id}")
-	public ShiftManagement updateaddShift(@RequestBody ShiftManagement shiftManagement,@PathVariable("Id") int id ) {
-		this.addShiftService.updateAddshift(shiftManagement,id);
-		return shiftManagement;
+	public ResponseEntity<Object> updateaddShift(@RequestBody ShiftManagement shiftManagement,@PathVariable("Id") int id ) {
+		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,addShiftService.updateAddshift(shiftManagement,id));
 	}
 
 //	@GetMapping("/time/{country}")

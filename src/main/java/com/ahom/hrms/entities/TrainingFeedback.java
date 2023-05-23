@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Getter
@@ -24,10 +25,12 @@ public class TrainingFeedback {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotEmpty(message = "Training Name can`t be Empty")
+	private String trainingName;
+
+	@NotEmpty(message = "Employee Name can`t be empty")
+	private String employeeName;
+
+	@NotEmpty(message = "Write Something Here")
 	private String feedback;
-
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private EmployeeTraining employeeTraining;
-
-
 }

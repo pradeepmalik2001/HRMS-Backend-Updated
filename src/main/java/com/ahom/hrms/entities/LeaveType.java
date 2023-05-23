@@ -1,56 +1,26 @@
 package com.ahom.hrms.entities;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class LeaveType {
+@Data
+public class LeaveType
+{
+
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY )
 private int id;
 
-@NotBlank(message="not null leaveType is mandatory ")
+@NotEmpty(message="LeaveType is Mandatory ")
 private String leaveType;
-@NotBlank(message="not null description is mandatory")
+
+@NotEmpty(message="Description is Mandatory")
 private String description;
-/**
- * @return the id
- */
-public int getId() {
-	return id;
-}
-/**
- * @param id the id to set
- */
-public void setId(int id) {
-	this.id = id;
-}
-/**
- * @return the leaveType
- */
-public String getLeaveType() {
-	return leaveType;
-}
-/**
- * @param leaveType the leaveType to set
- */
-public void setLeaveType(String leaveType) {
-	this.leaveType = leaveType;
-}
-/**
- * @return the description
- */
-public String getDescription() {
-	return description;
-}
-/**
- * @param description the description to set
- */
-public void setDescription(String description) {
-	this.description = description;
-}
 
 }

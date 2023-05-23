@@ -2,6 +2,7 @@ package com.ahom.hrms.controller;
 
 import java.util.List;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.serviceimpl.TrainingToEmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ahom.hrms.dto.EmployeeTrainingDto;
+
+import javax.validation.Valid;
 
 
 @CrossOrigin
@@ -20,17 +23,14 @@ public class EmployeeTrainingController {
 	TrainingToEmployeeServiceImpl trainingToEmployeeService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<EmployeeTrainingDto> saveEmployeeTraining(@RequestBody EmployeeTrainingDto employeeTrainingDto){
-		trainingToEmployeeService.saveEmployee(employeeTrainingDto);
-		return new ResponseEntity<>(employeeTrainingDto,HttpStatus.CREATED);
+	public ResponseEntity<Object> saveEmployeeTraining(@Valid @RequestBody EmployeeTrainingDto employeeTrainingDto){
+		return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,trainingToEmployeeService.saveEmployee(employeeTrainingDto));
 	}
 	//fetch data from database
 	
 	@GetMapping("/get")
-	public List<EmployeeTrainingDto> getEmployeeTraining(){
-		
-		List<EmployeeTrainingDto> allEmployeeTrainingDtos = trainingToEmployeeService.getAll();
-		return allEmployeeTrainingDtos;
+	public ResponseEntity<Object> getEmployeeTraining(){
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,trainingToEmployeeService.getAll());
 	}
 	
 	//Update data from database By Id

@@ -1,56 +1,30 @@
 package com.ahom.hrms.entities;
+import lombok.Data;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class EmployeeTraining {
+@Data
+public class EmployeeTraining
+{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private int id;
+
+	@NotEmpty(message = "Event Name can`t be Empty")
 	private String eventName;
+
+	@NotEmpty(message = "Training name can`t be Empty")
 	private String trainingName;
+
+	@NotEmpty(message = "Employee Name can`t be Empty")
 	private String employee;
-//	@OneToOne(cascade = CascadeType.ALL ,mappedBy = "employeeTraining")
-//	private TrainingFeedback feedback;
-	
-	
-	
-//	public TrainingFeedback getFeedback() {
-//		return feedback;
-//	}
-//	public void setFeedback(TrainingFeedback feedback) {
-//		this.feedback = feedback;
-//	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getEventName() {
-		return eventName;
-	}
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
-	public String getTrainingName() {
-		return trainingName;
-	}
-	public void setTrainingName(String trainingName) {
-		this.trainingName = trainingName;
-	}
-	public String getEmployee() {
-		return employee;
-	}
-	public void setEmployee(String employee) {
-		this.employee = employee;
-	}
-	
-	
-	}
+
+}

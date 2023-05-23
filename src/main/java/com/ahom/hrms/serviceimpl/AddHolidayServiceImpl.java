@@ -25,26 +25,21 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 
 
 	public AddHolidayDto SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
-
 	{
 		 AddHoliday addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate
 				(addHolidayDto.getHolidayName(),
 						addHolidayDto.getFromDate(),
 						addHolidayDto.getToDate());
-
-		 if(!Objects.isNull(addHolidays))
+		 if(Objects.isNull(addHolidays))
 
 		{
-			throw  new CustomException("Data Already Exist");
-
+			addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
 		}
 		else
 		{
-
 			throw  new RuntimeException("Data Already Exist");
 		}
 		return addHolidayDto;
-
 	}
 
 	public List<AddHolidayDto>getAllLeaveDetail(){
@@ -73,8 +68,6 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 			addHolidayDto1.setHolidayType(addHolidayDto.getHolidayType());
 			addHolidayDto1.setFromDate(addHolidayDto.getFromDate());
 			addHolidayDto1.setToDate(addHolidayDto.getToDate());
-
-
 			addHolidayRepository.saveAndFlush(addHolidayDto1);
 		}
 		else {

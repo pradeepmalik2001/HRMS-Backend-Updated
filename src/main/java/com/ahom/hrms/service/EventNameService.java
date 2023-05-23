@@ -14,7 +14,7 @@ public interface EventNameService {
 
     EventNameDto eventNameToEventNameDto(EventName eventName);
 
-    void saveEventName(EventNameDto eventNameDto);
+    EventNameDto saveEventName(EventNameDto eventNameDto);
 
     //fetch
     List<EventNameDto> getAll();

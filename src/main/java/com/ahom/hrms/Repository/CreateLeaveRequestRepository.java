@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @EnableJpaRepositories
-public interface CreateLeaveRequestRepository extends JpaRepository<CreateLeaveRequest, Double> {
+public interface CreateLeaveRequestRepository extends JpaRepository<CreateLeaveRequest, Integer> {
 
 }

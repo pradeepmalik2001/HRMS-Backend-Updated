@@ -8,6 +8,7 @@ import com.ahom.hrms.Repository.TrainingEmployeeReposatory;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.EmployeeTraining;
 import com.ahom.hrms.exception.CustomException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,14 @@ public class TrainingToEmployeeServiceImpl implements TrainingToEmployeeService 
 	@Autowired
 	BasicEmployeeRepository basicEmployeeRepository;
 
+	@Autowired
+	ModelMapper modelMapper;
+
 
 	@Override
-	public void saveEmployee(EmployeeTrainingDto trainingToEmployeeDto) {
+	public EmployeeTrainingDto saveEmployee(EmployeeTrainingDto trainingToEmployeeDto) {
 		employeeRepository.save(dtotoEmp(trainingToEmployeeDto));
+		return trainingToEmployeeDto;
 	}
 
 	//Fetch data from database
@@ -34,7 +39,6 @@ public class TrainingToEmployeeServiceImpl implements TrainingToEmployeeService 
 	public List<EmployeeTrainingDto> getAll(){
 		List<EmployeeTraining> employeeTraining=this.employeeRepository.findAll();
 		List<EmployeeTrainingDto> employeeTrainingDto = employeeTraining.stream().map(deduct ->this.EmptoDto(deduct)).collect(Collectors.toList());
-
 		return employeeTrainingDto;
 	}
 
@@ -67,32 +71,14 @@ public class TrainingToEmployeeServiceImpl implements TrainingToEmployeeService 
 
 	@Override
 	public EmployeeTraining  dtotoEmp( EmployeeTrainingDto dto) {
-		BasicEmployee basicEmployee=basicEmployeeRepository.findById(dto.getId()).orElse(null);
-		if (basicEmployee!=null) {
-			EmployeeTraining employee = new EmployeeTraining();
-
-			employee.setId(dto.getId());
-			employee.setEventName(dto.getEventName());
-			employee.setTrainingName(dto.getTrainingName());
-			employee.setEmployee(dto.getEmployee());
-			return employee;
-		}else {
-			throw
-					new CustomException("No Employee Found For" +" "+ dto.getId());
-		}
-
+		EmployeeTraining employeeTraining=this.modelMapper.map(dto,EmployeeTraining.class);
+		return employeeTraining;
 	}
 
 	@Override
 	public EmployeeTrainingDto EmptoDto(EmployeeTraining traningToEmployee) {
-
-		EmployeeTrainingDto employeeDto = new EmployeeTrainingDto();
-
-		employeeDto.setId(traningToEmployee.getId());
-		employeeDto.setEventName(traningToEmployee.getEventName());
-		employeeDto.setTrainingName(traningToEmployee.getTrainingName());
-		employeeDto.setEmployee(traningToEmployee.getEmployee());
-		return employeeDto;
+		EmployeeTrainingDto employeeTrainingDto=this.modelMapper.map(traningToEmployee,EmployeeTrainingDto.class);
+		return employeeTrainingDto;
 	}
 
 

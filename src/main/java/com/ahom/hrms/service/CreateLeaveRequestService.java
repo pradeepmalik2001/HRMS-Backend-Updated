@@ -6,11 +6,11 @@ import com.ahom.hrms.dto.CreateLeaveRequestDto;
 
 public interface CreateLeaveRequestService {
 
-	void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto);
+	CreateLeaveRequestDto saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto);
 
 	List<CreateLeaveRequestDto> getAllCreateLeaveRequest();
 
-	CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto);
+	CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,int id);
 	
 	
 
