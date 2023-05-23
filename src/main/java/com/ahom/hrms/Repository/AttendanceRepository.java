@@ -15,6 +15,7 @@ import java.util.List;
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer>{
 
  List <Attendance> findByUserName(String userName);
+ List<Attendance>findBySelectEmployee(String selectEmployee);
   List  <Attendance> findBySelectEmployeeAndDateBetween(
           @Param("selectEmployee") String selectEmployee,
           @Param("date")Date startDate,

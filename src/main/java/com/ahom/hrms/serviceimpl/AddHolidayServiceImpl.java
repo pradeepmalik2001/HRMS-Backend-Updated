@@ -33,13 +33,17 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 		 if(Objects.isNull(addHolidays))
 
 		{
+
 			addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+
 		}
 		else
 		{
 			throw  new RuntimeException("Data Already Exist");
 		}
+
 		return addHolidayDto;
+
 	}
 
 	public List<AddHolidayDto>getAllLeaveDetail(){

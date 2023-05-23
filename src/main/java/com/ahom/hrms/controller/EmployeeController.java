@@ -1,5 +1,6 @@
 package com.ahom.hrms.controller;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.serviceimpl.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class EmployeeController {
     @GetMapping("/byUserName")
     public ResponseEntity<Optional<Employee>>getByName(String userName){
         return new ResponseEntity<>(employeeService.findByUser(userName),HttpStatus.OK);
+    }
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Object>delete(@PathVariable("id") int id) {
+        return ResponseHandler.responseBuilder("Employee Record for ID:" + " " + id + " " + "is deleted successfully",
+                HttpStatus.OK, employeeService.delete(id));
     }
 }
