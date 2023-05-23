@@ -8,7 +8,7 @@ import com.ahom.hrms.entities.EmployeeTraining;
 
 public interface TrainingToEmployeeService {
 
-	void saveEmployee(EmployeeTrainingDto trainingToEmployeeDto);
+	EmployeeTrainingDto saveEmployee(EmployeeTrainingDto trainingToEmployeeDto);
 
 	List<EmployeeTrainingDto> getAll();
 

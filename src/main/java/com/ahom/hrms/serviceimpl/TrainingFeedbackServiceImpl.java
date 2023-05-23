@@ -2,6 +2,7 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.TrainingFeedbackReposatory;
 import com.ahom.hrms.entities.TrainingFeedback;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,26 +14,23 @@ public class TrainingFeedbackServiceImpl implements TrainingFeedbackService {
 	
 	@Autowired
 	TrainingFeedbackReposatory trainingFeedbackReposatory;
+
+	@Autowired
+	ModelMapper modelMapper;
 	
 	@Override
-	public void saveTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto) {
+	public TrainingFeedbackDto saveTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto) {
 		trainingFeedbackReposatory.save(trainingFeedbackDtoToTrainingFeedback(trainingFeedbackDto));
-		
+		return trainingFeedbackDto;
 }
 	@Override
 	public TrainingFeedback trainingFeedbackDtoToTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto) {
-		TrainingFeedback trainingFeedback = new TrainingFeedback();
-		
-		trainingFeedback.setId(trainingFeedbackDto.getId());
-		trainingFeedback.setFeedback(trainingFeedbackDto.getFeedback());
+		TrainingFeedback trainingFeedback=this.modelMapper.map(trainingFeedbackDto,TrainingFeedback.class);
 		return trainingFeedback;
 	}
 	@Override
 	public TrainingFeedbackDto trainingFeedbackToTrainingFeedbackDto(TrainingFeedback trainingFeedback) {
-		TrainingFeedbackDto trainingFeedbackDto = new TrainingFeedbackDto();
-		
-		trainingFeedbackDto.setId(trainingFeedback.getId());
-		trainingFeedbackDto.setFeedback(trainingFeedback.getFeedback());
+		TrainingFeedbackDto trainingFeedbackDto=this.modelMapper.map(trainingFeedback,TrainingFeedbackDto.class);
 		return trainingFeedbackDto;
 	}
 }

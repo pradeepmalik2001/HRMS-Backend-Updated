@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -12,18 +13,27 @@ import javax.persistence.*;
 public class CreateLeaveRequest {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	@NotEmpty(message = "Employee Name can`t be Empty")
 	private String selectEmployee;
+
+	@NotEmpty(message = "Approver Name can`t be Empty")
 	private String leaveApprover;
+
+	@NotEmpty(message = "Leave Type can`t be Empty")
 	private String leaveType;
+
+	@NotEmpty(message = "Start Date is Compulsory")
 	private String startDate;
+
+	@NotEmpty(message = "Last Date is Compulsory")
 	private String endDate;
-//	private String days;
+
+	@NotEmpty(message = "Reason For Leave is Mandatory")
 	private String reasonForLeave;
+
 	private boolean approve;
 
-//	@OneToOne(targetEntity = BasicEmployee.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-//	private BasicEmployee basicEmployee;
 }

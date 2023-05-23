@@ -6,48 +6,69 @@ import com.ahom.hrms.entities.LeaveType;
 import com.ahom.hrms.service.LeaveTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-
+@Service
 public class LeaveTypeServiceImpl implements LeaveTypeService {
 	@Autowired
 	LeaveTypeRepository leaveTypeRepository;
 	@Autowired
 	ModelMapper modelMapper;
 	
-	public void SaveLeaveTypeDetail(LeaveTypeDto leaveTypeDto) {
+	public LeaveTypeDto SaveLeaveTypeDetail(LeaveTypeDto leaveTypeDto) {
 		leaveTypeRepository.save(LeaveTypeDtotoLeaveType(leaveTypeDto));
-		
-}
+		return leaveTypeDto;
+	}
 	
 	public List<LeaveTypeDto> getAllLeaveDetail(){
 		List<LeaveType>jobTitles=this.leaveTypeRepository.findAll();
 		List<LeaveTypeDto>jobTitleToList=jobTitles.stream().map(title->this.leaveTypetoLeaveTypeDto(title)).collect(Collectors.toList());
 		return jobTitleToList;
 	}
-//public LeaveType updateLeaveType(LeaveType leaveType) {
-///		 LeaveType l=leaveTypeRepository.save(leaveType);
-//		 
-////		 return (l);
-////	 }
+
 	
-	public void deleteLaeveDetail(int i) {
-		leaveTypeRepository.deleteById(i);
+	public LeaveType deleteLaeveDetail(int id)
+	{
+		LeaveType leaveType=leaveTypeRepository.findById(id).orElse(null);
+		if(leaveType!=null)
+		{
+			leaveTypeRepository.deleteById(id);
+		}
+		else {
+			throw new RuntimeException("Leave Type for Id : "+id+" is Not Found");
+		}
+		return leaveType;
 	}
+
+	@Override
+	public LeaveType updateLeaveType(LeaveTypeDto leaveType, int id)
+	{
+		LeaveType leaveType1=this.leaveTypeRepository.findById(id).orElse(null);
+		if(leaveType1!=null)
+		{
+			leaveType1.setLeaveType(leaveType.getLeaveType());
+			leaveType1.setDescription(leaveType.getDescription());
+			leaveTypeRepository.saveAndFlush(leaveType1);
+		}
+		else {
+			throw new RuntimeException("Leave Type for Id : " + id + " is Not Found");
+		}
+		return leaveType1;
+	}
+
+
 	public LeaveType LeaveTypeDtotoLeaveType(LeaveTypeDto leaveTypeDto) {
 		LeaveType addholiday=this.modelMapper.map(leaveTypeDto, LeaveType.class);
-//		addjobtitle.setId(addJobTitleDto.getId());
-//		addjobtitle.setjobTitle(addJobTitleDto.getJobTitle());
 		return addholiday;
 	}
+
+
 	public LeaveTypeDto leaveTypetoLeaveTypeDto(LeaveType leaveType) {
 		LeaveTypeDto addjobtitledto=this.modelMapper.map(leaveType, LeaveTypeDto.class);
-//		addjobtitledto.setId(addjobtitle.getId());
-//		addjobtitledto.setJobTitle(addjobtitle.getjobTitle());
 		return addjobtitledto;
 	}
+
 }

@@ -5,7 +5,7 @@ import com.ahom.hrms.entities.TrainingFeedback;
 
 public interface TrainingFeedbackService {
 
-	void saveTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto);
+	TrainingFeedbackDto saveTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto);
 
 	TrainingFeedback trainingFeedbackDtoToTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto);
 

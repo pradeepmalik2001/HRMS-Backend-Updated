@@ -38,8 +38,16 @@ public class TrainingNameServiceImpl implements TrainingNameService {
 
     //save data
     @Override
-    public void saveTrainingName(TrainingNameDto trainingNameDto){
-        nameRepository.save(trainingNameDtoToTrainingName(trainingNameDto));
+    public TrainingNameDto saveTrainingName(TrainingNameDto trainingNameDto){
+       TrainingName trainingName=nameRepository.findByTrainingName(trainingNameDto.getTrainingName());
+       if(trainingName==null)
+       {
+           nameRepository.save(trainingNameDtoToTrainingName(trainingNameDto));
+       }
+       else {
+           throw new RuntimeException("Data Already Exist");
+       }
+        return trainingNameDto;
     }
 
 

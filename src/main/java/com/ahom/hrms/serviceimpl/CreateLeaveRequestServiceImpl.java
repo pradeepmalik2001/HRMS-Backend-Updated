@@ -8,6 +8,7 @@ import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.CreateLeaveRequest;
 import com.ahom.hrms.exception.CustomException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,6 +27,9 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	CreateLeaveRequestRepository createLeaveRequestRepository;
 
 	@Autowired
+	ModelMapper modelMapper;
+
+	@Autowired
 	JavaMailSender mailSender;
 	@Value("${mail.from}")
 	private String fromEmail;
@@ -36,17 +40,13 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	private BasicEmployeeRepository basicEmployeeRepository;
 
 	@Override
-	public void saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+	public CreateLeaveRequestDto saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
 		BasicEmployee basicEmployee=basicEmployeeRepository.findById(createLeaveRequestDto.getId()).orElse(null);
 
 		if (basicEmployee!=null) {
 			createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
 			try {
 
-
-//				String fromEmail =
-
-//			String fromEmail = createLeaveRequestDto.getBasicEmployee().getEmail();
 				SimpleMailMessage messageToEmployee = new SimpleMailMessage();
 				messageToEmployee.setFrom(fromEmail);
 				messageToEmployee.setTo("pradeep.malik@skillzamp.com");
@@ -61,9 +61,9 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 		}
 		else {
-			throw new CustomException("no employee");
+			throw new RuntimeException("no employee");
 		}
-
+		return createLeaveRequestDto;
 	}
 
 	@Override
@@ -74,47 +74,34 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 
 	@Override
-	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
-		createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
+	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,int id) {
+		CreateLeaveRequest createLeaveRequest=createLeaveRequestRepository.findById(id).orElse(null);
+		if(createLeaveRequest!=null)
+		{
+			createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
+			createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
+			createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
+			createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
+			createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
+			createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
+			createLeaveRequest.setApprove(createLeaveRequestDto.isApprove());
+			createLeaveRequestRepository.saveAndFlush(createLeaveRequest);
+		}
+		else {
+			throw new RuntimeException("Create Leave Not Found for Id : "+id);
+		}
 		return createLeaveRequestDto;
-
 	}
 
 	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
-		CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
-
-
-//	        createLeaveRequest.setAvailableBalance(createLeaveRequestDto.getAvailableBalance());
-		createLeaveRequest.setId(createLeaveRequestDto.getId());
-//		createLeaveRequest.setDays(createLeaveRequestDto.getDays());
-		createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
-		createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
-//	        createLeaveRequest.setLeaveFor(createLeaveRequestDto.getLeaveFor());
-		createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
-		createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
-		createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
-		createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
-		createLeaveRequest.setApprove(createLeaveRequestDto.isApprove());
-
-
+		CreateLeaveRequest createLeaveRequest=this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
 		return createLeaveRequest;
 	}
 
-	public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest) {
-		CreateLeaveRequestDto createLeaveRequestDto= new CreateLeaveRequestDto();
-
-//		  createLeaveRequestDto.setAvailableBalance(createLeaveRequest.getAvailableBalance());
-//		createLeaveRequestDto.setDays(createLeaveRequest.getDays());
-		createLeaveRequestDto.setEndDate(createLeaveRequest.getEndDate());
-		createLeaveRequestDto.setLeaveApprover(createLeaveRequest.getLeaveApprover());
-//		  createLeaveRequestDto.setLeaveFor(createLeaveRequest.getLeaveFor());
-		createLeaveRequestDto.setLeaveType(createLeaveRequest.getLeaveType());
-		createLeaveRequestDto.setReasonForLeave(createLeaveRequest.getReasonForLeave());
-		createLeaveRequestDto.setSelectEmployee(createLeaveRequest.getSelectEmployee());
-		createLeaveRequestDto.setStartDate(createLeaveRequest.getStartDate());
-		createLeaveRequestDto.setApprove(createLeaveRequest.isApprove());
+	public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest)
+	{
+		CreateLeaveRequestDto createLeaveRequestDto=this.modelMapper.map(createLeaveRequest,CreateLeaveRequestDto.class);
 		return createLeaveRequestDto;
-
 	}
 
 }

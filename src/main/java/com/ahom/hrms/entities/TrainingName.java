@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class TrainingName {
@@ -11,7 +12,9 @@ public class TrainingName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotEmpty(message = "Training Name can`t be Empty")
     private String trainingName;
+    @NotEmpty(message = "Please Write Something Here")
     private String description;
 
 

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -23,10 +24,15 @@ public class ShiftManagement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotEmpty(message = "Country Name Can`t be Empty")
 	private String country;
+	@NotEmpty(message = "Employee Name Can`t be Empty")
 	private String employee;
+	@NotEmpty(message = "Date Can`t be Empty")
 	private String date;
+	@NotEmpty(message = "Start Time Can`t be Empty")
 	private String startTime;
+	@NotEmpty(message = "End Time Can`t be Empty")
 	private String endTime;
 	
 	

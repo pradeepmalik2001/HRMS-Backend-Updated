@@ -3,13 +3,16 @@ package com.ahom.hrms.service;
 import java.util.List;
 
 import com.ahom.hrms.dto.LeaveTypeDto;
+import com.ahom.hrms.entities.LeaveType;
 
 public interface LeaveTypeService {
 
-	void SaveLeaveTypeDetail(LeaveTypeDto leaveTypeDto);
+	LeaveTypeDto SaveLeaveTypeDetail(LeaveTypeDto leaveTypeDto);
 
 	List<LeaveTypeDto> getAllLeaveDetail();
 
-	void deleteLaeveDetail(int i);
+	LeaveType deleteLaeveDetail(int id);
+
+	LeaveType updateLeaveType(LeaveTypeDto leaveType,int id);
 
 }

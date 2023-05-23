@@ -10,7 +10,7 @@ import java.util.List;
 public interface TrainingNameService {
 
 
-    void saveTrainingName(TrainingNameDto trainingNameDto);
+    TrainingNameDto saveTrainingName(TrainingNameDto trainingNameDto);
 
     TrainingName trainingNameDtoToTrainingName(TrainingNameDto trainingNameDto);
 

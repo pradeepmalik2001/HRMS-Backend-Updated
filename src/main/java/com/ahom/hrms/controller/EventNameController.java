@@ -1,5 +1,6 @@
 package com.ahom.hrms.controller;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.dto.EventNameDto;
 import com.ahom.hrms.dto.WorkInformationDto;
 import com.ahom.hrms.serviceimpl.EventNameServiceImpl;
@@ -21,15 +22,12 @@ public class EventNameController {
 
 
     @PostMapping("/saveData")
-    public ResponseEntity<EventNameDto> saveEvent(@Valid @RequestBody EventNameDto eventNameDto){
-        eventNameService.saveEventName(eventNameDto);
-        return new ResponseEntity<>(eventNameDto, HttpStatus.ACCEPTED);
+    public ResponseEntity<Object> saveEvent(@Valid @RequestBody EventNameDto eventNameDto){
+        return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,eventNameService.saveEventName(eventNameDto));
     }
 
     @GetMapping("/fetchData")
-    public List<EventNameDto> getEventName(){
-        List<EventNameDto> allEventNameDto=eventNameService.getAll();
-        return allEventNameDto;
-
+    public ResponseEntity<Object> getEventName(){
+        return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,eventNameService.getAll());
     }
 }

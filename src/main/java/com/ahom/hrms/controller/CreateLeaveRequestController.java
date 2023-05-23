@@ -3,6 +3,7 @@ package com.ahom.hrms.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,20 +29,15 @@ public class CreateLeaveRequestController {
 	
 	
 	 @PostMapping("/post")
-	    public ResponseEntity<CreateLeaveRequestDto> saveEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto)
+	    public ResponseEntity<Object> saveEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto)
 	    {
-	        createLeaveRequestService.saveCreateLeaveRequest(createLeaveRequestDto);
-
-	        return new ResponseEntity<>(createLeaveRequestDto, HttpStatus.CREATED);
+			return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,createLeaveRequestService.saveCreateLeaveRequest(createLeaveRequestDto));
 	    }
 	 
 	 @GetMapping("/get")
-	    public ResponseEntity<List<CreateLeaveRequestDto>> getCreateLeaveRequest()
+	    public ResponseEntity<Object> getCreateLeaveRequest()
 	    {
-	        List<CreateLeaveRequestDto> allCreateLeaveRequest = createLeaveRequestService.getAllCreateLeaveRequest();
-       
-	        return ResponseEntity.of(Optional.of(allCreateLeaveRequest));
-
+			return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,createLeaveRequestService.getAllCreateLeaveRequest());
 	    }
 	 
 //	 @DeleteMapping("/createLeaveRequest/{createLeaveRequestId}")
@@ -49,11 +45,10 @@ public class CreateLeaveRequestController {
 //	        createLeaveRequestService.deleteCreateLeaveRequest(id);
 //	    }
 	 
-	 @PutMapping("/put")
-	    public ResponseEntity<CreateLeaveRequestDto> updateEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto)
+	 @PutMapping("/put/{id}")
+	    public ResponseEntity<Object> updateEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto,@PathVariable int id)
 	    {
-	        createLeaveRequestService.updateCreateLeaveRequest(createLeaveRequestDto);
-	        return new ResponseEntity<>(createLeaveRequestDto, HttpStatus.ACCEPTED);
+			return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,createLeaveRequestService.updateCreateLeaveRequest(createLeaveRequestDto,id));
 	    }
 
 

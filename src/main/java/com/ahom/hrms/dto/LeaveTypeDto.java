@@ -1,43 +1,18 @@
 package com.ahom.hrms.dto;
 
-public class LeaveTypeDto {
+import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
+
+@Data
+public class LeaveTypeDto
+{
 	private int id;
+
+	@NotEmpty(message="LeaveType is Mandatory ")
 	private String leaveType;
+
+	@NotEmpty(message="Description is Mandatory")
 	private String description;
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-	/**
-	 * @return the leaveType
-	 */
-	public String getLeaveType() {
-		return leaveType;
-	}
-	/**
-	 * @param leaveType the leaveType to set
-	 */
-	public void setLeaveType(String leaveType) {
-		this.leaveType = leaveType;
-	}
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+
 }
