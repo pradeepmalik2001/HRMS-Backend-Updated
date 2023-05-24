@@ -38,19 +38,6 @@ public class Attendance {
 		this.userName = userName;
 	}
 
-//	@OneToOne(targetEntity = UserMaster.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//	@JoinColumn(name = "user_master_id")
-//	@JsonBackReference
-//	private UserMaster userMaster;
-//
-//	public UserMaster getUserMaster() {
-//		return userMaster;
-//	}
-//
-//	public void setUserMaster(UserMaster userMaster) {
-//		this.userMaster = userMaster;
-//	}
-
 	public String getStatus() {
 		return status;
 	}
