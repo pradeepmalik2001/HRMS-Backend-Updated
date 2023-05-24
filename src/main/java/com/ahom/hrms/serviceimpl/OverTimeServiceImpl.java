@@ -26,11 +26,10 @@ public class OverTimeServiceImpl implements OverTimeService {
 	ModelMapper modelMapper;
 	
 	@Override
-	public void EmployeeSave(OverTime overtimedto)
+	public OverTimeDto EmployeeSave(OverTimeDto overtimedto)
 	{
-//		overtimedto.setDate(new Date());
-		overRepository.save(overtimedto);
-		
+		overRepository.save(OverTimeDtoToOverTime(overtimedto));
+		return overtimedto;
 	}
 	
 	@Override
@@ -45,19 +44,17 @@ public class OverTimeServiceImpl implements OverTimeService {
 	public List<OverTime> gteOt(Date startdate, Date enddate, String name) {
 		List<OverTime> list = overRepository.findByNameAndDateRange(startdate, enddate, name);
 		System.out.println(list);
-		List<OverTime> filteredoverTimes = new ArrayList<>();
-
-		for (OverTime overTime: list) {
-			filteredoverTimes.add(overTime);
-
-			System.out.println(overTime);
-
+		if (list!= null) {
+			List<OverTime> filteredoverTimes = new ArrayList<>();
+			for (OverTime overTime : list) {
+				filteredoverTimes.add(overTime);
+				System.out.println(overTime);
+			}
+			return filteredoverTimes;
 		}
-
-
-//		List<OverTimeDto> collect = list.stream().map(dt -> OverTimeToOverTimeDto(dt)).collect(Collectors.toList());
-
-		return filteredoverTimes;
+		else {
+			throw new RuntimeException("Record for Name : "+name+" is Not Found");
+		}
 	}
 
 
@@ -66,7 +63,6 @@ public class OverTimeServiceImpl implements OverTimeService {
 	public OverTime OverTimeDtoToOverTime(OverTimeDto overtimedto)
 	{
 		OverTime addOvertime =this.modelMapper.map(overtimedto, OverTime.class);
-		
 		return addOvertime;
 	}
 
@@ -74,9 +70,7 @@ public class OverTimeServiceImpl implements OverTimeService {
 	
 	 public OverTimeDto OverTimeToOverTimeDto(OverTime addOvertime)
 	    {
-		 OverTimeDto overtimeDto= this.modelMapper.map(addOvertime, OverTimeDto.class);
-
-	     
+		 	OverTimeDto overtimeDto= this.modelMapper.map(addOvertime, OverTimeDto.class);
 	        return overtimeDto;
 	    }	
 }
