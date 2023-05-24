@@ -111,7 +111,7 @@ public class AttendanceController {
 	}
 	@PostMapping("/byDate")
 	@ResponseBody
-	public ResponseEntity<List<Attendance>> ot(@Valid @NotEmpty @RequestParam String startdate,
+	public ResponseEntity<List<Attendance>> ot( @RequestParam String startdate,
 											 @RequestParam String enddate,
 											 @RequestParam String name) throws ParseException {
 		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
