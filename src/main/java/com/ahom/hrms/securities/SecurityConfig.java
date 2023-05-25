@@ -30,18 +30,32 @@ import org.springframework.web.filter.CorsFilter;
                 "/signup"
         };
         public static final String [] ADMIN_URLS= {
-                "/saveApproval","/department","/holiday/leaveDetail","/holiday/{id}","/holiday/edit/{id}",
-                "/addJobTitle/**","/attendance/save","/attendance/upload","/attendance",
-                "/attendance/fetch","/attendance/Delete/{employeeId}","/attendance/update","/bank/**",
-                "/basic/**","/branch/**","/designation/**","disApprove/**","approve/**","/emergency/**",
-                "/employees/**","/employee/**","/employment/**","/event/**","/leave/**","/OverTime/**",
-                "/training/**","/trainingName/**","/TravelOverview/**","/work/**"
+                "/saveApproval",           "/department/**",
+                "/holiday/leaveDetail",    "/holiday/{id}",
+                "/holiday/edit/{id}",      "/OverTime/**",
+                "/addJobTitle/**",         "/attendance/save",
+                "/attendance/fetch",       "/attendance/Delete/{employeeId}"
+                ,"/attendance/update",     "/bank/**",
+                "/basic/**",               "/designation/**",
+                "disApprove/**",           "approve/**",
+                "/employees/**",           "/employee/**",
+                "/employment/**",          "/event/**",
+                "/leave/**",               "/branch/**",
+                "/training/**",            "/trainingName/**",
+                "/TravelOverview/**",      "/work/**",
+                "/attendance/upload",      "/emergency/**",
+
 
 
         };
         public static final String [] EMPLOYEE_URLS={
-                "/holiday/leaveDetails","/shiftManagement/**","/attendance/byDate","/attendance/status",
-                "/attendance/count","/attendance/statusOf","/CreateLeaveRequest/**"
+                "/holiday/leaveDetails",
+                "/shiftManagement/**",
+                "/attendance/byDate",
+                "/attendance/status",
+                "/attendance/count",
+                "/attendance/statusOf",
+                "/CreateLeaveRequest/**"
         };
         @Autowired
         private CustomUserDetailService customUserDetailService;
