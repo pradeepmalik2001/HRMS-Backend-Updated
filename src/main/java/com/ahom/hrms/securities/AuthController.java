@@ -89,27 +89,29 @@ public class AuthController {
         Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
         if (employee.isEmpty()) {
             if (UserDTO.getRoles()!=null) {
+                if (UserDTO.getConfirmPassword().equals(UserDTO.getPassword())) {
 
+                    SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+                    messageToEmployee.setFrom(fromEmail);
+                    messageToEmployee.setTo(UserDTO.getUsername());
+                    messageToEmployee.setSubject("Login Credentials");
+                    messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName() + " "
+                            + "\n"
+                            + "\n"
+                            + "User Name = "
+                            + UserDTO.getUsername() + " " +
+                            " " +
+                            "\n" +
+                            "Password :" +
+                            " " + UserDTO.getConfirmPassword());
+                    mailSender.send(messageToEmployee);
+                    System.out.println(messageToEmployee);
 
-            SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-            messageToEmployee.setFrom(fromEmail);
-            messageToEmployee.setTo(UserDTO.getUsername());
-            messageToEmployee.setSubject("Login Credentials");
-            messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName()+ " "
-                    + "\n"
-                    +"\n"
-                    +"User Name = "
-                    + UserDTO.getUsername() +" " +
-                    " "+
-                    "\n" +
-                    "Password :" +
-                    " " + UserDTO.getConfirmPassword());
-            mailSender.send(messageToEmployee);
-            System.out.println(messageToEmployee);
-
-                Employee createUser = userService.saveEmployee(UserDTO);
-                return ResponseHandler.responseBuilder("Employee registered successfully",
-                        HttpStatus.OK, createUser);
+                    Employee createUser = userService.saveEmployee(UserDTO);
+                    return ResponseHandler.responseBuilder("Employee registered successfully",
+                            HttpStatus.OK, createUser);
+                }else
+                    throw new RuntimeException("Password validation Failed");
             }
             else {
                 throw new RuntimeException("Role is Mandatory");
