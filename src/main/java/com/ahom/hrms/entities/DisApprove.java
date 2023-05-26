@@ -18,5 +18,5 @@ public class DisApprove
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String status;
+    private boolean status;
 }

@@ -44,21 +44,9 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 		BasicEmployee basicEmployee=basicEmployeeRepository.findById(createLeaveRequestDto.getId()).orElse(null);
 
 		if (basicEmployee!=null) {
+			createLeaveRequestDto.setEmail(basicEmployee.getEmail());
+			createLeaveRequestDto.setStatus("3");
 			createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
-			try {
-
-				SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-				messageToEmployee.setFrom(fromEmail);
-				messageToEmployee.setTo("pradeep.malik@skillzamp.com");
-				messageToEmployee.setSubject(emailSubject);
-				messageToEmployee.setText("Request for leave");
-				mailSender.send(messageToEmployee);
-				System.out.println(messageToEmployee);
-			}catch (RuntimeException e)
-			{
-				e.printStackTrace();
-			}
-
 		}
 		else {
 			throw new RuntimeException("no employee");
@@ -78,14 +66,47 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 		CreateLeaveRequest createLeaveRequest=createLeaveRequestRepository.findById(id).orElse(null);
 		if(createLeaveRequest!=null)
 		{
-			createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
-			createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
-			createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
-			createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
-			createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
-			createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
-			createLeaveRequest.setApprove(createLeaveRequestDto.isApprove());
+//			createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
+//			createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
+//			createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
+//			createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
+//			createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
+//			createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
+			createLeaveRequest.setStatus(createLeaveRequestDto.getStatus());
 			createLeaveRequestRepository.saveAndFlush(createLeaveRequest);
+			if(createLeaveRequestDto.getStatus().equals("1"))
+			{
+				try {
+					SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+					messageToEmployee.setFrom(fromEmail);
+					messageToEmployee.setTo(createLeaveRequest.getEmail());
+					messageToEmployee.setSubject(emailSubject);
+					messageToEmployee.setText("Request for leave");
+					mailSender.send(messageToEmployee);
+					System.out.println(messageToEmployee);
+				}catch (RuntimeException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else if (createLeaveRequestDto.getStatus().equals("2"))
+			{
+				try {
+					SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+					messageToEmployee.setFrom(fromEmail);
+					messageToEmployee.setTo(createLeaveRequest.getEmail());
+					messageToEmployee.setSubject(emailSubject);
+					messageToEmployee.setText("Request for leave");
+					mailSender.send(messageToEmployee);
+					System.out.println(messageToEmployee);
+				}catch (RuntimeException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else {
+				return null;
+			}
 		}
 		else {
 			throw new RuntimeException("Create Leave Not Found for Id : "+id);
@@ -95,6 +116,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
 		CreateLeaveRequest createLeaveRequest=this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
+//		createLeaveRequest.setStatus("3");
 		return createLeaveRequest;
 	}
 

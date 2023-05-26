@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
@@ -33,6 +34,9 @@ public class CreateLeaveRequestDto {
 	@NotEmpty(message = "Reason For Leave is Mandatory")
 	private String reasonForLeave;
 
-	private boolean approve;
+
+	private String status;
+
+	private String email;
 
 }
