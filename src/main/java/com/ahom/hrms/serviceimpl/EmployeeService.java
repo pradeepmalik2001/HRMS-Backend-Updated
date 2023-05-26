@@ -32,6 +32,10 @@ public class EmployeeService {
         return employeeRepository.findByUserName(userName);
     }
 
+    public Employee user(String userName){
+        return employeeRepository.getByUserName(userName);
+    }
+
     public Object delete(int id){
 
         Employee employee=employeeRepository.findById(id).orElse(null);
