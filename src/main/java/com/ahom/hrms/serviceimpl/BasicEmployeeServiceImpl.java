@@ -120,7 +120,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		else {
 			throw new RuntimeException("Employee with ID:" + id + " " + "not found");
 		}
-		return null;
+		return basicEmployee;
 	}
 	@Scheduled(cron = "00 33 18 * * ?")
 	public void checkBirthday()

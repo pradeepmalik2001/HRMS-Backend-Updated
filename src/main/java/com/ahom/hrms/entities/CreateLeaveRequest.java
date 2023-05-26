@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 public class CreateLeaveRequest {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@NotEmpty(message = "Employee Name can`t be Empty")
@@ -34,6 +34,8 @@ public class CreateLeaveRequest {
 	@NotEmpty(message = "Reason For Leave is Mandatory")
 	private String reasonForLeave;
 
-	private boolean approve;
+	private String status;
+
+	private String email;
 
 }

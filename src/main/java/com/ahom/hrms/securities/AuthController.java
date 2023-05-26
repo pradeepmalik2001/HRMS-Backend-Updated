@@ -89,6 +89,7 @@ public class AuthController {
         Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
         if (employee.isEmpty()) {
             if (UserDTO.getRoles()!=null) {
+
                 if (UserDTO.getConfirmPassword().equals(UserDTO.getPassword())) {
 
                     SimpleMailMessage messageToEmployee = new SimpleMailMessage();
@@ -112,6 +113,7 @@ public class AuthController {
                             HttpStatus.OK, createUser);
                 }else
                     throw new RuntimeException("Password validation Failed");
+
             }
             else {
                 throw new RuntimeException("Role is Mandatory");

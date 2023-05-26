@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.entities.OverTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ahom.hrms.dto.OverTimeDto;
 import com.ahom.hrms.serviceimpl.OverTimeServiceImpl;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/OverTime")
@@ -24,38 +27,31 @@ public class OverTimeController {
 	OverTimeServiceImpl overTimeservice;
 	
 	@PostMapping("/save")
-	public ResponseEntity<OverTime> EmplSave(@RequestBody OverTime overtimedto)
+	public ResponseEntity<Object> EmplSave(@Valid @RequestBody OverTimeDto overtimedto)
 	{
 		overtimedto.setDate(new Date());
-		 overTimeservice.EmployeeSave(overtimedto);	
- 		 return new ResponseEntity<>(overtimedto ,HttpStatus.CREATED);
+		return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,overTimeservice.EmployeeSave(overtimedto));
 	}
 	
 	@GetMapping("/fetch")
-	public ResponseEntity<List<OverTimeDto>> Emplfetch()
+	public ResponseEntity<Object> Emplfetch()
 	{
-		List<OverTimeDto> Emplfetch = overTimeservice.Employeefetch();
-		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,overTimeservice.Employeefetch());
 	}
 
 	@PostMapping("/byDate")
 	@ResponseBody
-	public ResponseEntity<List<OverTime>> ot(@RequestParam String startdate,
-												@RequestParam String enddate,
-												@RequestParam String name) throws ParseException {
+	public ResponseEntity<Object> ot(@RequestParam(required = false,name = "startdate") String startdate,
+												@RequestParam(required = false,name="enddate") String enddate,
+												@RequestParam(required = false,name="name") String name) throws ParseException
+	{
 		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
 		Date stdate= format.parse(startdate);
 		Date endate= format.parse(enddate);
 		List<OverTime> Emplfetch = overTimeservice.gteOt(stdate,endate,name);
-		return new ResponseEntity<>(Emplfetch ,HttpStatus.OK);
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,Emplfetch);
 	}
-	
-//	OverTime overtime =new OverTime();
-//	Duration duration = Duration.between(setStarttime(Temporal starttime),setEndtime(Temporal endtime));
-//	@GetMapping("/viewbyId/{emplyeeId}")
-//	public Optional<OverTime> getAttendanceById(@PathVariable("employeeId") int empId) {
-//		return overTimeservice.viewOverTimeById(empId);
-//	}
+
 
 
 
