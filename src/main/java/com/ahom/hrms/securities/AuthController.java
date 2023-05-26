@@ -49,15 +49,21 @@ public class AuthController {
     private EmployeeService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> createToken(@Valid @RequestBody JwtAuthRequest request) throws Exception {
+    public ResponseEntity<Object> createToken(@Valid @RequestBody JwtAuthRequest request) throws Exception {
         this.authenticate(request.getUsername(), request.getPassword());
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
         String token = this.jwtTokenHelper.generateToken(userDetails);
 
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(token);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+       Employee user = userService.user(request.getUsername());
+        if (user!=null) {
+            response.setUserName(user.getEmployeeName());
+            return ResponseHandler.responseBuilder("Login Successful", HttpStatus.OK,
+                    response);
+        }else
+            throw new RuntimeException();
+//        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     private void authenticate(String username, String password) throws Exception {
@@ -83,27 +89,29 @@ public class AuthController {
         Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
         if (employee.isEmpty()) {
             if (UserDTO.getRoles()!=null) {
+                if (UserDTO.getConfirmPassword().equals(UserDTO.getPassword())) {
 
+                    SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+                    messageToEmployee.setFrom(fromEmail);
+                    messageToEmployee.setTo(UserDTO.getUsername());
+                    messageToEmployee.setSubject("Login Credentials");
+                    messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName() + " "
+                            + "\n"
+                            + "\n"
+                            + "User Name = "
+                            + UserDTO.getUsername() + " " +
+                            " " +
+                            "\n" +
+                            "Password :" +
+                            " " + UserDTO.getConfirmPassword());
+                    mailSender.send(messageToEmployee);
+                    System.out.println(messageToEmployee);
 
-//            SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-//            messageToEmployee.setFrom(fromEmail);
-//            messageToEmployee.setTo(UserDTO.getUsername());
-//            messageToEmployee.setSubject("Login Credentials");
-//            messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName()+ " "
-//                    + "\n"
-//                    +"\n"
-//                    +"User Name = "
-//                    + UserDTO.getUsername() +" " +
-//                    " "+
-//                    "\n" +
-//                    "Password :" +
-//                    " " + UserDTO.getConfirmPassword());
-//            mailSender.send(messageToEmployee);
-//            System.out.println(messageToEmployee);
-
-                Employee createUser = userService.saveEmployee(UserDTO);
-                return ResponseHandler.responseBuilder("Employee registered successfully",
-                        HttpStatus.OK, createUser);
+                    Employee createUser = userService.saveEmployee(UserDTO);
+                    return ResponseHandler.responseBuilder("Employee registered successfully",
+                            HttpStatus.OK, createUser);
+                }else
+                    throw new RuntimeException("Password validation Failed");
             }
             else {
                 throw new RuntimeException("Role is Mandatory");

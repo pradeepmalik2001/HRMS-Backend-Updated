@@ -43,11 +43,13 @@ public class Employee implements UserDetails {
 
 
     @JsonProperty()
-    @Pattern(regexp = "^.*(?=.{5,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
-            message = "must contain one upperCase and special character")
+//    @Pattern(regexp = "^.*(?=.{5,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
+            message = "Password must contain one upperCase special character and minimum length 8")
     private String password;
 
     @Transient
+    @NotEmpty
     private String confirmPassword;
 
     @Enumerated(EnumType.STRING)
