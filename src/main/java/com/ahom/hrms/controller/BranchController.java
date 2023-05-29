@@ -32,7 +32,7 @@ public class BranchController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteBranch(@PathVariable int id)
+    public ResponseEntity<Object> deleteBranch(@PathVariable String id)
     {
         return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,branchService.deleteBranch(id));
     }
