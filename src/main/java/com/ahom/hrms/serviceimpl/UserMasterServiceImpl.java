@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 
@@ -17,6 +18,8 @@ import com.ahom.hrms.dto.UserMasterDto;
 
 import com.ahom.hrms.service.UserMasterService;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,26 +58,29 @@ public class UserMasterServiceImpl implements UserMasterService{
 				userMasterDto.setRoles(Collections.singletonList(role));
 				userMasterDto.setRoleName(userMasterDto.getRoleName());
 
-
-
 					String userName = userMasterDto.getUserName();
-					SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-					messageToEmployee.setFrom(fromEmail);
-					messageToEmployee.setTo(userName);
-					messageToEmployee.setSubject(emailSubject);
-					messageToEmployee.setText("Login Credentials for : " + userMasterDto.getEmployeeName()+ " "
-							+ "\n"
-							+"\n"
-							+"User Name = "
-							+ userMasterDto.getUserName() +" " +
-							 " "+
-							"\n" +
-							"Password :" +
-							" " + userMasterDto.getConfirmPassword());
-					mailSender.send(messageToEmployee);
-					System.out.println(messageToEmployee);
+					try {
+						MimeMessage message=mailSender.createMimeMessage();
+						MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
+						messageToEmployee.setFrom(fromEmail);
+						messageToEmployee.setTo(userName);
+						messageToEmployee.setSubject(emailSubject);
+						messageToEmployee.setText("Login Credentials for : " + userMasterDto.getEmployeeName()+ " "
+								+ "\n"
+								+"\n"
+								+"User Name = "
+								+ userMasterDto.getUserName() +" " +
+								" "+
+								"\n" +
+								"Password :" +
+								" " + userMasterDto.getConfirmPassword());
+						mailSender.send(message);
+						System.out.println(message);
 
-					userMasterRepository.saveAndFlush(userMasterDto);
+						userMasterRepository.saveAndFlush(userMasterDto);
+					} catch (MessagingException e) {
+						throw new RuntimeException(e);
+					}
 			} else {
 				throw new CustomException("no role");
 			}

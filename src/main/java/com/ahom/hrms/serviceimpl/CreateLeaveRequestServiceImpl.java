@@ -13,12 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 
 import com.ahom.hrms.dto.CreateLeaveRequestDto;
 
 import com.ahom.hrms.service.CreateLeaveRequestService;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
@@ -77,31 +81,38 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			if(createLeaveRequestDto.getStatus().equals("1"))
 			{
 				try {
-					SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+					MimeMessage message=mailSender.createMimeMessage();
+					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
 					messageToEmployee.setFrom(fromEmail);
 					messageToEmployee.setTo(createLeaveRequest.getEmail());
 					messageToEmployee.setSubject(emailSubject);
 					messageToEmployee.setText("Request for leave");
-					mailSender.send(messageToEmployee);
-					System.out.println(messageToEmployee);
+					mailSender.send(message);
+					System.out.println(message);
 				}catch (RuntimeException e)
 				{
 					e.printStackTrace();
+				} catch (MessagingException e) {
+					throw new RuntimeException(e);
 				}
 			}
 			else if (createLeaveRequestDto.getStatus().equals("2"))
 			{
 				try {
-					SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-					messageToEmployee.setFrom(fromEmail);
-					messageToEmployee.setTo(createLeaveRequest.getEmail());
-					messageToEmployee.setSubject(emailSubject);
-					messageToEmployee.setText("Request for leave");
-					mailSender.send(messageToEmployee);
-					System.out.println(messageToEmployee);
+					MimeMessage message=mailSender.createMimeMessage();
+					MimeMessageHelper helper=new MimeMessageHelper(message);
+					helper.setFrom(fromEmail);
+					helper.setTo(createLeaveRequest.getEmail());
+					helper.setSubject(emailSubject);
+					helper.setText("Request For Leave");
+
+					mailSender.send(message);
+					System.out.println(message);
 				}catch (RuntimeException e)
 				{
 					e.printStackTrace();
+				} catch (MessagingException e) {
+					throw new RuntimeException(e);
 				}
 			}
 			else {
