@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -80,9 +83,8 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     }
 
 
-    @Scheduled(cron = "00 19 14 * * ?")
-    public void checkProbation()
-    {
+    @Scheduled(cron = "00 24 12 * * ?")
+    public void checkProbation() throws MessagingException {
         List<WorkInformation>workInformation=workInformationRepository.findAll();
 
         LocalDate localDate=LocalDate.now();
@@ -96,24 +98,26 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                 LocalDate probationEndDate = joiningDate.plusMonths(6);
                 long daysToComplete = ChronoUnit.DAYS.between(localDate, probationEndDate);
                 if (daysToComplete==7 ||daysToComplete==0) {
-                    SimpleMailMessage simpleMailMessageToHr = new SimpleMailMessage();
 
+
+                    MimeMessage message=mailSender.createMimeMessage();
+                    MimeMessageHelper simpleMailMessageToHr=new MimeMessageHelper(message);
                     simpleMailMessageToHr.setFrom(fromEmail);
                     simpleMailMessageToHr.setTo(hrEmail);
                     simpleMailMessageToHr.setSubject(emailSubject);
                     simpleMailMessageToHr.setText("Probation period of employee "
                             + workInformation1.getBasicEmployee().getEmployeeName()
                             + " will end in one week.");
-                    mailSender.send(simpleMailMessageToHr);
+                    mailSender.send(message);
+                    System.out.println(message);
 
-                    System.out.println(simpleMailMessageToHr);
-                    SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+                    MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
                     messageToEmployee.setFrom(fromEmail);
                     messageToEmployee.setTo(workInformation1.getBasicEmployee().getEmail());
                     messageToEmployee.setSubject(emailSubject);
                     messageToEmployee.setText("Your probation period will end in 7 days. Please contact HR for further instructions.");
-                    mailSender.send(messageToEmployee);
-                    System.out.println(messageToEmployee);
+                    mailSender.send(message);
+                    System.out.println(message);
                 }
             }
 
