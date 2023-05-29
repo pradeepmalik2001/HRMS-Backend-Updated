@@ -1,10 +1,12 @@
 package com.ahom.hrms.entities;
 
+import com.ahom.hrms.constant.PrefixAndSequence;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,8 +26,16 @@ import java.util.List;
 @AllArgsConstructor
 public class Employee implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "branch_seq")
+    @GenericGenerator(name = "branch_seq",
+            strategy = "com.ahom.hrms.constant.PrefixAndSequence",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = PrefixAndSequence.INCREMENT_PARAM,value = "1"),
+                    @org.hibernate.annotations.Parameter(name = PrefixAndSequence.VALUE_PREFIX_PARAMETER, value = "ATPL_"),
+                    @org.hibernate.annotations.Parameter(name = PrefixAndSequence.NUMBER_FORMAT_PARAMETER,value = "%03d")
+            })
+
+    private String id;
 
     @NotBlank(message = "Department name is mandatory")
     private String departmentName;

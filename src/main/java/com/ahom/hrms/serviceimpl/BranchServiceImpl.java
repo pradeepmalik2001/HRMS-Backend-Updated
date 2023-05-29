@@ -52,7 +52,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public Branch deleteBranch(int id)
+    public Branch deleteBranch(String id)
     {
         Branch branch=branchRepository.findById(id).orElse(null);
         if(branch!=null)

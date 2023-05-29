@@ -36,7 +36,7 @@ public class EmployeeService {
         return employeeRepository.getByUserName(userName);
     }
 
-    public Object delete(int id){
+    public Object delete(String id){
 
         Employee employee=employeeRepository.findById(id).orElse(null);
         if (employee==null)
