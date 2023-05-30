@@ -14,7 +14,7 @@ public interface AttendanceService {
 	public List<AttendanceDto> getAllEmplAttendance();
 	
 	public Object deleteAttendance(int empId);
-	public void updateEmployeeAttendance(AttendanceDto attendancedto);
+	public AttendanceDto updateEmployeeAttendance(AttendanceDto attendancedto);
 	public Object saveExcel(MultipartFile file);
 	public List<Attendance>getAll();
 	public List<Attendance> gteOt(Date startdate
