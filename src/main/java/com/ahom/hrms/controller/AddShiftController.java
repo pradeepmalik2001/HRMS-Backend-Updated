@@ -61,7 +61,7 @@ public class AddShiftController {
 
 	//Update
 	@PutMapping("/update/{Id}")
-	public ResponseEntity<Object> updateaddShift(@RequestBody ShiftManagement shiftManagement,@PathVariable("Id") int id ) {
+	public ResponseEntity<Object> updateaddShift(@Valid @RequestBody ShiftManagement shiftManagement,@PathVariable("Id") int id ) {
 		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,addShiftService.updateAddshift(shiftManagement,id));
 	}
 

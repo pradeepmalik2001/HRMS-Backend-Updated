@@ -31,7 +31,7 @@ WorkInformationRepository workInformationRepository;
 
 	//save data
 	public Object saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-		BankingInfo bankingInfo = bankingInfoRepository.findById(bankingInfoDto.getEmployeeId()).orElse(null);
+		BankingInfo bankingInfo = bankingInfoRepository.findById(bankingInfoDto.getId()).orElse(null);
 		if (bankingInfo == null) {
 			bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
 			bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
@@ -44,8 +44,8 @@ WorkInformationRepository workInformationRepository;
 
 	//converting DTO
 	public BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-		int empId=bankingInfoDto.getEmployeeId();
-		BasicEmployee basicEmployee = basicEmployeeRepository.findById(bankingInfoDto.getEmployeeId())
+		int empId=bankingInfoDto.getId();
+		BasicEmployee basicEmployee = basicEmployeeRepository.findById(bankingInfoDto.getId())
 				.orElse(null);
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
 		if(basicEmployee!=null) {
@@ -65,7 +65,7 @@ WorkInformationRepository workInformationRepository;
 	public BankingInfoDto bankingInfoToBankingInfoDto(BankingInfo bankingInfo) throws Exception {
 		BankingInfoDto bankingInfoDto = this.modelMapper.map(bankingInfo, BankingInfoDto.class);
 
-		int empId=bankingInfoDto.getEmployeeId();
+		int empId=bankingInfoDto.getId();
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(empId).orElse(null);
 		return bankingInfoDto;
 	}
