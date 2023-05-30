@@ -50,7 +50,7 @@ public class AttendanceController {
 	@PostMapping("/upload")
 	public ResponseEntity<Object>save(@Valid @RequestParam("file")MultipartFile file) throws IOException {
 
-		if (Excel.checkFormat(file)&& file.isEmpty()) {
+		if (Excel.checkFormat(file)) {
 			try {
 				Workbook workbook = WorkbookFactory.create(file.getInputStream());
 				Sheet sheet = workbook.getSheetAt(0);
@@ -91,9 +91,9 @@ public class AttendanceController {
 	}
 
 	@GetMapping("/fetch")
-	public ResponseEntity<List<AttendanceDto>> getEmplAttendance() {
+	public ResponseEntity<Object> getEmplAttendance() {
 		List<AttendanceDto> allEmployee = attendanceService.getAllEmplAttendance();
-		return new ResponseEntity<>(allEmployee ,HttpStatus.OK);
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,allEmployee);
 	}
 
 	@DeleteMapping("/Delete/{employeeId}")
@@ -103,11 +103,9 @@ public class AttendanceController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<AttendanceDto> updateEmplAttendance(@RequestBody AttendanceDto attendancedto) {
+	public ResponseEntity<Object> updateEmplAttendance(@RequestBody AttendanceDto attendancedto) {
 		attendancedto.setDate(new Date());
-		attendanceService.updateEmployeeAttendance(attendancedto);
-
-		return new ResponseEntity<> (attendancedto,HttpStatus.OK);
+		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,attendanceService.updateEmployeeAttendance(attendancedto));
 	}
 	@PostMapping("/byDate")
 	@ResponseBody

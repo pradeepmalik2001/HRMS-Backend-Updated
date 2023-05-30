@@ -55,8 +55,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 			throw new RuntimeException("No Record Present for Id:"+empId);
 	}
 	@Override
-	public void updateEmployeeAttendance(AttendanceDto attendancedto) {
+	public AttendanceDto updateEmployeeAttendance(AttendanceDto attendancedto) {
 		attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
+		return attendancedto;
 	}
 
 	@Override
