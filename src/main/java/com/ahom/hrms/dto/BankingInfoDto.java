@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 public class BankingInfoDto {
-	private int employeeId;
+	private int id;
 
 	@NotEmpty(message = "Please Enter Account Number")
 	@Column(unique = true)

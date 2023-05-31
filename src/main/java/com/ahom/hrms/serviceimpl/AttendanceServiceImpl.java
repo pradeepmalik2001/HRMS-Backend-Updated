@@ -34,8 +34,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public Object saveEmplAttendance(AttendanceDto attendancedto) {
-		attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
-		return attendancedto;
+		Optional<Employee> employee=employeeRepository.findByUserName(attendancedto.getUserName());
+		if (employee.isPresent()) {
+			attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
+			return attendancedto;
+		}else
+			throw new RuntimeException("No employee found for UserName:"+ attendancedto.getUserName());
 	}
 
 	@Override
@@ -156,14 +160,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
 	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto) {
-		Optional<Employee> employee = employeeRepository.findByUserName(attendancedto.getUserName());
+//		Optional<Employee> employee = employeeRepository.findByUserName(attendancedto.getUserName());
 
-		if (employee.isPresent()) {
+//		if (employee.isPresent()) {
 			return this.modelMapper.map(attendancedto, Attendance.class);
-		}
-		else {
-			throw new RuntimeException("No employee found for UserName:"+ attendancedto.getUserName());
-		}
+//		}
+//		else {
+//			throw new RuntimeException("No employee found for UserName:"+ attendancedto.getUserName());
+//		}
 	}
 
 	/** ------------ Using DTO Class in AttendanceToAttendanceDto --------------------------*/
