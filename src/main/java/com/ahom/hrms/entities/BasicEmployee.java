@@ -26,6 +26,7 @@ public class BasicEmployee {
 
 	private int employeeId;
 	@NotBlank(message = "Employee name can not be null")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String employeeName;
 
 	@NotBlank(message = "company required")

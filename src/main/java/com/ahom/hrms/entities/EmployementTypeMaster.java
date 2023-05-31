@@ -5,6 +5,7 @@ package com.ahom.hrms.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "employment_type_master")
@@ -14,6 +15,7 @@ public class EmployementTypeMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  int id;
     @NotEmpty(message = "Employment Type is not empty")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String employmentType;
 	@NotEmpty(message = "Write some description here")
 	private String description;

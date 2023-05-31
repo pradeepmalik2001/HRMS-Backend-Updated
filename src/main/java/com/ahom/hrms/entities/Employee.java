@@ -42,7 +42,7 @@ public class Employee implements UserDetails {
 
     @Column(nullable = false)
     @NotBlank(message = "Name can not be empty")
-//	@Pattern(regexp = "^[a-zA-Z][a-zA-Z\\\\s]+$")
+    @Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
     private String employeeName;
 
 

@@ -2,6 +2,7 @@ package com.ahom.hrms.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "add_department")
@@ -12,6 +13,7 @@ public class AddDepartment {
 	private int id;
 	@Column(unique = true)
 	@NotEmpty(message = "Department name can't be null")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String departmentName;
 	@NotEmpty(message = "Description is null")
 	private String description;
