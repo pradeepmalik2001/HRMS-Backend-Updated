@@ -13,7 +13,7 @@ public class AddDepartment {
 	private int id;
 	@Column(unique = true)
 	@NotEmpty(message = "Department name can't be null")
-	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
+//	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String departmentName;
 	@NotEmpty(message = "Description is null")
 	private String description;

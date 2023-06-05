@@ -7,7 +7,7 @@ public class EmployementTypeMasterDto {
 	private  int id;
 
 	@NotEmpty(message = "Employment Type is not empty")
-	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
+//	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String employmentType;
 	@NotEmpty(message = "Write some description here")
 	private String description;
