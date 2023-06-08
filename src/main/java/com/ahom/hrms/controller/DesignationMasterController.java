@@ -31,10 +31,8 @@ public class DesignationMasterController {
 
 	//fetch all data from database
 	@GetMapping("/fetchAllDesignation")
-	public ResponseEntity<List<DesignationMasterDto>> getDesignation(){
-		List<DesignationMasterDto> allEmployee = designationMasterService.getAllEmployee();
-		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		return ResponseEntity.of(Optional.of(allEmployee));
+	public ResponseEntity<Object> getDesignation(){
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,designationMasterService.getAllEmployee());
 	}
 
 	@DeleteMapping("/designation/{id}")
