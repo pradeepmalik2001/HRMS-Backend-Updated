@@ -17,6 +17,6 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         return this.employeeRepository.findByUserName(username)
-                .orElseThrow(() -> new CustomException("employee not found"));
+                .orElseThrow(() -> new RuntimeException("employee not found"));
     }
 }

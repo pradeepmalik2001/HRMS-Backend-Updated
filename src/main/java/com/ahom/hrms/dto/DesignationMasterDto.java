@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 public class DesignationMasterDto {
 
 	private int Id;
+
 	@NotEmpty(message = "Designation can`t be empty")
 	private String designationName;
 	

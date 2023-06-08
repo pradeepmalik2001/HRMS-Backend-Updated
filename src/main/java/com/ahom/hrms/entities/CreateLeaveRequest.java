@@ -13,8 +13,7 @@ import javax.validation.constraints.NotEmpty;
 public class CreateLeaveRequest {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String id;
 
 	@NotEmpty(message = "Employee Name can`t be Empty")
 	private String selectEmployee;

@@ -44,7 +44,6 @@ WorkInformationRepository workInformationRepository;
 
 	//converting DTO
 	public BankingInfo bankingInfoDtoToBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
-		int empId=bankingInfoDto.getId();
 		BasicEmployee basicEmployee = basicEmployeeRepository.findById(bankingInfoDto.getId())
 				.orElse(null);
 		BankingInfo bankingInfo = this.modelMapper.map(bankingInfoDto, BankingInfo.class);
@@ -65,8 +64,8 @@ WorkInformationRepository workInformationRepository;
 	public BankingInfoDto bankingInfoToBankingInfoDto(BankingInfo bankingInfo) throws Exception {
 		BankingInfoDto bankingInfoDto = this.modelMapper.map(bankingInfo, BankingInfoDto.class);
 
-		int empId=bankingInfoDto.getId();
-		BasicEmployee basicEmployee = basicEmployeeRepository.findById(empId).orElse(null);
+
+		BasicEmployee basicEmployee = basicEmployeeRepository.findById(bankingInfoDto.getId()).orElse(null);
 		return bankingInfoDto;
 	}
 

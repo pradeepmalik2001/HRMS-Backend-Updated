@@ -47,9 +47,10 @@ public class CreateLeaveRequestController {
 //	    }
 	 
 	 @PutMapping("/put/{id}")
-	    public ResponseEntity<Object> updateEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto,@PathVariable int id)
+	    public ResponseEntity<Object> updateEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto,@PathVariable String id)
 	    {
-			return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,createLeaveRequestService.updateCreateLeaveRequest(createLeaveRequestDto,id));
+			return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,
+					createLeaveRequestService.updateCreateLeaveRequest(createLeaveRequestDto,id));
 	    }
 
 

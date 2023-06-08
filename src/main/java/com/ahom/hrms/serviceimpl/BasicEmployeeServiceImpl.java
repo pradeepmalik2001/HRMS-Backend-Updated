@@ -1,9 +1,10 @@
 package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
+import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.Repository.SalarySetupRepository;
 import com.ahom.hrms.entities.BasicEmployee;
-import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.entities.Employee;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
@@ -45,6 +45,8 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	@Value("${mail.subject}")
 	private String emailSubject;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	//save data
 	public Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
@@ -69,34 +71,43 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	}
 
 	//fetch data by employee id
-	public BasicEmployeeDto employeeById(int employeeId){
-		BasicEmployee basicEmployee = basicEmployeeRepository.findById(employeeId).orElse(null);
-		return basicEmployeeToBasicEmployeeDto(basicEmployee);
+	public BasicEmployee employeeById(String employeeId){
+	return basicEmployeeRepository.findById(employeeId).orElse(null);
+//		return basicEmployeeToBasicEmployeeDto(basicEmployee);
 	}
 
 
 	public List<BasicEmployee> getAllEmployee() {
-
 		return this.basicEmployeeRepository.findAll();
 	}
 
 
 	//converting DTO
 	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
-		BasicEmployee basicEmployee=new BasicEmployee();
-		basicEmployeeDto.setEmployeeId(basicEmployee.getEmployeeId());
-		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-		Date date=dateFormat.parse(basicEmployeeDto.getJoiningDate());
-		basicEmployee.setJoiningDate(String.valueOf(date));
-		return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
+		Employee employee=employeeRepository.findById(basicEmployeeDto.getEmployeeId())
+				.orElse(null);
+		if (employee!=null) {
+
+
+//			basicEmployeeDto.setEmail(employee.getUsername());
+			BasicEmployee basicEmployee = new BasicEmployee();
+//			basicEmployeeDto.setEmployeeId(basicEmployee.getEmployeeId());
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(basicEmployeeDto.getJoiningDate());
+			basicEmployee.setJoiningDate(String.valueOf(date));
+			return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
+		}else
+			throw new RuntimeException("Employee for Id:"+basicEmployeeDto.getEmployeeId() +
+					"not found");
 	}
 
 	public BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee) {
 		return this.modelMapper.map(basicEmployee, BasicEmployeeDto.class);
 	}
 
-	public List<BasicEmployee>details(int id){
-		List<BasicEmployee>list=basicEmployeeRepository.findAllByDetails(id);
+	public List<BasicEmployee>details(String id){
+		List<BasicEmployee>list=basicEmployeeRepository.findAllByDetails(Integer.parseInt(id));
 		System.out.println(list);
 		List<BasicEmployee>filterData=new ArrayList<>();
 
@@ -109,19 +120,42 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	}
 
 	@Override
-	public Object deleteEmployee(int id) {
+	public Object deleteEmployee(String id) {
 		BasicEmployee basicEmployee=basicEmployeeRepository.findById(id).orElse(null);
 		if (basicEmployee!=null) {
-
 			basicEmployeeRepository.deleteById(id);
-//			throw new RuntimeException("Employee with ID"+" " +id + " " + "& name" + " " +
-//					basicEmployee.getEmployeeName()+ " " + " Deleted Successfully");
 		}
 		else {
 			throw new RuntimeException("Employee with ID:" + id + " " + "not found");
 		}
 		return basicEmployee;
 	}
+
+	@Override
+	public BasicEmployeeDto update(BasicEmployeeDto employee,String id){
+		BasicEmployee be=basicEmployeeRepository.findById(id)
+				.orElseThrow(()->new RuntimeException("Employee not found with ID: "
+						+employee.getEmployeeId()));
+
+		be.setEmployeeName(employee.getEmployeeName());
+		be.setCtc(employee.getCtc());
+		be.setDob(employee.getDob());
+		be.setEmail(employee.getEmail());
+		be.setJoiningDate(employee.getJoiningDate());
+		be.setMobile(employee.getMobile());
+		be.setDesignation(employee.getDesignation());
+		be.setAadhaarNumber(employee.getAadhaarNumber());
+		be.setPanNumber(employee.getPanNumber());
+		be.setWorkType(employee.getWorkType());
+		be.setPfnumber(employee.getPfnumber());
+		be.setSelectDepartment(employee.getSelectDepartment());
+		be.setWhichCompany(employee.getWhichCompany());
+		be.setReportingTo(employee.getReportingTo());
+
+		basicEmployeeRepository.save(be);
+		return employee;
+	}
+
 	@Scheduled(cron = "00 33 18 * * ?")
 	public void checkBirthday()
 	{
@@ -145,15 +179,6 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		}
 	}
 
-//	public void checkBirthdayDate()
-//	{
-//		LocalDate localDate=LocalDate.now();
-//		int currentDay= localDate.getDayOfMonth();
-//		int currentMonth=localDate.getMonthValue();
-//		List<BasicEmployee> basicEmployees= (List<BasicEmployee>) basicEmployeeRepository.findByDob(localDate.getMonth().);
-//
-//
-//	}
 
 
 }

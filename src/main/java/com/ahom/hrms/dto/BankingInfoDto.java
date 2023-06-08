@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class BankingInfoDto {
-	@NotNull
-	private Integer id;
+	@NotEmpty
+	private String id;
 
 	@NotEmpty(message = "Please Enter Account Number")
 	@Column(unique = true)

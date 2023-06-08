@@ -10,15 +10,16 @@ public interface BasicEmployeeService {
 	
 	Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException;
 	
-	BasicEmployeeDto employeeById(int employeeId);
+	BasicEmployee employeeById(String employeeId);
 	
 	BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException;
 	
 	BasicEmployeeDto basicEmployeeToBasicEmployeeDto(BasicEmployee basicEmployee);
 
 	List<BasicEmployee> getAllEmployee();
-	List<BasicEmployee>details(int id);
+	List<BasicEmployee>details(String id);
 
-	Object deleteEmployee(int id);
+	Object deleteEmployee(String id);
+	BasicEmployeeDto update(BasicEmployeeDto employee,String id);
 
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @EnableJpaRepositories
-public interface WorkInformationRepository extends JpaRepository<WorkInformation, Integer>{
+public interface WorkInformationRepository extends JpaRepository<WorkInformation, String>{
  //   WorkInformation findById(Integer  employeeId);
     WorkInformation findByBasicEmployee(int basicEmployee);
 
