@@ -4,10 +4,12 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class BankingInfoDto {
-	private int id;
+	@NotNull
+	private Integer id;
 
 	@NotEmpty(message = "Please Enter Account Number")
 	@Column(unique = true)

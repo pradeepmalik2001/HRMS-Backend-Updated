@@ -2,7 +2,7 @@ package com.ahom.hrms.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Data
 public class BasicEmployeeDto {
 
@@ -30,6 +30,7 @@ public class BasicEmployeeDto {
 	private String designation;
 
 	@Email
+	@NotBlank(message = "Email needs to entered")
 	private String email;
 
 	@NotBlank(message = "Mobile Number Required")
@@ -43,13 +44,14 @@ public class BasicEmployeeDto {
 	private String reportingTo;
 
 //	@NotBlank(message = "DOB Required")
+	@NotNull
 	private LocalDate dob;
 
 	@NotBlank(message = "Work Type Required")
 	private String workType;
 
-	@NotNull(message = "CTC Required")
-	private int ctc;
+	@NotNull
+	private Integer ctc;
 
 	private String pfnumber;
 

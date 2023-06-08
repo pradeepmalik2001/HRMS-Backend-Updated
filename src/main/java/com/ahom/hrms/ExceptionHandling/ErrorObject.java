@@ -1,0 +1,1 @@
+package com.ahom.hrms.ExceptionHandling;import org.springframework.http.HttpStatus;public class ErrorObject {    public ErrorObject(String message, HttpStatus httpStatus) {    }}

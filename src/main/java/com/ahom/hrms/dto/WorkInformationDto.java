@@ -7,13 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkInformationDto {
 
-	private int workId;
+	@NotNull
+	private Integer workId;
 	@NotEmpty(message = "Employee name can not be null")
 	private String employeeName;
 	@NotEmpty(message = "Employment type can not be null")

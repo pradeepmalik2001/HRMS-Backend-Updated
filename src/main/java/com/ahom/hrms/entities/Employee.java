@@ -12,10 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,8 +38,8 @@ public class Employee implements UserDetails {
     private String departmentName;
 
     @Column(nullable = false)
-    @NotBlank(message = "Name can not be empty")
-    @Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
+    @NotEmpty(message = "Name can not be empty")
+    @Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}",message = "sss")
     private String employeeName;
 
 
@@ -63,6 +60,7 @@ public class Employee implements UserDetails {
     private String confirmPassword;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "roles can not be null")
     private Roles roles;
 
     @Override
