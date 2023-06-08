@@ -11,7 +11,7 @@ public interface CreateLeaveRequestService {
 
 	List<CreateLeaveRequestDto> getAllCreateLeaveRequest();
 
-	CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,int id);
+	CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,String id);
 	
 	
 

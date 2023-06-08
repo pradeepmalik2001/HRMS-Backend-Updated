@@ -16,7 +16,7 @@ public class DesignationMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 	@Column(unique=true)
-	@NotEmpty(message = "mandatory")
+	@NotEmpty(message = "This field is required")
 	private String designationName;
 	
 	public DesignationMaster() {

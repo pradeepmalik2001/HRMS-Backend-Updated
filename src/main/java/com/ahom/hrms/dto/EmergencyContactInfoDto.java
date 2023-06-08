@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class EmergencyContactInfoDto
 {
-	private int id;
+	private String id;
 	@NotEmpty(message = "PLease Enter Mobile Number")
 	private String emergencyContactMobile;
 

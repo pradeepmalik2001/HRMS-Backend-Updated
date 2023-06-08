@@ -22,9 +22,7 @@ import java.util.Date;
 public class BasicEmployee {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
-	private int employeeId;
+	private String employeeId;
 	@NotBlank(message = "Employee name can not be null")
 	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String employeeName;
@@ -51,6 +49,7 @@ public class BasicEmployee {
 	private String reportingTo;
 
 //	@NotBlank(message = "DOB Required")
+	@NotNull
 	private LocalDate dob;
 
 	@NotBlank(message = "Work Type Required")

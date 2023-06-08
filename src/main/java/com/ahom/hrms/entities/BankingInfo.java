@@ -14,7 +14,7 @@ public class BankingInfo {
 
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String id;
 
 	@NotEmpty(message = "Please Enter Account Number")
 	@Column(unique = true)

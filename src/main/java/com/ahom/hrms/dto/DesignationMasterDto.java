@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 public class DesignationMasterDto {
 
 	private int Id;
-	@NotEmpty(message = "mandatory")
+	@NotEmpty(message = "This field is required")
 	private String designationName;
 	
 	public DesignationMasterDto() {

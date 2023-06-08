@@ -14,7 +14,7 @@ public class WorkInformation {
 	
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int workId;
+	private String workId;
 	private String employeeName;
 	private String employmentType;
 	private String officeBranch;

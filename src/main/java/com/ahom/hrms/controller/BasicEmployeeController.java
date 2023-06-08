@@ -45,8 +45,8 @@ public class BasicEmployeeController {
 
 	//fetch data by id
 	@GetMapping("/fetchemployee/{employeeid}")
-	public ResponseEntity<BasicEmployeeDto> getEmployee(@PathVariable("employeeid") Integer employeeId){
-		BasicEmployeeDto basicEmployeeDto = basicEmployeeService.employeeById(employeeId);
+	public ResponseEntity<BasicEmployee> getEmployee(@PathVariable("employeeid") String employeeId){
+		BasicEmployee basicEmployeeDto = basicEmployeeService.employeeById(employeeId);
 		ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.ok(basicEmployeeDto);
 	}
@@ -65,9 +65,16 @@ public String generateReport(@PathVariable String format) throws JRException, Fi
 
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> deleteEmployee(@PathVariable int id)
+	public ResponseEntity<Object> deleteEmployee(@PathVariable String id)
 	{
 	return ResponseHandler.responseBuilder("Employee deleted successfully",HttpStatus.OK,
 			basicEmployeeService.deleteEmployee(id));
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object>update(@RequestBody BasicEmployeeDto employee,@PathVariable String id)
+	{
+		return ResponseHandler.responseBuilder("update success",HttpStatus.OK,
+				basicEmployeeService.update(employee,id));
 	}
 }

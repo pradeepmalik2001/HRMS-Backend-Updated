@@ -66,16 +66,10 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 
 	@Override
-	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,int id) {
+	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,String id) {
 		CreateLeaveRequest createLeaveRequest=createLeaveRequestRepository.findById(id).orElse(null);
 		if(createLeaveRequest!=null)
 		{
-//			createLeaveRequest.setSelectEmployee(createLeaveRequestDto.getSelectEmployee());
-//			createLeaveRequest.setLeaveApprover(createLeaveRequestDto.getLeaveApprover());
-//			createLeaveRequest.setLeaveType(createLeaveRequestDto.getLeaveType());
-//			createLeaveRequest.setStartDate(createLeaveRequestDto.getStartDate());
-//			createLeaveRequest.setEndDate(createLeaveRequestDto.getEndDate());
-//			createLeaveRequest.setReasonForLeave(createLeaveRequestDto.getReasonForLeave());
 			createLeaveRequest.setStatus(createLeaveRequestDto.getStatus());
 			createLeaveRequestRepository.saveAndFlush(createLeaveRequest);
 			if(createLeaveRequestDto.getStatus().equals("1"))
@@ -126,6 +120,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	}
 
 	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
+
 		CreateLeaveRequest createLeaveRequest=this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
 //		createLeaveRequest.setStatus("3");
 		return createLeaveRequest;

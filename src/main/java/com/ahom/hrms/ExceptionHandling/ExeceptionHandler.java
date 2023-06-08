@@ -2,6 +2,7 @@ package com.ahom.hrms.ExceptionHandling;
 
 import com.ahom.hrms.exception.ApiResponse;
 import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.exception.EmailResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
@@ -38,8 +39,12 @@ public class ExeceptionHandler {
                 (authenticationFailException.getMessage(),HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(value = CustomException.class)
-    public final ResponseEntity<String>handleCustomException(CustomException customException){
-        return new ResponseEntity<>(customException.getMessage(),HttpStatus.ALREADY_REPORTED);
+    public final ResponseEntity<EmailResponse>handleCustomException(CustomException customException){
+            EmailResponse response=new EmailResponse(
+            customException.getMessage(),
+        HttpStatus.ALREADY_REPORTED.value()
+            );
+        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(response);
     }
 
     @ExceptionHandler(value = Exception.class)

@@ -18,7 +18,7 @@ public class EmergencyContactInfo {
 	
 	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String id;
 
 	@NotEmpty(message = "PLease Enter Mobile Number")
 	private String emergencyContactMobile;

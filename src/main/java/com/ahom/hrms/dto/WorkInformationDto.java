@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class WorkInformationDto {
 
 	@NotNull
-	private Integer workId;
+	private String workId;
 	@NotEmpty(message = "Employee name can not be null")
 	private String employeeName;
 	@NotEmpty(message = "Employment type can not be null")

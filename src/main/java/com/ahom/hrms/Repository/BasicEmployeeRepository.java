@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @EnableJpaRepositories
-public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, Integer>{
+public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, String>{
 
 
 
