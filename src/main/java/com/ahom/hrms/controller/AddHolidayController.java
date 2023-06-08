@@ -30,10 +30,10 @@ public ResponseEntity<Object>SaveAddHolidayDetail(@Valid @RequestBody AddHoliday
 public ResponseEntity<Object> getAllJob(){
 	return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,addHolidayService.getAllLeaveDetail());
 }
-@DeleteMapping("/leaveDetail/{deletei}")
-	public ResponseEntity<Object> delete(@PathVariable ("deletei")int i)
+@DeleteMapping("/leaveDetail/{id}")
+	public ResponseEntity<Object> delete(@PathVariable ("id")int id)
 {
-	return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,addHolidayService.deleteLaeveDetail(i));
+	return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,addHolidayService.deleteLaeveDetail(id));
 } 
 @PutMapping("/edit/{id}")
 public ResponseEntity<Object>updateall(@RequestBody AddHolidayDto addHolidayDto,@PathVariable("id") int id){

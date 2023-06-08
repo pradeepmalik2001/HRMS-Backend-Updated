@@ -52,10 +52,10 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	}
 
 
-	public AddHoliday deleteLaeveDetail(int i) {
-		AddHoliday addHoliday=addHolidayRepository.findById(i).orElse(null);
+	public AddHoliday deleteLaeveDetail(int id) {
+		AddHoliday addHoliday=addHolidayRepository.findById(id).orElse(null);
 		if (addHoliday!=null){
-			addHolidayRepository.deleteById(i);
+			addHolidayRepository.deleteById(id);
 		}else {
 			throw new RuntimeException("No Holiday Present");
 		}
