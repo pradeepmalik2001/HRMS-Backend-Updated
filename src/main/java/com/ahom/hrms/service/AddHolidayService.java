@@ -11,7 +11,7 @@ public interface AddHolidayService {
 
 	List<AddHolidayDto> getAllLeaveDetail();
 
-	AddHoliday deleteLaeveDetail(int i);
+	AddHoliday deleteLaeveDetail(int id);
 
 	AddHoliday updateLeaveDetail(AddHolidayDto addHolidayDto,int id);
 
