@@ -13,8 +13,8 @@ public class Attendance {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
-	private Integer id;
+
+		private int id;
 
 	public int getId() {
 		return id;

@@ -12,7 +12,7 @@ public class AttendanceDto {
 
 
 
-	private Integer id;
+	private int id;
 
 	public int getId() {
 		return id;
