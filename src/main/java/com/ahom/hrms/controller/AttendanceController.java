@@ -38,7 +38,7 @@ public class AttendanceController {
 
 
 	@PostMapping("/save")
-	public ResponseEntity<Object> saveEmp(@RequestBody AttendanceDto attendancedto) {
+	public ResponseEntity<Object> saveEmp(@Valid @RequestBody AttendanceDto attendancedto) {
 		attendancedto.setDate(new Date());
 		return ResponseHandler.responseBuilder("Attendance uploaded",HttpStatus.OK,
 				attendanceService.saveEmplAttendance(attendancedto));
