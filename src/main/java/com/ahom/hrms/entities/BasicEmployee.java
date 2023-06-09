@@ -23,7 +23,7 @@ public class BasicEmployee {
 	
 	@Id
 	private String employeeId;
-	@NotBlank(message = "Employee name can not be null")
+	@NotEmpty(message = "Employee name can not be null")
 	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
 	private String employeeName;
 

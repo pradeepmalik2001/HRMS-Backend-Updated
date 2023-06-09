@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.Type;
 import java.util.Date;
 
@@ -31,5 +32,7 @@ public class OverTime {
 
 	@NotEmpty(message = "Write Something Here")
 	private String description;
+	@NotEmpty
+	private String userName;
 	
 }

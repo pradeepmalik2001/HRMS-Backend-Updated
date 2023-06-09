@@ -75,7 +75,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		return null;
+		return file.getOriginalFilename();
 	}
 
 	@Override
