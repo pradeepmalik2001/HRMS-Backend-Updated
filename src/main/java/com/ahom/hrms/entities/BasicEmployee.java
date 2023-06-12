@@ -40,6 +40,7 @@ public class BasicEmployee {
 	private String email;
 
 	@NotBlank(message = "Mobile Number Required")
+
 	private String mobile;
 
 	@NotBlank(message = "Joining Date Required")
@@ -66,7 +67,7 @@ public class BasicEmployee {
 	private String panNumber;
 
 	@NotBlank(message = "Aadhaar Number Required")
-	@Column(nullable = false,unique = true)
+
 	@Pattern(regexp = "[0-9]{12}",message = "Aadhaar Number should be in format ")
 	private String aadhaarNumber;
 

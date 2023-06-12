@@ -5,6 +5,7 @@ import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.Repository.SalarySetupRepository;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.Employee;
+import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BasicEmployeeServiceImpl implements BasicEmployeeService{
@@ -52,22 +54,25 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	public Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
 
 
-		BasicEmployee basicEmployee = basicEmployeeRepository.
-				findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
+		Optional<BasicEmployee> basicEmployee = basicEmployeeRepository.
+				findByemployeeIdAndAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
+						basicEmployeeDto.getEmployeeId(),
 						basicEmployeeDto.getAadhaarNumber(),
 						basicEmployeeDto.getPanNumber(),
 						basicEmployeeDto.getPfnumber(),
 						basicEmployeeDto.getMobile(),
 						basicEmployeeDto.getEmail());
 
-		if (basicEmployee == null) {
 
-			basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
-		} else {
-			throw
-					new RuntimeException("Found duplicate entry");
-		}
-		return basicEmployeeDto;
+
+			if (basicEmployee.isEmpty()) {
+
+				return basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
+			} else {
+				throw
+						new CustomException("Found duplicate entry");
+			}
+
 	}
 
 	//fetch data by employee id
@@ -87,12 +92,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 		Employee employee=employeeRepository.findById(basicEmployeeDto.getEmployeeId())
 				.orElse(null);
 		if (employee!=null) {
-
-
-//			basicEmployeeDto.setEmail(employee.getUsername());
 			BasicEmployee basicEmployee = new BasicEmployee();
-//			basicEmployeeDto.setEmployeeId(basicEmployee.getEmployeeId());
-
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(basicEmployeeDto.getJoiningDate());
 			basicEmployee.setJoiningDate(String.valueOf(date));

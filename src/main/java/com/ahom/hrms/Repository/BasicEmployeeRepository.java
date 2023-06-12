@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @EnableJpaRepositories
@@ -18,8 +19,9 @@ public interface BasicEmployeeRepository extends JpaRepository<BasicEmployee, St
 
 BasicEmployee findByMobile(String mobile);
 
-BasicEmployee findByAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail( String aadhaarNumber ,String panNumber,
-													   String pfnumber,String mobile,String email);
+   Optional<BasicEmployee> findByemployeeIdAndAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail
+		(String employeeId, String aadhaarNumber ,String panNumber,
+		  String pfnumber,String mobile,String email);
 
 	@Query (value = "SELECT * FROM basic_employee INNER JOIN banking_info on basic_employee.employee_id =banking_info.id where basic_employee.employee_id=:id",
 			nativeQuery = true)

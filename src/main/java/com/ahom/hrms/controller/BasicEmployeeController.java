@@ -38,7 +38,7 @@ public class BasicEmployeeController {
 	//save data
 	@PostMapping("/saveemployee")
 	public ResponseEntity<Object> saveEmployees(@Valid @RequestBody BasicEmployeeDto basicEmployeeDto) throws ParseException {
-		return ResponseHandler.responseBuilder("Employee Data saved Successfully",HttpStatus.CREATED,
+		return ResponseHandler.responseBuilder("Employee Data saved Successfully",HttpStatus.OK,
 				basicEmployeeService.saveEmployee(basicEmployeeDto));
 
 	}

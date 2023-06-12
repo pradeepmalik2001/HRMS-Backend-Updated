@@ -65,7 +65,7 @@ public class BasicEmployeeDto {
 	@NotBlank(message = "Aadhaar Number Required")
 //	@Min(12)
 //	@Max(12)
-	@Column(nullable = false,unique = true)
+
 
 	@Pattern(regexp = "[0-9]{12}",message = "Aadhaar Number should be in format ")
 	private String aadhaarNumber;
