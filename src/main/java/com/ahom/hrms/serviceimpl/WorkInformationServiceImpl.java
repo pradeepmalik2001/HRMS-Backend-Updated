@@ -69,6 +69,11 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                 throw new RuntimeException("employee not found for particular Id" +" "+workInformation.getWorkId());
             }
         }
+        else
+        {
+            throw new RuntimeException("Work information already present for Employee:"+
+                    workInformationDto.getEmployeeName());
+        }
         return workInformation;
     }
 

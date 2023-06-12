@@ -160,14 +160,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
 	
 	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto) {
-//		Optional<Employee> employee = employeeRepository.findByUserName(attendancedto.getUserName());
-
-//		if (employee.isPresent()) {
 			return this.modelMapper.map(attendancedto, Attendance.class);
-//		}
-//		else {
-//			throw new RuntimeException("No employee found for UserName:"+ attendancedto.getUserName());
-//		}
 	}
 
 	/** ------------ Using DTO Class in AttendanceToAttendanceDto --------------------------*/
