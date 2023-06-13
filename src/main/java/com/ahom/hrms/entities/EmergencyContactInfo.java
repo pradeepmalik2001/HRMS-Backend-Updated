@@ -21,9 +21,11 @@ public class EmergencyContactInfo {
 	private String id;
 
 	@NotEmpty(message = "PLease Enter Mobile Number")
+	@Pattern(regexp = "[0-9]{10,12}",message = "Contact number should be in numeric form")
 	private String emergencyContactMobile;
 
 	@NotEmpty(message = "Please Enter Contact Name")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,30}",message = "Only alphabets")
 	private String emergencyContactName;
 
 	@NotEmpty(message = "Please Enter Your Email")

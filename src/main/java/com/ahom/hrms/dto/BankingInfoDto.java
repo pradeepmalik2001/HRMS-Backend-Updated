@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Data
 public class BankingInfoDto {
@@ -16,6 +17,7 @@ public class BankingInfoDto {
 	private String bankAccountNo;
 
 	@NotEmpty(message = "Please Enter Bank Name")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,30}",message = "only alphabets")
 	private String bankName;
 
 	@NotEmpty(message = "Please Enter Bank Branch")
