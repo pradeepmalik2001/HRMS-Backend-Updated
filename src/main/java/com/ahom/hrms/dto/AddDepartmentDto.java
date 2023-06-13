@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 public class AddDepartmentDto {
 
 	@NotEmpty(message = "Department name can't be null")
-//	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,10}")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,15}",message = "Only Alphabets Allowed")
 	private String departmentName;
 	@NotEmpty(message = "Description is null")
 	private String description;

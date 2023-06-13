@@ -1,0 +1,1 @@
+package com.ahom.hrms.exception;import lombok.Data;@Datapublic class ErrorResponse {    private String errorMessage;    private String details;    public ErrorResponse(String constraintViolationError, String message) {    }    // Constructor, getters, and setters    // ...}

@@ -30,24 +30,23 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ExeceptionHandler  {
-        @ResponseStatus(HttpStatus.BAD_REQUEST)
-        @ExceptionHandler(MethodArgumentNotValidException.class)
-        public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException e){
-            Map<String, String> errorMap = new HashMap<>();
-            e.getBindingResult().getFieldErrors().forEach(error ->{
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            });
+public class ExeceptionHandler {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException e) {
+        Map<String, String> errorMap = new HashMap<>();
+        e.getBindingResult().getFieldErrors().forEach(error -> {
+            errorMap.put(error.getField(), error.getDefaultMessage());
+        });
 
-            return errorMap;
-        }
+        return errorMap;
+    }
 
-    @ExceptionHandler(value =com.ahom.hrms.exception.AuthenticationException.class)
+    @ExceptionHandler(value = com.ahom.hrms.exception.AuthenticationException.class)
     public final ResponseEntity<String> handelAuthenticationFailException
-            (AuthenticationException authenticationFailException)
-    {
-        return  new ResponseEntity<>
-                (authenticationFailException.getMessage(),HttpStatus.BAD_REQUEST);
+            (AuthenticationException authenticationFailException) {
+        return new ResponseEntity<>
+                (authenticationFailException.getMessage(), HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(value = CustomException.class)
     public final ResponseEntity<EmailResponse>handleCustomException(CustomException customException){
@@ -59,7 +58,7 @@ public class ExeceptionHandler  {
     }
 
     @ExceptionHandler(value = Exception.class)
-    public final ResponseEntity<ApiResponse>handleException(Exception e){
+    public final ResponseEntity<ApiResponse> handleException(Exception e) {
         ApiResponse response = new ApiResponse(
                 e.getMessage(),
                 NOT_FOUND.value()
@@ -67,6 +66,7 @@ public class ExeceptionHandler  {
         return ResponseEntity.status(NOT_FOUND).body(response);
 
     }
+
     @ExceptionHandler(InvalidFormatException.class)
     public ResponseEntity<String> handleInvalidFormatException(InvalidFormatException ex) {
         String errorMessage = "Invalid value for 'roles' field.";
@@ -74,7 +74,7 @@ public class ExeceptionHandler  {
     }
 
 }
-        //other exception handlers below
+//other exception handlers below
 
 
 

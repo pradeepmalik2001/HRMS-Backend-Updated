@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class BasicEmployeeDto {
 
 
+	@NotEmpty(message = "Employee Id Required")
 	private String employeeId;
 	@NotEmpty(message = "Employee name can not be null")
 	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,30}")

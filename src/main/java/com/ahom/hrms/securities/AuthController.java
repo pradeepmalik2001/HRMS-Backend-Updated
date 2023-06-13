@@ -119,7 +119,7 @@ public class AuthController {
                 throw new RuntimeException("Role is Mandatory");
             }
         }else {
-            throw new RuntimeException("UserName already existed");
+            throw new CustomException("UserName already present");
         }
     }
 

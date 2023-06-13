@@ -50,7 +50,6 @@ public class Employee implements UserDetails {
 
 
     @JsonProperty()
-//    @Pattern(regexp = "^.*(?=.{5,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
             message = "Password must contain one upperCase special character and minimum length 8")
     private String password;
@@ -59,14 +58,16 @@ public class Employee implements UserDetails {
     @NotEmpty
     private String confirmPassword;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull(message = "roles can not be null")
-    private Roles roles;
+//    @Enumerated(EnumType.STRING)
+//    @NotNull(message = "roles can not be null")
+//    private Roles roles;
+    @NotEmpty(message = "Role is mandatory")
+    private String roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        String roleName = "ROLE_" + roles.toString();
+        String roleName = "ROLE_" + roles;
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName);
 
         return List.of(simpleGrantedAuthority);

@@ -1,0 +1,1 @@
+package com.ahom.hrms.ExceptionHandling;import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;@NoArgsConstructor@AllArgsConstructor@Datapublic class EmailResponse {    private String response;    private int status_code;}
