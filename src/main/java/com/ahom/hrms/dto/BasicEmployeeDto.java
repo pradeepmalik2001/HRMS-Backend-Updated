@@ -35,6 +35,7 @@ public class BasicEmployeeDto {
 	private String email;
 
 	@NotBlank(message = "Mobile Number Required")
+	@Pattern(regexp = "[0-9]{10,12}",message = "only numbers")
 	private String mobile;
 
 	@NotBlank(message = "Joining Date Required")
@@ -54,20 +55,15 @@ public class BasicEmployeeDto {
 	@NotNull
 	private Integer ctc;
 
+	@Pattern(regexp = "[0-9]",message = "Pf number should be in numbers")
 	private String pfnumber;
 
 	@Column(nullable = false,unique = true)
 	@NotBlank(message = "PAN Number Required")
-//	@Min(10)
-//	@Max(10)
 	@Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}",message = "PAN number should be in proper format like ABCDE1234A ")
 	private String panNumber;
 
 	@NotBlank(message = "Aadhaar Number Required")
-//	@Min(12)
-//	@Max(12)
-
-
 	@Pattern(regexp = "[0-9]{12}",message = "Aadhaar Number should be in format ")
 	private String aadhaarNumber;
 	

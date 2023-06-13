@@ -2,6 +2,7 @@ package com.ahom.hrms.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lowagie.text.pdf.PdfPCell;
@@ -21,6 +22,7 @@ public class BankingInfo {
 	private String bankAccountNo;
 
 	@NotEmpty(message = "Please Enter Bank Name")
+	@Pattern(regexp = "[/^[a-zA-Z ]*$/]{1,30}",message = "only alphabets")
 	private String bankName;
 
 	@NotEmpty(message = "Please Enter Bank Branch")
