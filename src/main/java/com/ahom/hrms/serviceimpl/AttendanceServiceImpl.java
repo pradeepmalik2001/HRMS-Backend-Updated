@@ -85,32 +85,30 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public List<Attendance> gteOt(Date startdate, Date enddate, String name) {
-		List<Attendance> attendances=attendanceRpository.findBySelectEmployee(name);
+		List<Attendance> attendances=attendanceRpository.findByNameAndDateRange(startdate,enddate,name);
 		if (attendances.isEmpty()) {
-			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not defined");
+			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not present");
 
 		}else {
-			List<Attendance> list = attendanceRpository.findByNameAndDateRange(startdate, enddate, name);
-			return new ArrayList<>(list);
+			return new ArrayList<>(attendances);
 		}
 
 	}
 
 	@Override
 	public List<Attendance> getByStatus(Date startdate, Date enddate, String name,String status) {
-		List<Attendance> attendances=attendanceRpository.findBySelectEmployee(name);
+		List<Attendance> attendances=attendanceRpository.findByMonth(startdate,enddate,name,status);
 		if (!attendances.isEmpty()) {
-			List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name, status);
-			System.out.println(list);
-			List<Attendance> filterAttendance = new ArrayList<>();
+//			List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name, status);
+//			List<Attendance> filterAttendance = new ArrayList<>();
 
-			for (Attendance attendance : list) {
-				filterAttendance.add(attendance);
-
-				System.out.println(attendance);
-
-			}
-			return filterAttendance;
+//			for (Attendance attendance : list) {
+//				filterAttendance.add(attendance);
+//
+//				System.out.println(attendance);
+//
+//			}
+			return attendances;
 		}else
 			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not defined");
 	}

@@ -9,6 +9,7 @@ import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -54,14 +55,15 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	public Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
 
 
-		Optional<BasicEmployee> basicEmployee = basicEmployeeRepository.
-				findByemployeeIdAndAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
-						basicEmployeeDto.getEmployeeId(),
-						basicEmployeeDto.getAadhaarNumber(),
-						basicEmployeeDto.getPanNumber(),
-						basicEmployeeDto.getPfnumber(),
-						basicEmployeeDto.getMobile(),
-						basicEmployeeDto.getEmail());
+//		Optional<BasicEmployee> basicEmployee = basicEmployeeRepository.
+//				findByemployeeIdAndAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
+//						basicEmployeeDto.getEmployeeId(),
+//						basicEmployeeDto.getAadhaarNumber(),
+//						basicEmployeeDto.getPanNumber(),
+//						basicEmployeeDto.getPfnumber(),
+//						basicEmployeeDto.getMobile(),
+//						basicEmployeeDto.getEmail());
+		Optional<BasicEmployee> basicEmployee=basicEmployeeRepository.findById(basicEmployeeDto.getEmployeeId());
 
 
 
@@ -70,7 +72,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 				return basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
 			} else {
 				throw
-						new CustomException("Found duplicate entry");
+						new RuntimeException("Found duplicate entry");
 			}
 
 	}
