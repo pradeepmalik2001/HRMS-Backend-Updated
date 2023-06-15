@@ -55,7 +55,6 @@ public class BasicEmployeeDto {
 	@NotNull
 	private Integer ctc;
 
-	@Pattern(regexp = "[0-9]",message = "Pf number should be in numbers")
 	private String pfnumber;
 
 	@Column(nullable = false,unique = true)
