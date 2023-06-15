@@ -45,8 +45,8 @@ public class TrainingToEmployeeServiceImpl implements TrainingToEmployeeService 
 
 	//Update data from database By Id
 	@Override
-	public void updateEmployeeTraining(EmployeeTrainingDto employeeTraining,int id) {
-		EmployeeTraining employeeTraining2 = this.employeeRepository.findById(id).get();
+	public void updateEmployeeTraining(EmployeeTrainingDto employeeTraining,String id) {
+		EmployeeTraining employeeTraining2 = this.employeeRepository.findById(id).orElse(null);
 
 		employeeTraining2.setEmployee(employeeTraining.getEmployee());
 		employeeTraining2.setEventName(employeeTraining.getEventName());
@@ -59,14 +59,16 @@ public class TrainingToEmployeeServiceImpl implements TrainingToEmployeeService 
 
 	//Delete data from database
 	@Override
-	public void deleteEmployeeTraining(int id) {
+	public EmployeeTraining deleteEmployeeTraining(String id) {
 		EmployeeTraining training=employeeRepository.findById(id).orElse(null);
 		if (training!=null) {
 			employeeRepository.deleteById(id);
-			throw new CustomException("Record For Training ID" +  " " + id  + " "+" Is Deleted");
+
+//			throw new CustomException("Record For Training ID" +  " " + id  + " "+" Is Deleted");
 		} else {
 			throw new CustomException("No Training For ID" +" "+ id+" " +"Available ");
 		}
+		return training;
 	}
 
 	@Override

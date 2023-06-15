@@ -59,6 +59,7 @@ public class AuthController {
        Employee user = userService.user(request.getUsername());
         if (user!=null) {
             response.setUserName(user.getEmployeeName());
+            response.setRoles(user.getRoles());
             return ResponseHandler.responseBuilder("Login Successful", HttpStatus.OK,
                     response);
         }else

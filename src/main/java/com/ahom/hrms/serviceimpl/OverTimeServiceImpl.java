@@ -43,18 +43,13 @@ public class OverTimeServiceImpl implements OverTimeService {
 	@Override
 	public List<OverTime> gteOt(Date startdate, Date enddate, String name) {
 		List<OverTime> list = overRepository.findByNameAndDateRange(startdate, enddate, name);
-		System.out.println(list);
-		if (list!= null) {
-			List<OverTime> filteredoverTimes = new ArrayList<>();
-			for (OverTime overTime : list) {
-				filteredoverTimes.add(overTime);
-				System.out.println(overTime);
+			if (list.isEmpty())
+			{
+				throw new RuntimeException("Data for "+name+" is not found");
 			}
-			return filteredoverTimes;
-		}
-		else {
-			throw new RuntimeException("Record for Name : "+name+" is Not Found");
-		}
+			else {
+				return list;
+			}
 	}
 
 
