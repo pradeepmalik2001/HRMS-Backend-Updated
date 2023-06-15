@@ -36,20 +36,26 @@ import org.springframework.web.filter.CorsFilter;
                 "/addJobTitle/**",         "/attendance/save",
                 "/attendance/fetch",       "/attendance/Delete/{employeeId}"
                 ,"/attendance/update",     "/bank/**",
-                "/basic/**",               "/designation/**",
+                "/basic/saveemployee",     "/designation/**",
+                "basic/delete/{id}",       "basic/update/{id}",
                 "disApprove/**",           "approve/**",
-                "/employees/**",           "/employee/**",
+                "/employees/save",         "/employees/byUserName",
+                "/employee/**",            "/employees/delete{id}",
                 "/employment/**",          "/event/**",
-                "/leave/**",               "/branch/**",
+                "/leave/leaveType",        "/branch/**",
                 "/training/**",            "/trainingName/**",
                 "/TravelOverview/**",      "/work/**",
                 "/attendance/upload",      "/emergency/**",
-
+                "/leave/leaveType/{id}",
 
 
         };
         public static final String [] EMPLOYEE_URLS={
                 "/holiday/leaveDetails",
+                "/leave/get",
+                "/employees/getAll",
+                "basic/fetchdata",
+                "basic/fetchemployee/{employeeid}",
                 "/shiftManagement/**",
                 "/attendance/byDate",
                 "/attendance/status",

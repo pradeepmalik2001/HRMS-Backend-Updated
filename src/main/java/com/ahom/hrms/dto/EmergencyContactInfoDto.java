@@ -6,9 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 
 @NoArgsConstructor
@@ -18,7 +16,7 @@ public class EmergencyContactInfoDto
 {
 	private String id;
 	@NotEmpty(message = "PLease Enter Mobile Number")
-	@Pattern(regexp = "[0-9]{10,12}",message = "Contact number should be in numeric form")
+	@Size(min = 10,max = 10)
 	private String emergencyContactMobile;
 
 	@NotEmpty(message = "Please Enter Contact Name")

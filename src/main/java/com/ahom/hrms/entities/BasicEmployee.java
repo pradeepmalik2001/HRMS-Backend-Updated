@@ -40,7 +40,6 @@ public class BasicEmployee {
 	private String email;
 
 	@NotBlank(message = "Mobile Number Required")
-
 	private String mobile;
 
 	@NotBlank(message = "Joining Date Required")
@@ -57,7 +56,7 @@ public class BasicEmployee {
 	private String workType;
 
 	@NotNull(message = "CTC Required")
-	private int ctc;
+	private Long ctc;
 
 	private String pfnumber;
 

@@ -29,7 +29,7 @@ public class LeaveTypeController
 		return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,leaveTypeService.SaveLeaveTypeDetail(leaveTypeDto));
 	 }
 
-	@GetMapping("/leaveType")
+	@GetMapping("/get")
 	public ResponseEntity<Object> getAll(){
 		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,leaveTypeService.getAllLeaveDetail());
 	}
