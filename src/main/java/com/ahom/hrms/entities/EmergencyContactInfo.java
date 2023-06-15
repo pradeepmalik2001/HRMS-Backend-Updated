@@ -21,7 +21,8 @@ public class EmergencyContactInfo {
 	private String id;
 
 	@NotEmpty(message = "PLease Enter Mobile Number")
-	@Pattern(regexp = "[0-9]{10,12}",message = "Contact number should be in numeric form")
+
+	@Size(min = 10,max = 10,message = "Number should be of 10 digits")
 	private String emergencyContactMobile;
 
 	@NotEmpty(message = "Please Enter Contact Name")

@@ -35,7 +35,7 @@ public class BasicEmployeeDto {
 	private String email;
 
 	@NotBlank(message = "Mobile Number Required")
-	@Pattern(regexp = "[0-9]{10,12}",message = "only numbers")
+	@Size(min = 10,max = 10,message = "Number should be of 10 digits")
 	private String mobile;
 
 	@NotBlank(message = "Joining Date Required")
@@ -53,7 +53,7 @@ public class BasicEmployeeDto {
 	private String workType;
 
 	@NotNull
-	private Integer ctc;
+	private Long ctc;
 
 	private String pfnumber;
 
