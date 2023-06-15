@@ -4,6 +4,16 @@ public class JwtAuthResponse {
     private String token;
     private String userName;
 
+    private String roles;
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
     public String getUserName() {
         return userName;
     }

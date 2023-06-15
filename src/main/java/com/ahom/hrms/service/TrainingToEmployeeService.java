@@ -12,9 +12,9 @@ public interface TrainingToEmployeeService {
 
 	List<EmployeeTrainingDto> getAll();
 
-	void updateEmployeeTraining(EmployeeTrainingDto employeeTraining, int id);
+	void updateEmployeeTraining(EmployeeTrainingDto employeeTraining, String id);
 
-	void deleteEmployeeTraining(int id);
+	EmployeeTraining deleteEmployeeTraining(String id);
 
 	EmployeeTraining dtotoEmp(EmployeeTrainingDto dto);
 

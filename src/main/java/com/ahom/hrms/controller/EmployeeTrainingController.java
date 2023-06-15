@@ -36,16 +36,16 @@ public class EmployeeTrainingController {
 	//Update data from database By Id
 	
 	@PutMapping("/edit/{Id}")
-	public EmployeeTrainingDto updateall(@RequestBody EmployeeTrainingDto employeeTrainingDto,@PathVariable("Id") int id){
+	public EmployeeTrainingDto updateall(@RequestBody EmployeeTrainingDto employeeTrainingDto,@PathVariable("Id") String id){
 		this.trainingToEmployeeService.updateEmployeeTraining(employeeTrainingDto,id);
 		return employeeTrainingDto;	}
 	
 	//Delete data from database
 	
 	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable("id")int id) {
+	public Object delete(@PathVariable("id")String id) {
 
-		trainingToEmployeeService.deleteEmployeeTraining(id);
+		return ResponseHandler.responseBuilder("Data Deleted Successfully",HttpStatus.OK,trainingToEmployeeService.deleteEmployeeTraining(id));
 	}
 
 }

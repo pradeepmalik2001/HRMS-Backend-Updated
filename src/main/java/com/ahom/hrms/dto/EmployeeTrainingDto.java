@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -13,7 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class EmployeeTrainingDto
 {
-	private int id;
+	@NotEmpty(message = "Id can`t be null")
+	private String id;
 
 	@NotEmpty(message = "Event Name can`t be Empty")
 	private String eventName;
