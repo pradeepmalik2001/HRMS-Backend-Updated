@@ -31,10 +31,12 @@ public class BasicEmployeeDto {
 	private String designation;
 
 	@Email
+	@Column(nullable = false,unique = true)
 	@NotBlank(message = "Email needs to entered")
 	private String email;
 
 	@NotBlank(message = "Mobile Number Required")
+	@Column(nullable = false,unique = true)
 	@Size(min = 10,max = 10,message = "Number should be of 10 digits")
 	private String mobile;
 
@@ -63,6 +65,7 @@ public class BasicEmployeeDto {
 	private String panNumber;
 
 	@NotBlank(message = "Aadhaar Number Required")
+	@Column(nullable = false,unique = true)
 	@Pattern(regexp = "[0-9]{12}",message = "Aadhaar Number should be in format ")
 	private String aadhaarNumber;
 	

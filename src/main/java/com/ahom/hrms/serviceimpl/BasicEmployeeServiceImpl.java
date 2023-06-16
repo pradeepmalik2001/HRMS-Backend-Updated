@@ -5,6 +5,7 @@ import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.Repository.SalarySetupRepository;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.Employee;
+import com.ahom.hrms.exception.CustomDataIntegrityViolationException;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,28 +54,16 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 	//save data
 	public Object saveEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
-
-
-//		Optional<BasicEmployee> basicEmployee = basicEmployeeRepository.
-//				findByemployeeIdAndAadhaarNumberAndPanNumberAndPfnumberAndMobileAndEmail(
-//						basicEmployeeDto.getEmployeeId(),
-//						basicEmployeeDto.getAadhaarNumber(),
-//						basicEmployeeDto.getPanNumber(),
-//						basicEmployeeDto.getPfnumber(),
-//						basicEmployeeDto.getMobile(),
-//						basicEmployeeDto.getEmail());
-		Optional<BasicEmployee> basicEmployee=basicEmployeeRepository.findById(basicEmployeeDto.getEmployeeId());
-
-
-
-			if (basicEmployee.isEmpty()) {
-
+		Optional<BasicEmployee> employee=basicEmployeeRepository.findById(basicEmployeeDto.getEmployeeId());
+		if (employee.isEmpty()) {
+			try {
 				return basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
-			} else {
-				throw
-						new RuntimeException("Found duplicate entry");
-			}
+			} catch (DataIntegrityViolationException exception) {
 
+				throw new CustomDataIntegrityViolationException("");
+			}
+		}else throw new CustomException("Employee with ID:"
+				+basicEmployeeDto.getEmployeeId()+ " "+"already present");
 	}
 
 	//fetch data by employee id

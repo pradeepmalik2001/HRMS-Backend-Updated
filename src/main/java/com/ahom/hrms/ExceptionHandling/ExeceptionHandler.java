@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -71,6 +73,14 @@ public class ExeceptionHandler {
     public ResponseEntity<String> handleInvalidFormatException(InvalidFormatException ex) {
         String errorMessage = "Invalid value for 'roles' field.";
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+    }
+    @ExceptionHandler(CustomDataIntegrityViolationException.class)
+    public ResponseEntity <EmailResponse> handleDataIntegrityViolation(CustomDataIntegrityViolationException ex) {
+
+        String errorMessage = "The value provided must be unique.";
+        EmailResponse response = new EmailResponse(errorMessage, HttpStatus.ALREADY_REPORTED.value());
+        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(response);
+
     }
 
 }
