@@ -1,28 +1,28 @@
 package com.ahom.hrms.serviceimpl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
+import com.ahom.hrms.dto.CreateLeaveRequestDto;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.CreateLeaveRequest;
 import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.service.CreateLeaveRequestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-
-import com.ahom.hrms.dto.CreateLeaveRequestDto;
-
-import com.ahom.hrms.service.CreateLeaveRequestService;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
@@ -44,18 +44,35 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	private BasicEmployeeRepository basicEmployeeRepository;
 
 	@Override
-	public CreateLeaveRequestDto saveCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
-		BasicEmployee basicEmployee=basicEmployeeRepository.findById(createLeaveRequestDto.getId()).orElse(null);
+	public CreateLeaveRequest saveCreateLeaveRequest(CreateLeaveRequest createLeaveRequest) throws ParseException {
+		BasicEmployee basicEmployee=basicEmployeeRepository.findById(createLeaveRequest.getId()).orElse(null);
 
 		if (basicEmployee!=null) {
-			createLeaveRequestDto.setEmail(basicEmployee.getEmail());
-			createLeaveRequestDto.setStatus("3");
-			createLeaveRequestRepository.save(createLeaveRequestdtotoCreateLeaveRequest(createLeaveRequestDto));
+			Date currentDate = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String startDateString = createLeaveRequest.getStartDate();
+			String endDateString = createLeaveRequest.getEndDate();
+			Date startDate = formatter.parse(startDateString);
+			Date endDate = formatter.parse(endDateString);
+
+			if (startDate.before(currentDate)) {
+				throw new RuntimeException("Start date cannot be earlier than the current date");
+			}
+			if (endDate.after(startDate)||endDate.before(currentDate)){
+				throw new CustomException("End date cannot be earlier than current date or before start date ");
+			}
+			else {
+
+				createLeaveRequest.setEmail(basicEmployee.getEmail());
+				createLeaveRequest.setStatus("3");
+				createLeaveRequestRepository.save(createLeaveRequest);
+			}
 		}
+
 		else {
 			throw new RuntimeException("no employee");
 		}
-		return createLeaveRequestDto;
+		return createLeaveRequest;
 	}
 
 	@Override

@@ -1,8 +1,10 @@
 package com.ahom.hrms.entities;
 
 
+import com.ahom.hrms.constant.PrefixAndSequence;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,6 +15,15 @@ import javax.validation.constraints.NotEmpty;
 public class CreateLeaveRequest {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "leave_seq")
+	@GenericGenerator(name = "leave_seq",
+			strategy = "com.ahom.hrms.constant.PrefixAndSequence",
+			parameters = {
+					@org.hibernate.annotations.Parameter(name = PrefixAndSequence.INCREMENT_PARAM,value = "1"),
+					@org.hibernate.annotations.Parameter(name = PrefixAndSequence.VALUE_PREFIX_PARAMETER, value = "LId_"),
+					@org.hibernate.annotations.Parameter(name = PrefixAndSequence.NUMBER_FORMAT_PARAMETER,value = "%03d")
+			})
+
 	private String id;
 
 	@NotEmpty(message = "Employee Name can`t be Empty")

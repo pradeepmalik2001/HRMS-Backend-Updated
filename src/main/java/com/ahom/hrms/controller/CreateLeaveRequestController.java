@@ -1,5 +1,6 @@
 package com.ahom.hrms.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ahom.hrms.dto.CreateLeaveRequestDto;
 import com.ahom.hrms.serviceimpl.CreateLeaveRequestServiceImpl;
+
+import javax.validation.Valid;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/CreateLeaveRequest")
@@ -30,9 +34,8 @@ public class CreateLeaveRequestController {
 	
 	
 	 @PostMapping("/post")
-	    public ResponseEntity<Object> saveEmp(@RequestBody CreateLeaveRequestDto createLeaveRequestDto)
-	    {
-			return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,createLeaveRequestService.saveCreateLeaveRequest(createLeaveRequestDto));
+	    public ResponseEntity<Object> saveEmp( @Valid @RequestBody CreateLeaveRequest createLeaveRequest) throws ParseException {
+			return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,createLeaveRequestService.saveCreateLeaveRequest(createLeaveRequest));
 	    }
 	 
 	 @GetMapping("/get")
