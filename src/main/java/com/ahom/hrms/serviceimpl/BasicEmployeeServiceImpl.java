@@ -62,7 +62,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 				throw new CustomDataIntegrityViolationException("");
 			}
-		}else throw new CustomException("Employee with ID:"
+		}else throw new RuntimeException("Employee with ID:"
 				+basicEmployeeDto.getEmployeeId()+ " "+"already present");
 	}
 
@@ -82,12 +82,15 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	public BasicEmployee basicEmployeeDtoToBasicEmployee(BasicEmployeeDto basicEmployeeDto) throws ParseException {
 		Employee employee=employeeRepository.findById(basicEmployeeDto.getEmployeeId())
 				.orElse(null);
+		LocalDate now = LocalDate.now();
 		if (employee!=null) {
-			BasicEmployee basicEmployee = new BasicEmployee();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = dateFormat.parse(basicEmployeeDto.getJoiningDate());
-			basicEmployee.setJoiningDate(String.valueOf(date));
-			return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
+			if (basicEmployeeDto.getDob().isBefore(now)) {
+				BasicEmployee basicEmployee = new BasicEmployee();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = dateFormat.parse(basicEmployeeDto.getJoiningDate());
+				basicEmployee.setJoiningDate(String.valueOf(date));
+				return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
+			}else throw new RuntimeException("DOB");
 		}else
 			throw new RuntimeException("Employee for Id:"+basicEmployeeDto.getEmployeeId() +
 					"not found");

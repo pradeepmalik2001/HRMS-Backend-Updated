@@ -60,6 +60,8 @@ public class AuthController {
         if (user!=null) {
             response.setUserName(user.getEmployeeName());
             response.setRoles(user.getRoles());
+            response.setId(user.getId());
+            response.setEmail(user.getUsername());
             return ResponseHandler.responseBuilder("Login Successful", HttpStatus.OK,
                     response);
         }else

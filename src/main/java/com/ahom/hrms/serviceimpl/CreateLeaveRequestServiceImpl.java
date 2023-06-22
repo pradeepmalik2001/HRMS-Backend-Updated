@@ -58,7 +58,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			if (startDate.before(currentDate)) {
 				throw new RuntimeException("Start date cannot be earlier than the current date");
 			}
-			if (endDate.after(startDate)||endDate.before(currentDate)){
+			if (endDate.before(startDate)||endDate.before(currentDate)){
 				throw new CustomException("End date cannot be earlier than current date or before start date ");
 			}
 			else {
@@ -138,15 +138,13 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
 
-		CreateLeaveRequest createLeaveRequest=this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
-//		createLeaveRequest.setStatus("3");
-		return createLeaveRequest;
+		//		createLeaveRequest.setStatus("3");
+		return this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
 	}
 
 	public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest)
 	{
-		CreateLeaveRequestDto createLeaveRequestDto=this.modelMapper.map(createLeaveRequest,CreateLeaveRequestDto.class);
-		return createLeaveRequestDto;
+		return this.modelMapper.map(createLeaveRequest,CreateLeaveRequestDto.class);
 	}
 
 }
