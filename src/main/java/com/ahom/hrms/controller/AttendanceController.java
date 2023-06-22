@@ -58,14 +58,14 @@ public class AttendanceController {
 				// Identify the header row based on its content
 				Row headerRow = sheet.getRow(0);
 				if (headerRow == null) {
-					throw new CustomException("Header Row not found. Please upload Valid file");
+					throw new RuntimeException("Header Row not found. Please upload Valid file");
 				}
 
 				String[] expectedColumns = {"selectEmployee", "date", "inTime","outTime","status","userName"};
 				for (int i = 0; i < expectedColumns.length; i++) {
 					Cell cell = headerRow.getCell(i);
 					if (cell == null || !cell.getStringCellValue().equals(expectedColumns[i])) {
-						throw new CustomException("Header Row is not Valid. Please upload Valid file");
+						throw new RuntimeException("Header Row is not Valid. Please upload Valid file");
 					}
 				}
 

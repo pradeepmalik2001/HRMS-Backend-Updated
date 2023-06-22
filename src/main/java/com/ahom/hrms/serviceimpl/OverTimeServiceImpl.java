@@ -1,5 +1,6 @@
 package com.ahom.hrms.serviceimpl;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,15 +58,20 @@ public class OverTimeServiceImpl implements OverTimeService {
 	
 	public OverTime OverTimeDtoToOverTime(OverTimeDto overtimedto)
 	{
-		OverTime addOvertime =this.modelMapper.map(overtimedto, OverTime.class);
-		return addOvertime;
+		String startTime = overtimedto.getStartTime();
+		String endTime = overtimedto.getEndTime();
+		LocalTime parse = LocalTime.parse(startTime);
+		LocalTime parse1 = LocalTime.parse(endTime);
+		if (parse1.isAfter(parse)) {
+			return this.modelMapper.map(overtimedto, OverTime.class);
+		}else
+			throw new RuntimeException("End time should be after then start time");
 	}
 
 	/** ------------Using DTO Class in OverTimeToOverTimeDto --------------------------*/
 	
 	 public OverTimeDto OverTimeToOverTimeDto(OverTime addOvertime)
 	    {
-		 	OverTimeDto overtimeDto= this.modelMapper.map(addOvertime, OverTimeDto.class);
-	        return overtimeDto;
+			return this.modelMapper.map(addOvertime, OverTimeDto.class);
 	    }	
 }
