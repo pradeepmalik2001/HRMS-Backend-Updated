@@ -58,6 +58,14 @@ public class ExeceptionHandler {
             );
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(response);
     }
+    @ExceptionHandler(value = ValidationException.class)
+    public final ResponseEntity<ValidationError>handleCustomException(ValidationException validationException){
+        ValidationError response=new ValidationError(
+                validationException.getMessage(),
+                HttpStatus.ALREADY_REPORTED.value()
+        );
+        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(response);
+    }
 
     @ExceptionHandler(value = Exception.class)
     public final ResponseEntity<ApiResponse> handleException(Exception e) {

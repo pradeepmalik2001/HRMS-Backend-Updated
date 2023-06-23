@@ -1,6 +1,7 @@
 package com.ahom.hrms.controller;
 
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.ahom.hrms.Response.ResponseHandler;
@@ -23,7 +24,7 @@ public class AddHolidayController {
 @Autowired
 AddHolidayServiceImpl addHolidayService;
 @PostMapping("/leaveDetail")
-public ResponseEntity<Object>SaveAddHolidayDetail(@Valid @RequestBody AddHolidayDto addHolidayDto){
+public ResponseEntity<Object>SaveAddHolidayDetail(@Valid @RequestBody AddHolidayDto addHolidayDto) throws ParseException {
 	return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.CREATED,addHolidayService.SaveAddHolidayDetail(addHolidayDto));
 }
 @GetMapping("/leaveDetails")

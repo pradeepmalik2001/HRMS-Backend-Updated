@@ -1,5 +1,8 @@
 package com.ahom.hrms.serviceimpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,19 +27,25 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	ModelMapper modelMapper;
 
 
-	public AddHolidayDto SaveAddHolidayDetail(AddHolidayDto addHolidayDto)
-	{
+	public AddHolidayDto SaveAddHolidayDetail(AddHolidayDto addHolidayDto) throws ParseException {
 		 AddHoliday addHolidays=addHolidayRepository.findByHolidayNameAndFromDateAndToDate
 				(addHolidayDto.getHolidayName(),
 						addHolidayDto.getFromDate(),
 						addHolidayDto.getToDate());
-		 if(Objects.isNull(addHolidays))
 
-		{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String startDateString =addHolidayDto.getToDate();
+		String endDateString = addHolidayDto.getFromDate();
+		Date startDate = formatter.parse(startDateString);
+		Date endDate = formatter.parse(endDateString);
 
-			addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
-
-		}
+		if(Objects.isNull(addHolidays)) {
+			 if (!endDate.before(startDate)) {
+				 addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+			 }else {
+				 throw new CustomException("From date should be of present day or after of ToDate");
+			 }
+		 }
 		else
 		{
 			throw  new RuntimeException("Data Already Exist");
@@ -82,12 +91,10 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 	}
 
 	public AddHoliday AddHolidayDtotoAddHoliday(AddHolidayDto addHolidayDto) {
-		AddHoliday addholiday=this.modelMapper.map(addHolidayDto, AddHoliday.class);
-		return addholiday;
+		return this.modelMapper.map(addHolidayDto, AddHoliday.class);
 	}
 
 	public AddHolidayDto addHolidaytoAddHolidayDto(AddHoliday title) {
-		AddHolidayDto addjobtitledto=this.modelMapper.map(title, AddHolidayDto.class);
-		return addjobtitledto;
+		return this.modelMapper.map(title, AddHolidayDto.class);
 	}
 }

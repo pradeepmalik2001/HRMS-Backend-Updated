@@ -1,0 +1,1 @@
+package com.ahom.hrms.exception;import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;@NoArgsConstructor@AllArgsConstructor@Datapublic class ValidationError {    private String validation;    private int status_code;}
