@@ -43,8 +43,8 @@ public class WorkInformationServiceImpl implements WorkInformationService {
 //    @Value("${mail.hr}")
      String hrEmail="malikpradeep2001@gmail.com"; // Set HR email address in application.properties file
 
-    @Value("${mail.subject}")
-    private String emailSubject;
+//    @Value("${mail.subject}")
+//    private String emailSubject;
 
     //save data
     public WorkInformation saveWorkInfo(WorkInformationDto workInformationDto) throws Exception {
@@ -109,7 +109,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                     MimeMessageHelper simpleMailMessageToHr=new MimeMessageHelper(message);
                     simpleMailMessageToHr.setFrom(fromEmail);
                     simpleMailMessageToHr.setTo(hrEmail);
-                    simpleMailMessageToHr.setSubject(emailSubject);
+                    simpleMailMessageToHr.setSubject("Probation End Reminder");
                     simpleMailMessageToHr.setText("Probation period of employee "
                             + workInformation1.getBasicEmployee().getEmployeeName()
                             + " will end in one week.");
@@ -119,7 +119,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                     MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
                     messageToEmployee.setFrom(fromEmail);
                     messageToEmployee.setTo(workInformation1.getBasicEmployee().getEmail());
-                    messageToEmployee.setSubject(emailSubject);
+                    messageToEmployee.setSubject("Probation End Reminder");
                     messageToEmployee.setText("Your probation period will end in 7 days. Please contact HR for further instructions.");
                     mailSender.send(message);
                     System.out.println(message);

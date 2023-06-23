@@ -38,8 +38,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Value("${mail.from}")
 	private String fromEmail;
 
-	@Value("${mail.subject}")
-	private String emailSubject;
+//	@Value("${mail.subject}")
+//	private String emailSubject;
 	@Autowired
 	private BasicEmployeeRepository basicEmployeeRepository;
 
@@ -55,17 +55,17 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			Date startDate = formatter.parse(startDateString);
 			Date endDate = formatter.parse(endDateString);
 
-			if (startDate.before(currentDate)) {
-				throw new RuntimeException("Start date cannot be earlier than the current date");
-			}
-			if (endDate.before(startDate)||endDate.before(currentDate)){
-				throw new CustomException("End date cannot be earlier than current date or before start date ");
+			if (startDate.before(currentDate)||startDate.equals(currentDate)) {
+				if (!endDate.before(startDate) || !endDate.before(currentDate)) {
+					createLeaveRequest.setEmail(basicEmployee.getEmail());
+					createLeaveRequest.setStatus("3");
+					createLeaveRequestRepository.save(createLeaveRequest);
+				}else {
+					throw new CustomException("End date cannot be earlier than current date or before start date ");
+				}
 			}
 			else {
-
-				createLeaveRequest.setEmail(basicEmployee.getEmail());
-				createLeaveRequest.setStatus("3");
-				createLeaveRequestRepository.save(createLeaveRequest);
+				throw new RuntimeException("Start date cannot be earlier than the current date");
 			}
 		}
 
@@ -96,7 +96,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
 					messageToEmployee.setFrom(fromEmail);
 					messageToEmployee.setTo(createLeaveRequest.getEmail());
-					messageToEmployee.setSubject(emailSubject);
+					messageToEmployee.setSubject("Response Against Leave Request");
 					messageToEmployee.setText("Request for leave");
 					mailSender.send(message);
 					System.out.println(message);
@@ -114,7 +114,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					MimeMessageHelper helper=new MimeMessageHelper(message);
 					helper.setFrom(fromEmail);
 					helper.setTo(createLeaveRequest.getEmail());
-					helper.setSubject(emailSubject);
+					helper.setSubject("Response Against Leave Request");
 					helper.setText("Request For Leave");
 
 					mailSender.send(message);

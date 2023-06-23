@@ -7,6 +7,7 @@ import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.exception.CustomDataIntegrityViolationException;
 import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.exception.ValidationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,8 +48,8 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 	//    @Value("${mail.hr}")
 	String hrEmail="malikpradeep2001@gmail.com"; // Set HR email address in application.properties file
 
-	@Value("${mail.subject}")
-	private String emailSubject;
+//	@Value("${mail.subject}")
+//	private String emailSubject;
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
@@ -90,7 +91,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 				Date date = dateFormat.parse(basicEmployeeDto.getJoiningDate());
 				basicEmployee.setJoiningDate(String.valueOf(date));
 				return this.modelMapper.map(basicEmployeeDto, BasicEmployee.class);
-			}else throw new RuntimeException("DOB");
+			}else throw new ValidationException("Please check DOB");
 		}else
 			throw new RuntimeException("Employee for Id:"+basicEmployeeDto.getEmployeeId() +
 					"not found");
@@ -165,7 +166,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 
 				mailMessage.setFrom(fromEmail);
 				mailMessage.setTo(basicEmployee1.getEmail());
-				mailMessage.setSubject(emailSubject);
+				mailMessage.setSubject("Birthday Reminder");
 				mailMessage.setText("Today is Birthday of : "+basicEmployee1.getEmployeeName());
 				mailSender.send(mailMessage);
 				System.out.println(mailMessage);
