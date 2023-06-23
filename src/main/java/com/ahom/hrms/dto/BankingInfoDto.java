@@ -24,7 +24,7 @@ public class BankingInfoDto {
 	private String bankBranch;
 
 	@NotEmpty(message = "Please Enter IFSC Code")
-	@Pattern(regexp = "[A-Z]{4}[A-Z0-9]{6}",message = "ABCD000000")
+	@Pattern(regexp = "[A-Z]{4}[A-Z0-9]{6}",message = "IFSC Code should be in format AAAA090909")
 	private String ifscCode;
 
 	@NotEmpty(message = "Please Enter Your Name")

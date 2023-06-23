@@ -85,8 +85,8 @@ public class ExeceptionHandler {
     @ExceptionHandler(CustomDataIntegrityViolationException.class)
     public ResponseEntity <EmailResponse> handleDataIntegrityViolation(CustomDataIntegrityViolationException ex) {
 
-        String errorMessage = "The value provided must be unique.";
-        EmailResponse response = new EmailResponse(errorMessage, HttpStatus.ALREADY_REPORTED.value());
+//        String errorMessage = "The value provided must be unique.";
+        EmailResponse response = new EmailResponse(ex.getMessage(), HttpStatus.ALREADY_REPORTED.value());
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(response);
 
     }

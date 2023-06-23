@@ -2,9 +2,11 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
+import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.dto.CreateLeaveRequestDto;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.CreateLeaveRequest;
+import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.CreateLeaveRequestService;
 import org.modelmapper.ModelMapper;
@@ -20,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,22 +45,30 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 //	private String emailSubject;
 	@Autowired
 	private BasicEmployeeRepository basicEmployeeRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	@Override
 	public CreateLeaveRequest saveCreateLeaveRequest(CreateLeaveRequest createLeaveRequest) throws ParseException {
-		BasicEmployee basicEmployee=basicEmployeeRepository.findById(createLeaveRequest.getId()).orElse(null);
+		Employee employee = employeeRepository.findById(createLeaveRequest.getId()).orElse(null);
 
-		if (basicEmployee!=null) {
-			Date currentDate = new Date();
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		if (employee!=null) {
+//			Date currentDate = new Date();
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//			String startDateString = createLeaveRequest.getStartDate();
+//			String endDateString = createLeaveRequest.getEndDate();
+//			Date startDate = formatter.parse(startDateString);
+//			Date endDate = formatter.parse(endDateString);
+			LocalDate currentDate = LocalDate.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String startDateString = createLeaveRequest.getStartDate();
 			String endDateString = createLeaveRequest.getEndDate();
-			Date startDate = formatter.parse(startDateString);
-			Date endDate = formatter.parse(endDateString);
+			LocalDate startDate = LocalDate.parse(startDateString, formatter);
+			LocalDate endDate = LocalDate.parse(endDateString, formatter);
 
-			if (startDate.before(currentDate)||startDate.equals(currentDate)) {
-				if (!endDate.before(startDate) || !endDate.before(currentDate)) {
-					createLeaveRequest.setEmail(basicEmployee.getEmail());
+			if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
+				if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
+					createLeaveRequest.setEmail(employee.getUsername());
 					createLeaveRequest.setStatus("3");
 					createLeaveRequestRepository.save(createLeaveRequest);
 				}else {
