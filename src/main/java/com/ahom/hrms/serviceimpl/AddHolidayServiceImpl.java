@@ -34,8 +34,8 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 						addHolidayDto.getToDate());
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		String startDateString =addHolidayDto.getToDate();
-		String endDateString = addHolidayDto.getFromDate();
+		String startDateString =addHolidayDto.getFromDate();
+		String endDateString = addHolidayDto.getToDate();
 		Date startDate = formatter.parse(startDateString);
 		Date endDate = formatter.parse(endDateString);
 

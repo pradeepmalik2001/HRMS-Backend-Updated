@@ -5,9 +5,11 @@ import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.WorkInformationRepository;
 import com.ahom.hrms.entities.BankingInfo;
 import com.ahom.hrms.entities.BasicEmployee;
+import com.ahom.hrms.exception.CustomDataIntegrityViolationException;
 import com.ahom.hrms.exception.CustomException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import com.ahom.hrms.dto.BankingInfoDto;
 import com.ahom.hrms.service.BankingInfoService;
@@ -33,11 +35,19 @@ WorkInformationRepository workInformationRepository;
 	public Object saveBankingInfo(BankingInfoDto bankingInfoDto) throws Exception {
 		BankingInfo bankingInfo = bankingInfoRepository.findById(bankingInfoDto.getId()).orElse(null);
 		if (bankingInfo == null) {
-			bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
-			bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
-		} else {
-			throw new RuntimeException("Data is Already Present");
+			try {
+
+				bankingInfoDto.setBasicSalary(bankingInfoDto.getBasicSalary());
+				bankingInfoRepository.saveAndFlush(bankingInfoDtoToBankingInfo(bankingInfoDto));
+
+			} catch (DataIntegrityViolationException exception) {
+				throw new CustomDataIntegrityViolationException("Unique Account number needed");
+			}
 		}
+			else{
+				throw new RuntimeException("Data is Already Present");
+			}
+
 		return bankingInfoDto;
 	}
 
