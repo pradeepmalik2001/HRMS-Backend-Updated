@@ -13,8 +13,7 @@ public interface WorkInformationService {
 	WorkInformation workInformationDtoToWorkInformation(WorkInformationDto workInformationDto) throws Exception;
 	
 	WorkInformationDto workInformationToWorkInformationDto(WorkInformation workInformation);
-
-	///
+	WorkInformationDto updateWork(WorkInformationDto workInformationDto,String id);
 
 	List<WorkInformationDto> getAll();
 }

@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -81,8 +82,19 @@ public class WorkInformationServiceImpl implements WorkInformationService {
         return this.modelMapper.map(workInformation, WorkInformationDto.class);
     }
 
+    @Override
+    public WorkInformationDto updateWork(WorkInformationDto workInformationDto, String id) {
+        WorkInformation workInformation=workInformationRepository.findById(id).orElse(null);
+        if (workInformation==null){
+            throw new RuntimeException("Employee Id Not Found");
+        }else {
+            workInformation.setEmploymentType(workInformationDto.getEmploymentType());
+            workInformationRepository.save(workInformation);
+        }
+        return workInformationDto;
+    }
 
-    //fetch
+
     public List getAll() {
         return workInformationRepository.findAll();
     }

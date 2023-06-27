@@ -61,7 +61,7 @@ public class BasicEmployeeServiceImpl implements BasicEmployeeService{
 				return basicEmployeeRepository.save(basicEmployeeDtoToBasicEmployee(basicEmployeeDto));
 			} catch (DataIntegrityViolationException exception) {
 
-				throw new CustomDataIntegrityViolationException("");
+				throw new CustomDataIntegrityViolationException("Duplicate Entry");
 			}
 		}else throw new RuntimeException("Employee with ID:"
 				+basicEmployeeDto.getEmployeeId()+ " "+"already present");
