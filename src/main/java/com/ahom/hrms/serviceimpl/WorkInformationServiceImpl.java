@@ -88,6 +88,12 @@ public class WorkInformationServiceImpl implements WorkInformationService {
         if (workInformation==null){
             throw new RuntimeException("Employee Id Not Found");
         }else {
+            workInformation.setAddress(workInformationDto.getAddress());
+            workInformation.setDescription(workInformationDto.getDescription());
+            workInformation.setBloodGroup(workInformationDto.getBloodGroup());
+            workInformation.setGender(workInformationDto.getGender());
+            workInformation.setEmployeeType(workInformationDto.getEmployeeType());
+            workInformation.setOfficeBranch(workInformationDto.getOfficeBranch());
             workInformation.setEmploymentType(workInformationDto.getEmploymentType());
             workInformationRepository.save(workInformation);
         }

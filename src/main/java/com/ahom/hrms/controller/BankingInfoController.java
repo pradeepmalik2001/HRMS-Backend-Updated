@@ -1,6 +1,7 @@
 package com.ahom.hrms.controller;
 
 import com.ahom.hrms.Response.ResponseHandler;
+import com.ahom.hrms.dto.EmergencyContactInfoDto;
 import com.ahom.hrms.entities.BankingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,13 @@ public class BankingInfoController {
 	public ResponseEntity<Object> response(@PathVariable Integer employeeId) throws Exception {
 		return ResponseHandler.responseBuilder("Data for employee ID:" +employeeId
 				+"-",HttpStatus.ACCEPTED,bankingInfoService.getById(employeeId));
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object>updateWork(@PathVariable String id,
+											@RequestBody BankingInfoDto bankingInfoDto){
+		return ResponseHandler.responseBuilder("Update successfully",HttpStatus.OK,
+				bankingInfoService.update(id, bankingInfoDto));
 	}
 
 }

@@ -16,4 +16,6 @@ public interface BankingInfoService {
 	List<BankingInfo>getAllInfo();
 
     BankingInfoDto getById(Integer employeeId) throws Exception;
+
+	BankingInfoDto update(String id,BankingInfoDto bankingInfoDto);
 }
