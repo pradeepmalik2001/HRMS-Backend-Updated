@@ -30,4 +30,11 @@ public class WorkInformationController {
 	public List<WorkInformationDto> getWorkInformation(){
 		return workInformationService.getAll();
 	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object>updateWork(@PathVariable String id,
+											@RequestBody WorkInformationDto workInformationDto){
+		return ResponseHandler.responseBuilder("Update successfully",HttpStatus.OK,
+				workInformationService.updateWork(workInformationDto,id));
+	}
 }

@@ -44,7 +44,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/employment/**",          "/event/**",
                 "/leave/leaveType",        "/branch/**",
                 "/training/**",            "/trainingName/**",
-                "/TravelOverview/**",      "/work/**",
+                "/TravelOverview/**",      "/work/saveWork",
                 "/attendance/upload",      "/emergency/**",
                 "/leave/leaveType/{id}",
 
@@ -61,7 +61,8 @@ import org.springframework.web.filter.CorsFilter;
                 "/attendance/status",
                 "/attendance/count",
                 "/attendance/statusOf",
-                "/CreateLeaveRequest/**"
+                "/CreateLeaveRequest/**",
+                "/work/fetchData"
         };
         @Autowired
         private CustomUserDetailService customUserDetailService;
