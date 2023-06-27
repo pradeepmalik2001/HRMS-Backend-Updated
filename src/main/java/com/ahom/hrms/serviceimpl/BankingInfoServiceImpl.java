@@ -95,5 +95,23 @@ WorkInformationRepository workInformationRepository;
 		}
 	}
 
+	@Override
+	public BankingInfoDto update(String id, BankingInfoDto bankingInfoDto) {
+		BankingInfo bankingInfo=bankingInfoRepository.findById(id).orElse(null);
+		if (bankingInfo==null)
+		{
+			throw new RuntimeException("No record");
+		}else
+		{
+			bankingInfo.setBankName(bankingInfoDto.getBankName());
+			bankingInfo.setBankBranch(bankingInfoDto.getBankBranch());
+			bankingInfo.setBankAccountNo(bankingInfoDto.getBankAccountNo());
+			bankingInfo.setIfscCode(bankingInfoDto.getIfscCode());
+
+			bankingInfoRepository.save(bankingInfo);
+		}
+		return bankingInfoDto;
+	}
+
 
 }

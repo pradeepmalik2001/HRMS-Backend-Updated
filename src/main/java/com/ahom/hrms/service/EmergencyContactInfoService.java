@@ -15,4 +15,6 @@ public interface EmergencyContactInfoService {
 	
 	List<EmergencyContactInfoDto> EmergencyContactInfo();
 
+	EmergencyContactInfoDto emergencyContactInfoDto(String id, EmergencyContactInfoDto  emergencyContactInfoDto);
+
 }

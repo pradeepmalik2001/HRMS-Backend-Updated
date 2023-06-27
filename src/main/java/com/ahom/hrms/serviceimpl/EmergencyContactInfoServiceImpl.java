@@ -65,4 +65,21 @@ public class EmergencyContactInfoServiceImpl implements EmergencyContactInfoServ
 		List<EmergencyContactInfoDto> salesdt=salest.stream().map((EmergencyContactInfo)->modelMapper.map(EmergencyContactInfo, EmergencyContactInfoDto.class)).collect(Collectors.toList());
 		return salesdt;
 	}
+
+	@Override
+	public EmergencyContactInfoDto emergencyContactInfoDto(String id
+			, EmergencyContactInfoDto emergencyContactInfoDto) {
+		EmergencyContactInfo contactInfo=emergencyContactInfoRepository.findById(id).orElse(null);
+		if (contactInfo==null){
+			throw new RuntimeException("No Record present");
+		}else {
+			contactInfo.setEmergencyContactAddress(emergencyContactInfoDto.getEmergencyContactAddress());
+			contactInfo.setEmergencyContactEmail(emergencyContactInfoDto.getEmergencyContactEmail());
+			contactInfo.setEmergencyContactMobile(emergencyContactInfoDto.getEmergencyContactMobile());
+			contactInfo.setEmergencyContactName(emergencyContactInfoDto.getEmergencyContactName());
+
+			emergencyContactInfoRepository.save(contactInfo);
+		}
+		return emergencyContactInfoDto;
+	}
 }
