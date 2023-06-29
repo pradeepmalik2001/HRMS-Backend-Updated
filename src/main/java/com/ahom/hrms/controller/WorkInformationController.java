@@ -32,7 +32,7 @@ public class WorkInformationController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Object>updateWork(@PathVariable String id,
+	public ResponseEntity<Object>updateWork(@Valid @PathVariable String id,
 											@RequestBody WorkInformationDto workInformationDto){
 		return ResponseHandler.responseBuilder("Update successfully",HttpStatus.OK,
 				workInformationService.updateWork(workInformationDto,id));

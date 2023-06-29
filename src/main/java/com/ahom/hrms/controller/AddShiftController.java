@@ -48,20 +48,20 @@ public class AddShiftController {
 	}
 
 
-	@GetMapping("/viewEmployee/{Id}")
-	public AddShiftDto getAddShiftById(@PathVariable("Id") int Id) {
-		return addShiftService.addShiftById(Id);
+	@GetMapping("/viewEmployee/{userName}")
+	public List<ShiftManagement> getAddShiftById(@PathVariable("userName") String userName) {
+		return addShiftService.addShiftById(userName);
 	}
 
 
 	@DeleteMapping("/addShift/{id}")
-	public ResponseEntity<Object> deleteaddShift(@PathVariable("id") int id){
+	public ResponseEntity<Object> deleteaddShift(@PathVariable("id") String id){
 		return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,addShiftService.deleteAddShift(id));
 	}
 
 	//Update
 	@PutMapping("/update/{Id}")
-	public ResponseEntity<Object> updateaddShift(@Valid @RequestBody ShiftManagement shiftManagement,@PathVariable("Id") int id ) {
+	public ResponseEntity<Object> updateaddShift(@Valid @RequestBody ShiftManagement shiftManagement,@PathVariable("Id") String id ) {
 		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,addShiftService.updateAddshift(shiftManagement,id));
 	}
 
