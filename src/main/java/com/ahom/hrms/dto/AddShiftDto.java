@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddShiftDto {
-	private int id;
+	private String id;
 
 	@NotEmpty(message = "Country Name Can`t be Empty")
 	private String country;
@@ -28,4 +28,7 @@ public class AddShiftDto {
 
 	@NotEmpty(message = "End Time Can`t be Empty")
 	private String endTime;
+
+	@NotEmpty(message = "Username Can`t be Empty")
+	private String userName;
 }

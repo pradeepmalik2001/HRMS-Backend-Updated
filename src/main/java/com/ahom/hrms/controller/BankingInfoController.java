@@ -43,7 +43,7 @@ public class BankingInfoController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Object>updateWork(@PathVariable String id,
+	public ResponseEntity<Object>updateWork(@Valid @PathVariable String id,
 											@RequestBody BankingInfoDto bankingInfoDto){
 		return ResponseHandler.responseBuilder("Update successfully",HttpStatus.OK,
 				bankingInfoService.update(id, bankingInfoDto));

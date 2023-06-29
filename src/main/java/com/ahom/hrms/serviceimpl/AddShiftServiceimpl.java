@@ -4,6 +4,7 @@ package com.ahom.hrms.serviceimpl;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class AddShiftServiceimpl implements AddShiftService {
 
 	// delete
 	@Override
-	public ShiftManagement deleteAddShift(int id){
+	public ShiftManagement deleteAddShift(String id){
 		ShiftManagement shiftManagement=addShiftRepo.findById(id).orElse(null);
 		if(shiftManagement!=null)
 		{
@@ -60,7 +61,7 @@ public class AddShiftServiceimpl implements AddShiftService {
 	//put
 
 	@Override
-	public ShiftManagement updateAddshift(ShiftManagement shiftManagement,int id)
+	public ShiftManagement updateAddshift(ShiftManagement shiftManagement,String id)
 	{
 		ShiftManagement abc = addShiftRepo.findById(id).orElse(null);
 		if(abc!=null)
@@ -81,10 +82,9 @@ public class AddShiftServiceimpl implements AddShiftService {
 
 
 	@Override
-	public AddShiftDto addShiftById(Integer id) {
-		ShiftManagement addShift = this.addShiftRepo.findById(id).get();
-		// Optional<Employee> byId = employeeReposatory.findById(employeeId);
-		return this.addShiftToAddShiftDto(addShift);
+	public List<ShiftManagement> addShiftById(String userName) {
+		List<ShiftManagement> addShift = this.addShiftRepo.findByUserName(userName);
+		return new ArrayList<>(addShift);
 
 	}
 
@@ -105,6 +105,7 @@ public class AddShiftServiceimpl implements AddShiftService {
 		addShift.setDate(formattedDateTime);
 		addShift.setCountry(addShiftDto.getCountry());
 		addShift.setEmployee(addShiftDto.getEmployee());
+		addShift.setUserName(addShiftDto.getUserName());
 		return addShift;
 	}
 
@@ -118,6 +119,7 @@ public class AddShiftServiceimpl implements AddShiftService {
 		addShiftDto.setCountry(addShift.getCountry());
 		addShiftDto.setStartTime(addShift.getStartTime());
 		addShiftDto.setEndTime(addShift.getEndTime());
+		addShiftDto.setUserName(addShift.getUserName());
 
 		return addShiftDto;
 	}
