@@ -36,7 +36,7 @@ public class EmergencyContactInfoController {
     }
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Object>updateWork(@PathVariable String id,
+	public ResponseEntity<Object>updateWork(@Valid @PathVariable String id,
 											@RequestBody EmergencyContactInfoDto emergencyContactInfoDto){
 		return ResponseHandler.responseBuilder("Update successfully",HttpStatus.OK,
 				emergencyContactInfoService.emergencyContactInfoDto(id, emergencyContactInfoDto));
