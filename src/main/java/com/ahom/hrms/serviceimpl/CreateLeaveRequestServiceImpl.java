@@ -3,10 +3,12 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.BasicEmployeeRepository;
 import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
 import com.ahom.hrms.Repository.EmployeeRepository;
+import com.ahom.hrms.Repository.LeaveRecordRepository;
 import com.ahom.hrms.dto.CreateLeaveRequestDto;
 import com.ahom.hrms.entities.BasicEmployee;
 import com.ahom.hrms.entities.CreateLeaveRequest;
 import com.ahom.hrms.entities.Employee;
+import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.CreateLeaveRequestService;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,24 +44,22 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Value("${mail.from}")
 	private String fromEmail;
 
-//	@Value("${mail.subject}")
-//	private String emailSubject;
 	@Autowired
 	private BasicEmployeeRepository basicEmployeeRepository;
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
+	@Autowired
+	LeaveRecordRepository leaveRecordRepository;
+
+	LeaveRecord leaveRecord;
+
 	@Override
 	public CreateLeaveRequest saveCreateLeaveRequest(CreateLeaveRequest createLeaveRequest) throws ParseException {
 		Employee employee = employeeRepository.findById(createLeaveRequest.getId()).orElse(null);
+		LeaveRecord leaveRecord1=leaveRecordRepository.findById(createLeaveRequest.getId()).orElse(null);
 
 		if (employee!=null) {
-//			Date currentDate = new Date();
-//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//			String startDateString = createLeaveRequest.getStartDate();
-//			String endDateString = createLeaveRequest.getEndDate();
-//			Date startDate = formatter.parse(startDateString);
-//			Date endDate = formatter.parse(endDateString);
 			LocalDate currentDate = LocalDate.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String startDateString = createLeaveRequest.getStartDate();
@@ -66,10 +67,17 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			LocalDate startDate = LocalDate.parse(startDateString, formatter);
 			LocalDate endDate = LocalDate.parse(endDateString, formatter);
 
+			long daysInBetween= ChronoUnit.DAYS.between(startDate,endDate);
+			long finalDays = daysInBetween + 1;
+			System.out.println("daysInBetwwnnnnnnn : "+daysInBetween);
+			System.out.println("finalDaysssss : "+finalDays);
+
 			if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
 				if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
 					createLeaveRequest.setEmail(employee.getUsername());
 					createLeaveRequest.setStatus("3");
+					createLeaveRequest.setNoOfDays(finalDays);
+					createLeaveRequest.setLeaveRecord(leaveRecord1);
 					createLeaveRequestRepository.save(createLeaveRequest);
 				}else {
 					throw new CustomException("End date cannot be earlier than current date or before start date ");
@@ -96,6 +104,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Override
 	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,String id) {
 		CreateLeaveRequest createLeaveRequest=createLeaveRequestRepository.findById(id).orElse(null);
+
 		if(createLeaveRequest!=null)
 		{
 			createLeaveRequest.setStatus(createLeaveRequestDto.getStatus());
@@ -103,20 +112,44 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			if(createLeaveRequestDto.getStatus().equals("1"))
 			{
 				try {
-					MimeMessage message=mailSender.createMimeMessage();
-					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
-					messageToEmployee.setFrom(fromEmail);
-					messageToEmployee.setTo(createLeaveRequest.getEmail());
-					messageToEmployee.setSubject("Response Against Leave Request");
-					messageToEmployee.setText("Request for leave");
-					mailSender.send(message);
-					System.out.println(message);
-				}catch (RuntimeException e)
-				{
+//					MimeMessage message=mailSender.createMimeMessage();
+//					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
+//					messageToEmployee.setFrom(fromEmail);
+//					messageToEmployee.setTo(createLeaveRequest.getEmail());
+//					messageToEmployee.setSubject("Response Against Leave Request");
+//					messageToEmployee.setText("Request for leave");
+//					mailSender.send(message);
+//					System.out.println(message);
+
+					if(createLeaveRequest.getNoOfDays()>=createLeaveRequest.getLeaveRecord().getTotalLeave())
+					{
+						LeaveRecord leaveRecord1=new LeaveRecord();
+						leaveRecord1.setId(createLeaveRequest.getLeaveRecord().getId());
+						leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
+						leaveRecord1.setLop(createLeaveRequest.getNoOfDays()-createLeaveRequest.getLeaveRecord().getTotalLeave()+ createLeaveRequest.getLeaveRecord().getLop());
+						leaveRecord1.setTotalLeave(0);
+						leaveRecord1.setLeaveLeft(0);
+						leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays()+ createLeaveRequest.getLeaveRecord().getLeaveTaken());
+						leaveRecordRepository.save(leaveRecord1);
+						createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+					}
+					else {
+						LeaveRecord leaveRecord1=new LeaveRecord();
+						leaveRecord1.setId(createLeaveRequest.getLeaveRecord().getId());
+						leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
+						leaveRecord1.setLop(0);
+						leaveRecord1.setTotalLeave(createLeaveRequest.getLeaveRecord().getTotalLeave()- createLeaveRequest.getNoOfDays());
+						leaveRecord1.setLeaveLeft(createLeaveRequest.getLeaveRecord().getTotalLeave()-createLeaveRequest.getNoOfDays());
+						leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays());
+						leaveRecordRepository.save(leaveRecord1);
+						createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+					}
+				}catch (RuntimeException e) {
 					e.printStackTrace();
-				} catch (MessagingException e) {
-					throw new RuntimeException(e);
 				}
+//				} catch (MessagingException e) {
+//					throw new RuntimeException(e);
+//				}
 			}
 			else if (createLeaveRequestDto.getStatus().equals("2"))
 			{

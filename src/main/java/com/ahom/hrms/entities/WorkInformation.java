@@ -28,11 +28,11 @@ public class WorkInformation {
     private String gender;
     @NotEmpty(message = "Blood Group needed")
     private String bloodGroup;
-    @NotEmpty(message = "Specify Employment type")
-    private String employeeType;
+   
     @NotEmpty(message = "Fill the address")
     private String address;
     @NotEmpty(message = "Description is empty")
+
     private String description;
 
 
