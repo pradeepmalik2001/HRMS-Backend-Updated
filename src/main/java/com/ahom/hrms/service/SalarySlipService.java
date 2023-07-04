@@ -1,0 +1,1 @@
+package com.ahom.hrms.service;import com.ahom.hrms.entities.SalarySlip;import java.text.ParseException;import java.util.List;public interface SalarySlipService {    List<SalarySlip> saveSalary (String month) throws ParseException;    List<SalarySlip> UpdateSalary(SalarySlip salarySlip);    List<SalarySlip>getAllSalary();}

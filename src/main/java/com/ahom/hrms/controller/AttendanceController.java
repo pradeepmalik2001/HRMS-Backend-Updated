@@ -1,20 +1,14 @@
 package com.ahom.hrms.controller;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.ahom.hrms.Helper.Excel;
 import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.entities.Attendance;
-import com.ahom.hrms.entities.OverTime;
-import com.ahom.hrms.exception.CustomException;
-import com.google.api.Http;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +20,6 @@ import com.ahom.hrms.serviceimpl.AttendanceServiceImpl;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/attendance")
@@ -133,11 +126,15 @@ public class AttendanceController {
     }
 
     @PostMapping("/count")
-    public ResponseEntity<Integer> countAttendance(@RequestParam String month,
+    public ResponseEntity<List<Integer>> countAttendance(@RequestParam List<String> name,
+                                                   @RequestParam List<String> userName,
+                                                   @RequestParam String startDate,
+                                                   @RequestParam String endDate) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDates = format.parse(startDate);
+        Date endDates = format.parse(endDate);
 
-                                                   @RequestParam String userName) throws ParseException {
-
-        Integer attendance = attendanceService.countAttendance(month, userName);
+        List<Integer> attendance = attendanceService.countAttendance(name,userName,startDates,endDates);
         return new ResponseEntity<>(attendance, HttpStatus.ACCEPTED);
     }
 
