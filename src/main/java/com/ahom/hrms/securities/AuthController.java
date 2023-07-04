@@ -3,7 +3,9 @@ package com.ahom.hrms.securities;
 import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.entities.Employee;
+import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.service.LeaveRecordService;
 import com.ahom.hrms.serviceimpl.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class AuthController {
 
     @Autowired
     private EmployeeService userService;
+
+    @Autowired
+    private LeaveRecordService leaveRecordService;
 
     @PostMapping("/login")
     public ResponseEntity<Object> createToken(@Valid @RequestBody JwtAuthRequest request) throws Exception {
@@ -95,23 +100,29 @@ public class AuthController {
 
                 if (UserDTO.getConfirmPassword().equals(UserDTO.getPassword())) {
 
-                    SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-                    messageToEmployee.setFrom(fromEmail);
-                    messageToEmployee.setTo(UserDTO.getUsername());
-                    messageToEmployee.setSubject("Login Credentials");
-                    messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName() + " "
-                            + "\n"
-                            + "\n"
-                            + "User Name = "
-                            + UserDTO.getUsername() + " " +
-                            " " +
-                            "\n" +
-                            "Password :" +
-                            " " + UserDTO.getConfirmPassword());
-                    mailSender.send(messageToEmployee);
-                    System.out.println(messageToEmployee);
+//                    SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+//                    messageToEmployee.setFrom(fromEmail);
+//                    messageToEmployee.setTo(UserDTO.getUsername());
+//                    messageToEmployee.setSubject("Login Credentials");
+//                    messageToEmployee.setText("Login Credentials for : " + UserDTO.getEmployeeName() + " "
+//                            + "\n"
+//                            + "\n"
+//                            + "User Name = "
+//                            + UserDTO.getUsername() + " " +
+//                            " " +
+//                            "\n" +
+//                            "Password :" +
+//                            " " + UserDTO.getConfirmPassword());
+//                    mailSender.send(messageToEmployee);
+//                    System.out.println(messageToEmployee);
 
                     Employee createUser = userService.saveEmployee(UserDTO);
+                    LeaveRecord leaveRecord=new LeaveRecord();
+                    leaveRecord.setTotalLeave(1.5);
+                    leaveRecord.setLeaveLeft(leaveRecord.getTotalLeave());
+                    leaveRecord.setId(UserDTO.getId());
+                    leaveRecord.setEmployeeName(UserDTO.getEmployeeName());
+                    leaveRecordService.saveLeave(leaveRecord);
                     return ResponseHandler.responseBuilder("Employee registered successfully",
                             HttpStatus.OK, createUser);
                 }else

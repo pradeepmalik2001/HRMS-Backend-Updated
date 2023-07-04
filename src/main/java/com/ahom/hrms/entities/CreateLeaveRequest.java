@@ -2,6 +2,7 @@ package com.ahom.hrms.entities;
 
 
 import com.ahom.hrms.constant.PrefixAndSequence;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -47,5 +48,11 @@ public class CreateLeaveRequest {
 	private String status;
 
 	private String email;
+
+	private double noOfDays;
+
+	@OneToOne(targetEntity = LeaveRecord.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonBackReference
+	LeaveRecord leaveRecord;
 
 }

@@ -1,6 +1,7 @@
 package com.ahom.hrms.dto;
 
 import com.ahom.hrms.entities.BasicEmployee;
+import com.ahom.hrms.entities.LeaveRecord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,9 @@ public class CreateLeaveRequestDto {
 	private String status;
 
 	private String email;
+
+	private double noOfDays;
+
+	LeaveRecord leaveRecord;
 
 }

@@ -37,4 +37,10 @@ public class EmployeeController {
         return ResponseHandler.responseBuilder("Employee Record for ID:" + " " + id + " " + "is deleted successfully",
                 HttpStatus.OK, employeeService.delete(id));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateEmployee(@RequestBody Employee employee,@PathVariable String id)
+    {
+        return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,employeeService.updateEmployee(employee,id));
+    }
 }

@@ -92,7 +92,6 @@ public class WorkInformationServiceImpl implements WorkInformationService {
             workInformation.setDescription(workInformationDto.getDescription());
             workInformation.setBloodGroup(workInformationDto.getBloodGroup());
             workInformation.setGender(workInformationDto.getGender());
-            workInformation.setEmployeeType(workInformationDto.getEmployeeType());
             workInformation.setOfficeBranch(workInformationDto.getOfficeBranch());
             workInformation.setEmploymentType(workInformationDto.getEmploymentType());
             workInformationRepository.save(workInformation);
@@ -106,7 +105,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
     }
 
 
-    @Scheduled(cron = "00 24 12 * * ?")
+    @Scheduled(cron = "00 04 18 * * ?")
     public void checkProbation() throws MessagingException {
         List<WorkInformation>workInformation=workInformationRepository.findAll();
 

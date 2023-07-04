@@ -1,6 +1,7 @@
 package com.ahom.hrms.entities;
 
 import com.ahom.hrms.constant.PrefixAndSequence;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,7 +56,7 @@ public class Employee implements UserDetails {
     private String password;
 
     @Transient
-    @NotEmpty
+//    @NotEmpty
     private String confirmPassword;
 
 //    @Enumerated(EnumType.STRING)
@@ -98,4 +99,5 @@ public class Employee implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

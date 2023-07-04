@@ -22,7 +22,6 @@ public class WorkInformation {
 
     private String gender;
 	private String bloodGroup;
-	private String employeeType;
 	private String address;
     private String description;
 
