@@ -1,0 +1,1 @@
+package com.ahom.hrms.service;import com.ahom.hrms.entities.Notification;import java.util.List;public interface NotificationService {    Notification saveNotification (Notification notification);    Notification updateNotification(int id,Notification  notification);    List <Notification> getAllNotification ();}

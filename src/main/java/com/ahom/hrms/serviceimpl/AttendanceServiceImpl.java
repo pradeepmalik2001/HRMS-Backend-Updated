@@ -34,12 +34,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public Object saveEmplAttendance(AttendanceDto attendancedto) {
-		Optional<Employee> employee=employeeRepository.findByUserName(attendancedto.getUserName());
+		Optional<Employee> employee = employeeRepository.findByUserName(attendancedto.getUserName());
 		if (employee.isPresent()) {
 			attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
 			return attendancedto;
-		}else
-			throw new RuntimeException("No employee found for UserName:"+ attendancedto.getUserName());
+		} else
+			throw new RuntimeException("No employee found for UserName:" + attendancedto.getUserName());
 	}
 
 	@Override
@@ -48,16 +48,17 @@ public class AttendanceServiceImpl implements AttendanceService {
 		attendanceRpository.findAll().forEach(l1 -> ListEmplAttendance.add(AttendanceToAttendanceDto(l1)));
 		return ListEmplAttendance;
 	}
+
 	@Override
 	public Object deleteAttendance(int empId) {
-		Attendance attendance=attendanceRpository.findById(empId).orElse(null);
-		if (attendance!=null){
-		attendanceRpository.deleteById(empId);
-		return attendance;
-		}
-		else
-			throw new RuntimeException("No Record Present for Id:"+empId);
+		Attendance attendance = attendanceRpository.findById(empId).orElse(null);
+		if (attendance != null) {
+			attendanceRpository.deleteById(empId);
+			return attendance;
+		} else
+			throw new RuntimeException("No Record Present for Id:" + empId);
 	}
+
 	@Override
 	public AttendanceDto updateEmployeeAttendance(AttendanceDto attendancedto) {
 		attendanceRpository.save(AttendanceDtoToAttendance(attendancedto));
@@ -85,19 +86,19 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public List<Attendance> gteOt(Date startdate, Date enddate, String name) {
-		List<Attendance> attendances=attendanceRpository.findByNameAndDateRange(startdate,enddate,name);
+		List<Attendance> attendances = attendanceRpository.findByNameAndDateRange(startdate, enddate, name);
 		if (attendances.isEmpty()) {
-			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not present");
+			throw new RuntimeException("Record For Employee" + " " + name + " " + "is not present");
 
-		}else {
+		} else {
 			return new ArrayList<>(attendances);
 		}
 
 	}
 
 	@Override
-	public List<Attendance> getByStatus(Date startdate, Date enddate, String name,String status) {
-		List<Attendance> attendances=attendanceRpository.findByMonth(startdate,enddate,name,status);
+	public List<Attendance> getByStatus(Date startdate, Date enddate, String name, String status) {
+		List<Attendance> attendances = attendanceRpository.findByMonth(startdate, enddate, name, status);
 		if (!attendances.isEmpty()) {
 //			List<Attendance> list = attendanceRpository.findByMonth(startdate, enddate, name, status);
 //			List<Attendance> filterAttendance = new ArrayList<>();
@@ -109,17 +110,17 @@ public class AttendanceServiceImpl implements AttendanceService {
 //
 //			}
 			return attendances;
-		}else
-			throw new RuntimeException("Record For Employee" +" "+ name + " " + "is not defined");
+		} else
+			throw new RuntimeException("Record For Employee" + " " + name + " " + "is not defined");
 	}
 
 	@Override
-	public List <Attendance> status( String name, String userName,String month) {
+	public List<Attendance> status(String name, String userName, String month) {
 
 		List<Attendance> attendance1 = attendanceRpository.findByUserName(userName);
-		List<Attendance>attendances=attendanceRpository.findBySelectEmployee(name);
+		List<Attendance> attendances = attendanceRpository.findBySelectEmployee(name);
 		ArrayList<Attendance> filterAttendance = null;
-		if (!attendance1.isEmpty()&& !attendances.isEmpty()) {
+		if (!attendance1.isEmpty() && !attendances.isEmpty()) {
 
 			DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
 			Date startDate, endDate;
@@ -130,76 +131,72 @@ public class AttendanceServiceImpl implements AttendanceService {
 				calendar.setTime(startDate);
 				calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 				endDate = calendar.getTime();
+
 			} catch (ParseException e) {
 				throw new RuntimeException(e);
 			}
 
 			List<Attendance> byEmployeeName = attendanceRpository.
-					findBySelectEmployeeAndDateBetween(name,startDate, endDate);
+					findBySelectEmployeeAndDateBetween(name, startDate, endDate);
 
 			filterAttendance = new ArrayList<>();
 
 			for (Attendance attendance : byEmployeeName) {
-					if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
-						filterAttendance.add(attendance);
-						System.out.println(filterAttendance.size());
-					}
-					}
+				if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
+					filterAttendance.add(attendance);
+					System.out.println(filterAttendance.size());
+				}
+			}
 			return filterAttendance;
 
-				}else
-					throw new RuntimeException("Record For Employee either" +" "+ userName + " " + "OR " +name+ " " + "is not defined");
-
+		} else
+			throw new RuntimeException("Record For Employee either" + " " + userName + " " + "OR " + name + " " + "is not defined");
 
 
 	}
 
 
-	/** ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------*/
-	
+	/**
+	 * ------------- Using DTO Class in AttendanceDtoToAttendance --------------------------
+	 */
+
 	public Attendance AttendanceDtoToAttendance(AttendanceDto attendancedto) {
-			return this.modelMapper.map(attendancedto, Attendance.class);
+		return this.modelMapper.map(attendancedto, Attendance.class);
 	}
 
-	/** ------------ Using DTO Class in AttendanceToAttendanceDto --------------------------*/
-	
-	 public AttendanceDto AttendanceToAttendanceDto(Attendance attendance)
-	    {
-			return this.modelMapper.map(attendance , AttendanceDto.class);
-	             }
+	/**
+	 * ------------ Using DTO Class in AttendanceToAttendanceDto --------------------------
+	 */
 
-		 public Integer countAttendance(String month,String userName){
-			 List<Attendance> attendance1 = attendanceRpository.findByUserName(userName);
-			 ArrayList<Attendance> filterAttendance = null;
-			 if (attendance1 != null) {
+	public AttendanceDto AttendanceToAttendanceDto(Attendance attendance) {
+		return this.modelMapper.map(attendance, AttendanceDto.class);
+	}
 
-				 DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
-				 Date startDate, endDate;
-				 try {
-					 month = month.toUpperCase();
-					 startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
-					 Calendar calendar = Calendar.getInstance();
-					 calendar.setTime(startDate);
-					 calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-					 endDate = calendar.getTime();
-				 } catch (ParseException e) {
-					 throw new RuntimeException(e);
-				 }
+	public List<Integer> countAttendance(List<String> names, List<String> userNames, Date startDate, Date endDate) {
+		List<Integer> attendanceCounts = new ArrayList<>();
 
-				 List<Attendance> byEmployeeName = attendanceRpository.findByUserName(userName);
+		for (int i = 0; i < names.size(); i++) {
+			String name = names.get(i);
+			String userName = userNames.get(i);
 
-				 filterAttendance = new ArrayList<>();
-				 if (byEmployeeName!=null) {
-					 for (Attendance attendance : byEmployeeName) {
-						 if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
-							 filterAttendance.add(attendance);
-							 long count = filterAttendance.size();
-							 System.out.println(filterAttendance.size());
-						 }
-					 }
-				 }return filterAttendance.size();
-			 }
-			 return null;
-		 }
-		 }
+			List<Attendance> byEmployeeName = attendanceRpository.findBySelectEmployeeAndDateBetween(name, startDate, endDate);
+			int count = 0;
+
+			if (byEmployeeName != null) {
+				for (Attendance attendance : byEmployeeName) {
+					if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
+						count++;
+					}
+				}
+			}
+
+			attendanceCounts.add(count);
+		}
+
+		return attendanceCounts;
+	}
+
+}
+
+
 
