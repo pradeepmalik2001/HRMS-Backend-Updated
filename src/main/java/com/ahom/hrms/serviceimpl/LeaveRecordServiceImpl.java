@@ -1,6 +1,7 @@
 package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.LeaveRecordRepository;
+import com.ahom.hrms.dto.EmployeeLeaveCount;
 import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.service.LeaveRecordService;
@@ -8,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LeaveRecordServiceImpl implements LeaveRecordService
@@ -38,4 +42,40 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
         }
         System.out.println("Method called on the 1st of every month.");
     }
+    public List<EmployeeLeaveCount> getAllEmployeesLeaveCount() {
+        List<LeaveRecord> leaveRecords = leaveRecordRepository.findAll();
+        Map<String, Double> leaveCountMap = new HashMap<>();
+
+        for (LeaveRecord leaveRecord : leaveRecords) {
+            String employeeName = leaveRecord.getEmployeeName();
+            double leaveTaken = leaveRecord.getLop();
+
+            if (leaveCountMap.containsKey(employeeName)) {
+                double existingLeaveCount = leaveCountMap.get(employeeName);
+                double updatedLeaveCount = existingLeaveCount + leaveTaken;
+                leaveCountMap.put(employeeName, updatedLeaveCount);
+            } else {
+                leaveCountMap.put(employeeName, leaveTaken);
+            }
+        }
+
+        List<EmployeeLeaveCount> employeesLeaveCount = new ArrayList<>();
+
+        for (Map.Entry<String, Double> entry : leaveCountMap.entrySet()) {
+            String employeeName = entry.getKey();
+            double leaveCount = entry.getValue();
+            employeesLeaveCount.add(new EmployeeLeaveCount(employeeName, leaveCount));
+        }
+
+        return employeesLeaveCount;
+    }
+
+    public EmployeeLeaveCount getById(String id){
+        LeaveRecord byId = leaveRecordRepository.getById(id);
+        EmployeeLeaveCount employeeLeaveCount=new EmployeeLeaveCount();
+        employeeLeaveCount.setEmployeeName(byId.getEmployeeName());
+        employeeLeaveCount.setLeaveCount(byId.getLop());
+        return employeeLeaveCount;
+    }
+
 }

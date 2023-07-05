@@ -128,8 +128,9 @@ public class WorkInformationServiceImpl implements WorkInformationService {
                     simpleMailMessageToHr.setTo(hrEmail);
                     simpleMailMessageToHr.setSubject("Probation End Reminder");
                     simpleMailMessageToHr.setText("Probation period of employee "
+                            +workInformation1.getBasicEmployee().getEmployeeId()+ " : "
                             + workInformation1.getBasicEmployee().getEmployeeName()
-                            + " will end in one week.");
+                            + " will end by:"+ probationEndDate);
                     mailSender.send(message);
                     System.out.println(message);
 

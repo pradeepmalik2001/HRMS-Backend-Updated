@@ -5,12 +5,10 @@ import com.ahom.hrms.Repository.CreateLeaveRequestRepository;
 import com.ahom.hrms.Repository.EmployeeRepository;
 import com.ahom.hrms.Repository.LeaveRecordRepository;
 import com.ahom.hrms.dto.CreateLeaveRequestDto;
-import com.ahom.hrms.entities.BasicEmployee;
-import com.ahom.hrms.entities.CreateLeaveRequest;
-import com.ahom.hrms.entities.Employee;
-import com.ahom.hrms.entities.LeaveRecord;
+import com.ahom.hrms.entities.*;
 import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.CreateLeaveRequestService;
+import com.ahom.hrms.service.NotificationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,6 +49,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 	@Autowired
 	LeaveRecordRepository leaveRecordRepository;
+	@Autowired
+	NotificationService notificationService;
 
 	LeaveRecord leaveRecord;
 
@@ -59,6 +59,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 		Employee employee = employeeRepository.findById(createLeaveRequest.getId()).orElse(null);
 		LeaveRecord leaveRecord1=leaveRecordRepository.findById(createLeaveRequest.getId()).orElse(null);
 
+		Notification notification=new Notification();
 		if (employee!=null) {
 			LocalDate currentDate = LocalDate.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -78,6 +79,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					createLeaveRequest.setStatus("3");
 					createLeaveRequest.setNoOfDays(finalDays);
 					createLeaveRequest.setLeaveRecord(leaveRecord1);
+					notification.setMessage("New leave request from Employee: " + createLeaveRequest.getEmail());
+					notification.setStatus(true);
 					createLeaveRequestRepository.save(createLeaveRequest);
 				}else {
 					throw new CustomException("End date cannot be earlier than current date or before start date ");
@@ -112,14 +115,14 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			if(createLeaveRequestDto.getStatus().equals("1"))
 			{
 				try {
-//					MimeMessage message=mailSender.createMimeMessage();
-//					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
-//					messageToEmployee.setFrom(fromEmail);
-//					messageToEmployee.setTo(createLeaveRequest.getEmail());
-//					messageToEmployee.setSubject("Response Against Leave Request");
-//					messageToEmployee.setText("Request for leave");
-//					mailSender.send(message);
-//					System.out.println(message);
+					MimeMessage message=mailSender.createMimeMessage();
+					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
+					messageToEmployee.setFrom(fromEmail);
+					messageToEmployee.setTo(createLeaveRequest.getEmail());
+					messageToEmployee.setSubject("Response Against Leave Request");
+					messageToEmployee.setText("Request for leave");
+					mailSender.send(message);
+					System.out.println(message);
 
 					if(createLeaveRequest.getNoOfDays()>=createLeaveRequest.getLeaveRecord().getTotalLeave())
 					{
@@ -146,10 +149,9 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					}
 				}catch (RuntimeException e) {
 					e.printStackTrace();
+				} catch (MessagingException e) {
+					throw new RuntimeException(e);
 				}
-//				} catch (MessagingException e) {
-//					throw new RuntimeException(e);
-//				}
 			}
 			else if (createLeaveRequestDto.getStatus().equals("2"))
 			{
@@ -181,9 +183,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	}
 
 	public CreateLeaveRequest createLeaveRequestdtotoCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto) {
-
-		//		createLeaveRequest.setStatus("3");
-		return this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
+				return this.modelMapper.map(createLeaveRequestDto,CreateLeaveRequest.class);
 	}
 
 	public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest)
