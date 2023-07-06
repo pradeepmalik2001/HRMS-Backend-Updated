@@ -47,7 +47,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/training/**",            "/trainingName/**",
                 "/TravelOverview/**",      "/work/saveWork",
                 "/attendance/upload",      "/emergency/**",
-                "/leave/leaveType/{id}",
+                "/leave/leaveType/{id}",    "/advance/**",
                 "/record/**"
 
 
