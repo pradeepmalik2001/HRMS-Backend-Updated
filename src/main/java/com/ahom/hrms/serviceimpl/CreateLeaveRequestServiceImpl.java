@@ -81,6 +81,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					createLeaveRequest.setLeaveRecord(leaveRecord1);
 					notification.setMessage("New leave request from Employee: " + createLeaveRequest.getEmail());
 					notification.setStatus(true);
+					notificationService.saveNotification(notification);
 					createLeaveRequestRepository.save(createLeaveRequest);
 				}else {
 					throw new CustomException("End date cannot be earlier than current date or before start date ");

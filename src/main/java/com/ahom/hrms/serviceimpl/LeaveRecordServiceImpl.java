@@ -26,7 +26,7 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
         return leaveRecordRepository.save(leaveRecord);
     }
 
-    @Scheduled(cron = "0 41 15 4 * *")
+    @Scheduled(cron = "0 40 17 6 * *")
     public void myScheduledMethod() {
         List<LeaveRecord> leaveRecords = leaveRecordRepository.findAll();
         for (LeaveRecord leaveRecord : leaveRecords) {
