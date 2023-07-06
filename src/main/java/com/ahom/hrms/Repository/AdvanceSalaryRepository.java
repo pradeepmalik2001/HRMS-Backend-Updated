@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface AdvanceSalaryRepository extends JpaRepository<AdvanceSalary,String>
 {
-
+    AdvanceSalary findByEmployeeId(String employeeId);
 }

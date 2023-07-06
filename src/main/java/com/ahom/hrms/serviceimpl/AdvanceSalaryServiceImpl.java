@@ -22,13 +22,27 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
     EmployeeRepository employeeRepository;
 
     @Override
+    public AdvanceSalary updatePerMonthDeduction(AdvanceSalary advanceSalary,String id)
+    {
+        AdvanceSalary advanceSalary1=advanceSalaryRepository.findByEmployeeId(id);
+        if(advanceSalary1!=null)
+        {
+            advanceSalary1.setAmountToPayPerMonth(advanceSalary.getAmountToPayPerMonth());
+            advanceSalaryRepository.save(advanceSalary1);
+        }
+        return advanceSalary1;
+    }
+
+    @Override
     public AdvanceSalary saveSalary(AdvanceSalary advanceSalary)
     {
-        Employee employee=employeeRepository.findById(advanceSalary.getId()).orElse(null);
+        Employee employee=employeeRepository.findById(advanceSalary.getEmployeeId()).orElse(null);
         if(employee!=null)
         {
             LocalDate localDate=LocalDate.now();
             advanceSalary.setDate(localDate);
+            advanceSalary.setRemainingAdvance(advanceSalary.getAdvance());
+            advanceSalary.setAmountToPayPerMonth(advanceSalary.getAdvance()/ advanceSalary.getAmountToPayWithinMonth());
             advanceSalaryRepository.save(advanceSalary);
         }
         else {
@@ -45,8 +59,34 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
     }
 
     @Override
-    public AdvanceSalary updateSalary(AdvanceSalary advanceSalary, int id)
+    public AdvanceSalary updateRemainingAdavnceMonth(AdvanceSalary advanceSalary)
     {
-        return null;
+        return advanceSalaryRepository.save(advanceSalary);
+
+    }
+
+    @Override
+    public AdvanceSalary updateSalary(AdvanceSalary advanceSalary, String id)
+    {
+        AdvanceSalary advanceSalary1=advanceSalaryRepository.findByEmployeeId(id);
+        if(advanceSalary1.getRemainingAdvance()<advanceSalary1.getAmountToPayPerMonth())
+        {
+            advanceSalary1.setAmountToPayPerMonth(advanceSalary1.getRemainingAdvance());
+            advanceSalary1.setRemainingAdvance(advanceSalary1.getRemainingAdvance()-advanceSalary.getAmountToPayPerMonth());
+            advanceSalaryRepository.save(advanceSalary1);
+        }
+        else {
+            advanceSalary1.setRemainingAdvance(advanceSalary.getRemainingAdvance() - advanceSalary.getAmountToPayPerMonth());
+            advanceSalaryRepository.save(advanceSalary1);
+        }
+
+        return advanceSalary1;
+    }
+
+    @Override
+    public AdvanceSalary findById(String id)
+    {
+        AdvanceSalary advanceSalary=advanceSalaryRepository.findByEmployeeId(id);
+        return advanceSalary;
     }
 }

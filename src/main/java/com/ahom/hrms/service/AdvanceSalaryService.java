@@ -10,5 +10,11 @@ public interface AdvanceSalaryService
 
     public List<AdvanceSalary> getAllSalary();
 
-    public AdvanceSalary updateSalary(AdvanceSalary advanceSalary,int id);
+    public AdvanceSalary updateSalary(AdvanceSalary advanceSalary,String id);
+
+    public AdvanceSalary findById(String id);
+
+    public AdvanceSalary updatePerMonthDeduction(AdvanceSalary advanceSalary,String id);
+
+    AdvanceSalary updateRemainingAdavnceMonth(AdvanceSalary advanceSalary);
 }

@@ -33,8 +33,14 @@ public class AdvanceSalaryController
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateAdvance(@Valid @RequestBody AdvanceSalary advanceSalary,@PathVariable int id)
+    public ResponseEntity<Object> updateAdvance(@Valid @RequestBody AdvanceSalary advanceSalary,@PathVariable String id)
     {
         return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,advanceSalaryService.updateSalary(advanceSalary,id));
+    }
+
+    @PutMapping("/updatePerMonth/{id}")
+    public ResponseEntity<Object> updateAdvanecPerMonth(@Valid @RequestBody AdvanceSalary advanceSalary,@PathVariable String id)
+    {
+        return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,advanceSalaryService.updatePerMonthDeduction(advanceSalary,id));
     }
 }
