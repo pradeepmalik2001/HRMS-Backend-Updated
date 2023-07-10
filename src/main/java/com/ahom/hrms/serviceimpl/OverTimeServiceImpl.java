@@ -1,16 +1,17 @@
 package com.ahom.hrms.serviceimpl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import com.ahom.hrms.Repository.OverTimeRepository;
 import com.ahom.hrms.entities.OverTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.ahom.hrms.dto.OverTimeDto;
@@ -42,16 +43,31 @@ public class OverTimeServiceImpl implements OverTimeService {
 	}
 
 	@Override
-	public List<OverTime> gteOt(Date startdate, Date enddate, String name) {
-		List<OverTime> list = overRepository.findByNameAndDateRange(startdate, enddate, name);
-			if (list.isEmpty())
+	public List<OverTime> gteOt(String month, String userName) {
+		DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+		Date startDate, endDate;
+		try {
+			month = month.toUpperCase();
+			startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(startDate);
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			endDate = calendar.getTime();
+
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+		List<OverTime> list = overRepository.findByUserNameAndDateRange(startDate, endDate, userName);
+		if (list.isEmpty())
 			{
-				throw new RuntimeException("Data for "+name+" is not found");
+				throw new RuntimeException("Data for "+userName+" is not found");
 			}
 			else {
 				return list;
 			}
 	}
+
+
 
 
 	/** -------------Using DTO Class in OverTimeDtoToOverTime --------------------------*/
@@ -73,5 +89,50 @@ public class OverTimeServiceImpl implements OverTimeService {
 	 public OverTimeDto OverTimeToOverTimeDto(OverTime addOvertime)
 	    {
 			return this.modelMapper.map(addOvertime, OverTimeDto.class);
-	    }	
+	    }
+
+
+
+/**
+ * --------------------- Method to calculate the overtime done--------------------
+ */
+	@Override
+	public int getByUserNameAndMonth(String month, String userName) {
+		DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+		Date startDate, endDate;
+		try {
+			month = month.toUpperCase();
+			startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(startDate);
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			endDate = calendar.getTime();
+
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+		List<OverTime> list = overRepository.findByUserNameAndDateRange(startDate, endDate, userName);
+		List<Duration> timeDifferences = new ArrayList<>();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+		for (OverTime overTime : list) {
+			LocalTime startTime = LocalTime.parse(overTime.getStartTime(), formatter);
+			LocalTime endTime = LocalTime.parse(overTime.getEndTime(), formatter);
+
+			Duration duration = Duration.between(startTime, endTime);
+			timeDifferences.add(duration);
+		}
+		System.out.println("timeDifference : "+timeDifferences);
+
+		long totalDurationMinutes = 0;
+
+		for (Duration duration : timeDifferences) {
+			totalDurationMinutes += duration.toMinutes();
+		}
+
+		int totalDuration = (int) totalDurationMinutes;
+		System.out.println("totalDuration : "+totalDuration);
+		return totalDuration;
+	}
 }

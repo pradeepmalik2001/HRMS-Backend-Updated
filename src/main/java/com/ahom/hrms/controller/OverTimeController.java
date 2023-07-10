@@ -41,17 +41,22 @@ public class OverTimeController {
 
 	@PostMapping("/byDate")
 	@ResponseBody
-	public ResponseEntity<Object> ot(@RequestParam(required = false,name = "startdate") String startdate,
-												@RequestParam(required = false,name="enddate") String enddate,
-												@RequestParam(required = false,name="name") String name) throws ParseException
+	public ResponseEntity<Object> ot(@RequestParam(required = false,name = "month") String month,
+
+												@RequestParam(required = false,name="userName") String userName) throws ParseException
 	{
-		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-		Date stdate= format.parse(startdate);
-		Date endate= format.parse(enddate);
-		List<OverTime> Emplfetch = overTimeservice.gteOt(stdate,endate,name);
+		List<OverTime> Emplfetch = overTimeservice.gteOt(month,userName);
 		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,Emplfetch);
 	}
 
+	@PostMapping("/byTime")
+	@ResponseBody
+	public ResponseEntity<Object> ott(@RequestParam(required = false,name = "month") String month,
+									 @RequestParam(required = false,name="userName") String userName) throws ParseException
+	{
+           int count = overTimeservice.getByUserNameAndMonth(month, userName);
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,count);
+	}
 
 
 

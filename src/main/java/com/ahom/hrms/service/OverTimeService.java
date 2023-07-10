@@ -1,7 +1,6 @@
 package com.ahom.hrms.service;
 
 
-import java.util.Date;
 import java.util.List;
 
 import com.ahom.hrms.dto.OverTimeDto;
@@ -11,8 +10,8 @@ public interface OverTimeService {
 	
 	OverTimeDto EmployeeSave(OverTimeDto overtimedto);
 	public List<OverTimeDto> Employeefetch();
-	public List<OverTime> gteOt(Date startdate
-			, Date enddate
+	public List<OverTime> gteOt(String month
 			, String name);
+	 int getByUserNameAndMonth(String month,String userName);
 
 }
