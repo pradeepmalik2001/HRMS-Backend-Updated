@@ -2,6 +2,7 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.AdvanceSalaryRepository;
 import com.ahom.hrms.Repository.EmployeeRepository;
+import com.ahom.hrms.dto.AdvanceSalaryDto;
 import com.ahom.hrms.entities.AdvanceSalary;
 import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.exception.CustomException;
@@ -54,8 +55,7 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
     @Override
     public List<AdvanceSalary> getAllSalary()
     {
-        List<AdvanceSalary> advanceSalaries=advanceSalaryRepository.findAll();
-        return advanceSalaries;
+        return advanceSalaryRepository.findAll();
     }
 
     @Override
@@ -63,6 +63,15 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
     {
         return advanceSalaryRepository.save(advanceSalary);
 
+    }
+
+    @Override
+    public AdvanceSalary getById(String employeeId) {
+        AdvanceSalary advanceSalary=advanceSalaryRepository.findByEmployeeId(employeeId);
+        if (advanceSalary!=null){
+            return advanceSalary;
+        }else
+            throw new RuntimeException();
     }
 
     @Override
@@ -84,9 +93,9 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
     }
 
     @Override
-    public AdvanceSalary findById(String id)
+    public AdvanceSalary findByEmployeeId(String employeeId)
     {
-        AdvanceSalary advanceSalary=advanceSalaryRepository.findByEmployeeId(id);
-        return advanceSalary;
+        return advanceSalaryRepository.findByEmployeeId(employeeId);
     }
+
 }

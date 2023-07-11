@@ -65,6 +65,7 @@ public class WorkInformationServiceImpl implements WorkInformationService {
         {
             if (basicEmployee!=null) {
                 workInformation.setWorkId(workInformationDto.getWorkId());
+                workInformation.setEmploymentType((workInformationDto.getEmploymentType()).toUpperCase());
                 workInformation.setBasicEmployee(basicEmployee);
             }else {
                 throw new RuntimeException("employee not found for particular Id" +" "+workInformation.getWorkId());
