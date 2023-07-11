@@ -1,15 +1,18 @@
 package com.ahom.hrms.controller;
 
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.serviceimpl.ForgotPasswordService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/api/forgot-password")
+@CrossOrigin
 public class ForgotPasswordController {
     private ForgotPasswordService forgotPasswordService;
 
@@ -18,15 +21,20 @@ public class ForgotPasswordController {
     }
 
     @PostMapping("/email")
-    public ResponseEntity<String> sendPasswordResetEmail(@RequestParam String userName) {
-        forgotPasswordService.sendPasswordResetEmail(userName);
-        return ResponseEntity.ok("Password reset email sent successfully");
+    public ResponseEntity<Object> sendPasswordResetEmail(@Valid @NotEmpty @RequestParam String userName) {
+
+        return ResponseHandler.responseBuilder("Email Sent Successfully", HttpStatus.OK,forgotPasswordService.sendPasswordResetEmail(userName));
     }
 
     @PostMapping("/reset")
-    public ResponseEntity<String> resetPassword(@RequestParam String userName, @RequestParam String otp, @RequestParam String newPassword) {
-        forgotPasswordService.resetPassword(userName, otp, newPassword);
-        return ResponseEntity.ok("Password reset successful");
+    public ResponseEntity<Object> resetPassword(@Valid @RequestParam String userName,@NotEmpty @RequestParam String otp, @NotEmpty @RequestParam String password, @NotEmpty @RequestParam String confirmPassword) {
+        return ResponseHandler.responseBuilder("Password Reset Successfully",HttpStatus.OK,forgotPasswordService.resetPassword(userName, otp, password, confirmPassword));
+    }
+
+    @PostMapping("/verifyOtp")
+    public ResponseEntity<Object> verifyOtp(@Valid @NotEmpty @RequestParam String userName, @NotEmpty @RequestParam String otp)
+    {
+        return ResponseHandler.responseBuilder("OTP Verified Successfully",HttpStatus.OK,forgotPasswordService.verifyOtp(userName, otp));
     }
 }
 

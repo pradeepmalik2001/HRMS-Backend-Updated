@@ -28,7 +28,8 @@ import org.springframework.web.filter.CorsFilter;
         public static final String [] PUBLIC_URLS= {
                 "/login",
                 "/salarySlip/**",
-                "/signup"
+                "/signup",
+                "/api/forgot-password/**"
         };
         public static final String [] ADMIN_URLS= {
                 "/saveApproval",           "/department/**",
