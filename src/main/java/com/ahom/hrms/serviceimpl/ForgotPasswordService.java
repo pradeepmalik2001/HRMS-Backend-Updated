@@ -49,7 +49,19 @@ public class ForgotPasswordService
         return "Email Sent Successfully";
     }
 
-    public String resetPassword(String userName, String otp, String newPassword) {
+    public String verifyOtp(String userName,String otp)
+    {
+        Employee employee1 =employeeRepository.getByUserName(userName);
+        String storedOtp1 = otpMap.getOrDefault(userName, "");
+
+        if(employee1!=null && (storedOtp1.isEmpty() || !storedOtp1.equals(otp)))
+        {
+            throw new IllegalArgumentException("Invalid OTP");
+        }
+        return "Otp Verified Successfully";
+    }
+
+    public String resetPassword(String userName, String otp, String password, String confirmPassword) {
         Employee employee=employeeRepository.getByUserName(userName);
         String storedOtp = otpMap.getOrDefault(userName, "");
 
@@ -58,10 +70,17 @@ public class ForgotPasswordService
         }
 
         // Update the password and clear OTP
-        if (otpMap.containsKey(userName)) {
-            employee.setPassword(bCryptPasswordEncoder.encode(newPassword));
-            otpMap.remove(userName);
-            employeeRepository.save(employee);
+        if (otpMap.containsKey(userName))
+        {
+            if(password.equals(confirmPassword))
+            {
+                employee.setPassword(bCryptPasswordEncoder.encode(password));
+                otpMap.remove(userName);
+                employeeRepository.save(employee);
+            }
+            else {
+                throw new IllegalArgumentException("Password and confirm Password do not matched");
+            }
         } else {
             throw new IllegalArgumentException("OTP not found");
         }
@@ -80,20 +99,16 @@ public class ForgotPasswordService
 
     private String sendEmail(String userName, String otp)
     {
-        SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-        messageToEmployee.setFrom(fromEmail);
-        messageToEmployee.setTo(userName);
-        messageToEmployee.setSubject("OTP for Reset Password");
-        messageToEmployee.setText("Otp : "+otp);
-        javaMailSender.send(messageToEmployee);
-        System.out.println(messageToEmployee);
+//        SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+//        messageToEmployee.setFrom(fromEmail);
+//        messageToEmployee.setTo(userName);
+//        messageToEmployee.setSubject("OTP for Reset Password");
+//        messageToEmployee.setText("Otp : "+otp);
+//        javaMailSender.send(messageToEmployee);
+//        System.out.println(messageToEmployee);
 
         return "Otp Sent Successfully";
     }
 
-//    private PasswordEncoder encryptPassword(String password)
-//    {
-//        return new BCryptPasswordEncoder();
-//    }
 }
 
