@@ -7,6 +7,7 @@ import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.LeaveRecordService;
 import com.ahom.hrms.serviceimpl.EmployeeService;
+import com.google.api.client.util.DateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @RestController
@@ -115,13 +118,18 @@ public class AuthController {
 //                            " " + UserDTO.getConfirmPassword());
 //                    mailSender.send(messageToEmployee);
 //                    System.out.println(messageToEmployee);
+                    LocalDate currentDate = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+                    String currentMonth = currentDate.format(formatter);
+                    currentMonth=currentMonth.toUpperCase();
 
                     Employee createUser = userService.saveEmployee(UserDTO);
                     LeaveRecord leaveRecord=new LeaveRecord();
                     leaveRecord.setTotalLeave(1.5);
                     leaveRecord.setLeaveLeft(leaveRecord.getTotalLeave());
-                    leaveRecord.setId(UserDTO.getId());
+                    leaveRecord.setEmployeeId(UserDTO.getId());
                     leaveRecord.setEmployeeName(UserDTO.getEmployeeName());
+                    leaveRecord.setLeaveRecordOfMonth(currentMonth);
                     leaveRecordService.saveLeave(leaveRecord);
                     return ResponseHandler.responseBuilder("Employee registered successfully",
                             HttpStatus.OK, createUser);

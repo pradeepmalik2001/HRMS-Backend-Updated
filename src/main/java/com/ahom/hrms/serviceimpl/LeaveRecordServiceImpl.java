@@ -6,6 +6,7 @@ import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.service.LeaveRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
     @Override
     public LeaveRecord saveLeave(LeaveRecord leaveRecord)
     {
+
         return leaveRecordRepository.save(leaveRecord);
     }
 
@@ -70,12 +72,16 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
         return employeesLeaveCount;
     }
 
-    public EmployeeLeaveCount getById(String id){
-        LeaveRecord byId = leaveRecordRepository.getById(id);
-        EmployeeLeaveCount employeeLeaveCount=new EmployeeLeaveCount();
-        employeeLeaveCount.setEmployeeName(byId.getEmployeeName());
-        employeeLeaveCount.setLeaveCount(byId.getLop());
-        return employeeLeaveCount;
+    public EmployeeLeaveCount getById(String employeeId,String leaveRecordOfMonth) {
+
+        LeaveRecord byId = leaveRecordRepository.findByEmployeeIdAndLeaveRecordOfMonth(employeeId, leaveRecordOfMonth);
+        if (byId != null) {
+            EmployeeLeaveCount employeeLeaveCount = new EmployeeLeaveCount();
+            employeeLeaveCount.setEmployeeName(byId.getEmployeeName());
+            employeeLeaveCount.setLeaveCount(byId.getLop());
+            return employeeLeaveCount;
+        }
+        else throw new RuntimeException("Record for EmployeeId: "+employeeId + " for Month:"+leaveRecordOfMonth+" "+"not available");
     }
 
 }

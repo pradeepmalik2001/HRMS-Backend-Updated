@@ -128,7 +128,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					if(createLeaveRequest.getNoOfDays()>=createLeaveRequest.getLeaveRecord().getTotalLeave())
 					{
 						LeaveRecord leaveRecord1=new LeaveRecord();
-						leaveRecord1.setId(createLeaveRequest.getLeaveRecord().getId());
+						leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
 						leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
 						leaveRecord1.setLop(createLeaveRequest.getNoOfDays()-createLeaveRequest.getLeaveRecord().getTotalLeave()+ createLeaveRequest.getLeaveRecord().getLop());
 						leaveRecord1.setTotalLeave(0);
@@ -139,7 +139,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					}
 					else {
 						LeaveRecord leaveRecord1=new LeaveRecord();
-						leaveRecord1.setId(createLeaveRequest.getLeaveRecord().getId());
+						leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
 						leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
 						leaveRecord1.setLop(0);
 						leaveRecord1.setTotalLeave(createLeaveRequest.getLeaveRecord().getTotalLeave()- createLeaveRequest.getNoOfDays());
