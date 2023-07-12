@@ -56,8 +56,11 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 	@Override
 	public CreateLeaveRequest saveCreateLeaveRequest(CreateLeaveRequest createLeaveRequest) throws ParseException {
+		LocalDate localDate=LocalDate.now();
+		DateTimeFormatter formatter1=DateTimeFormatter.ofPattern("MMMM yyyy");
+		String month= localDate.format(formatter1);
 		Employee employee = employeeRepository.findById(createLeaveRequest.getId()).orElse(null);
-		LeaveRecord leaveRecord1=leaveRecordRepository.findById(createLeaveRequest.getId()).orElse(null);
+		LeaveRecord leaveRecord1=leaveRecordRepository.findByEmployeeIdAndLeaveRecordOfMonth(createLeaveRequest.getId(),month);
 
 		Notification notification=new Notification();
 		if (employee!=null) {
