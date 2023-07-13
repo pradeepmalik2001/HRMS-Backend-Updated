@@ -2,6 +2,7 @@ package com.ahom.hrms.serviceimpl;
 
 import com.ahom.hrms.Repository.LeaveRecordRepository;
 import com.ahom.hrms.dto.EmployeeLeaveCount;
+import com.ahom.hrms.entities.CreateLeaveRequest;
 import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.service.LeaveRecordService;
@@ -10,6 +11,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +27,8 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
     @Autowired
     LeaveRecordRepository leaveRecordRepository;
 
+    CreateLeaveRequest createLeaveRequest;
+
     @Override
     public LeaveRecord saveLeave(LeaveRecord leaveRecord)
     {
@@ -31,16 +39,54 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
     @Scheduled(cron = "0 40 17 6 * *")
     public void myScheduledMethod() {
         List<LeaveRecord> leaveRecords = leaveRecordRepository.findAll();
-        for (LeaveRecord leaveRecord : leaveRecords) {
-            if(leaveRecord.getLeaveLeft()>=0)
-            {
-                double totalLeaveRecord= leaveRecord.getLeaveLeft()+1.5;
-                leaveRecord.setTotalLeave(totalLeaveRecord);
-                leaveRecord.setLop(0);
-                leaveRecord.setLeaveTaken(0);
-                leaveRecord.setLeaveLeft(leaveRecord.getLeaveLeft()+1.5);
-                leaveRecordRepository.save(leaveRecord);
-            }
+
+        LocalDate localDate=LocalDate.now();
+        DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("MMMM yyyy");
+        String format = localDate.format(dateTimeFormatter);
+
+        int currentMonth = localDate.getMonthValue();
+        int currentYear = localDate.getYear();
+
+        YearMonth yearMonth = YearMonth.of(currentYear, currentMonth);
+
+        String startDate1= createLeaveRequest.getStartDate();
+        String lastDayofMonth= String.valueOf(yearMonth.lengthOfMonth());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(startDate1, formatter);
+        LocalDate endDate = LocalDate.parse(lastDayofMonth, formatter);
+
+        long daysInBetween= ChronoUnit.DAYS.between(startDate,endDate);
+        long difference = daysInBetween + 1;
+
+        for (LeaveRecord leaveRecord : leaveRecords)
+        {
+               if(leaveRecord.getCarryForward()<=0)
+               {
+                   LeaveRecord leaveRecord1=new LeaveRecord();
+                   double totalLeaveRecord= leaveRecord.getLeaveLeft()+1.5;
+                   leaveRecord1.setTotalLeave(totalLeaveRecord);
+                   leaveRecord1.setLeaveTaken(0);
+                   leaveRecord1.setLeaveLeft(leaveRecord.getLeaveLeft()+1.5);
+                   leaveRecord1.setLeaveRecordOfMonth(format);
+                   leaveRecord1.setLop(0);
+                   leaveRecord1.setCarryForward(0);
+                   leaveRecord1.setCL(leaveRecord.getCL()+1);
+                   leaveRecord1.setPL(leaveRecord.getPL()+0.5);
+                   leaveRecordRepository.save(leaveRecord1);
+               }
+           else
+           {
+               LeaveRecord leaveRecord1=new LeaveRecord();
+               double totalLeaveRecord= leaveRecord.getLeaveLeft()+1.5;
+               leaveRecord1.setTotalLeave(totalLeaveRecord);
+               leaveRecord1.setLop(leaveRecord.getCarryForward());
+               leaveRecord1.setCarryForward(0);
+//               leaveRecord1.setLeaveTaken();
+               leaveRecord1.setLeaveLeft(leaveRecord.getLeaveLeft()+1.5);
+               leaveRecord1.setLeaveRecordOfMonth(format);
+               leaveRecordRepository.save(leaveRecord1);
+           }
         }
         System.out.println("Method called on the 1st of every month.");
     }

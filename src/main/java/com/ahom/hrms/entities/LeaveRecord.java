@@ -25,5 +25,7 @@ public class LeaveRecord
     private double lop;
     @DateTimeFormat(pattern = "MMMM yyyy")
     private String leaveRecordOfMonth;
-
+    private double cL;
+    private double pL;
+    private double carryForward;
 }

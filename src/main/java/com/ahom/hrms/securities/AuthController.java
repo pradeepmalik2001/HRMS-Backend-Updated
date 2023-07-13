@@ -125,7 +125,8 @@ public class AuthController {
 
                     Employee createUser = userService.saveEmployee(UserDTO);
                     LeaveRecord leaveRecord=new LeaveRecord();
-                    leaveRecord.setTotalLeave(1.5);
+                    leaveRecord.setCarryForward(0);
+                    leaveRecord.setTotalLeave(0);
                     leaveRecord.setLeaveLeft(leaveRecord.getTotalLeave());
                     leaveRecord.setEmployeeId(UserDTO.getId());
                     leaveRecord.setEmployeeName(UserDTO.getEmployeeName());

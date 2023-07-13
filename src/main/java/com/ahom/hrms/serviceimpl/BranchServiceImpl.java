@@ -64,4 +64,18 @@ public class BranchServiceImpl implements BranchService {
         }
          return branch;
     }
+
+    @Override
+    public Branch updateBranch(Branch branch, String id)
+    {
+        Branch branch1=branchRepository.findById(id).orElse(null);
+        if(branch1!=null)
+        {
+            branch1.setName(branch.getName());
+            branchRepository.save(branch1);
+        }
+        return branch1;
+    }
+
+
 }
