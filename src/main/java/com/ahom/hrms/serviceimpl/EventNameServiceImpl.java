@@ -55,4 +55,32 @@ public class EventNameServiceImpl implements EventNameService {
         return list;
     }
 
+    @Override
+    public EventName deleteEvent(int id)
+    {
+        EventName eventName=eventNameRepository.findById(id).orElse(null);
+        if(eventName!=null)
+        {
+            eventNameRepository.deleteById(id);
+        }
+        else
+        {
+            throw new CustomException("Id Not found");
+        }
+        return eventName;
+    }
+
+    @Override
+    public EventName updateEvent(EventName eventName, int id)
+    {
+        EventName eventName1=eventNameRepository.findById(id).orElse(null);
+        if(eventName1!=null)
+        {
+            eventName1.setName(eventName.getName());
+            eventName1.setDescription(eventName.getDescription());
+            eventNameRepository.save(eventName1);
+        }
+        return eventName1;
+    }
+
 }

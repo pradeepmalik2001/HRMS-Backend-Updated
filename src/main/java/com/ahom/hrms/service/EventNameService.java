@@ -18,4 +18,8 @@ public interface EventNameService {
 
     //fetch
     List<EventNameDto> getAll();
+
+    EventName deleteEvent(int id);
+
+    EventName updateEvent(EventName eventName,int id);
 }

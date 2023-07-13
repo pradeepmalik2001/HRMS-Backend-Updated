@@ -3,6 +3,7 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.TrainingNameRepository;
 import com.ahom.hrms.dto.TrainingNameDto;
 import com.ahom.hrms.entities.TrainingName;
+import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.TrainingNameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,33 @@ public class TrainingNameServiceImpl implements TrainingNameService {
        List list = nameRepository.findAll();
        return list;
    }
+
+    @Override
+    public TrainingName updateTraining(TrainingName trainingName, int id)
+    {
+        TrainingName trainingName1=nameRepository.findById(id).orElse(null);
+        if(trainingName1!=null)
+        {
+            trainingName1.setTrainingName(trainingName.getTrainingName());
+            trainingName1.setDescription(trainingName.getDescription());
+            nameRepository.save(trainingName1);
+        }
+        return null;
+    }
+
+    @Override
+    public TrainingName deleteById(int id)
+    {
+        TrainingName trainingName=nameRepository.findById(id).orElse(null);
+        if(trainingName!=null)
+        {
+            nameRepository.deleteById(id);
+        }
+        else {
+            throw new CustomException("Id not found");
+        }
+        return trainingName;
+    }
 
 
 }

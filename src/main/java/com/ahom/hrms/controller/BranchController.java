@@ -36,4 +36,10 @@ public class BranchController {
     {
         return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,branchService.deleteBranch(id));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateBranch(@Valid @RequestBody Branch branch,@PathVariable String id)
+    {
+        return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,branchService.updateBranch(branch, id));
+    }
 }

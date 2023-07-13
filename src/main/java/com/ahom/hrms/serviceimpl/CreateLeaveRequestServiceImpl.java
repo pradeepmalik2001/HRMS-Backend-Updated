@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -76,6 +77,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			System.out.println("daysInBetwwnnnnnnn : "+daysInBetween);
 			System.out.println("finalDaysssss : "+finalDays);
 
+
+
 			if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
 				if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
 					createLeaveRequest.setEmail(employee.getUsername());
@@ -128,28 +131,69 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 					mailSender.send(message);
 					System.out.println(message);
 
-					if(createLeaveRequest.getNoOfDays()>=createLeaveRequest.getLeaveRecord().getTotalLeave())
-					{
-						LeaveRecord leaveRecord1=new LeaveRecord();
-						leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
-						leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
-						leaveRecord1.setLop(createLeaveRequest.getNoOfDays()-createLeaveRequest.getLeaveRecord().getTotalLeave()+ createLeaveRequest.getLeaveRecord().getLop());
-						leaveRecord1.setTotalLeave(0);
-						leaveRecord1.setLeaveLeft(0);
-						leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays()+ createLeaveRequest.getLeaveRecord().getLeaveTaken());
-						leaveRecordRepository.save(leaveRecord1);
-						createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+					LocalDate localDate=LocalDate.now();
+					int currentMonth = localDate.getMonthValue();
+					int currentYear = localDate.getYear();
+
+					YearMonth yearMonth = YearMonth.of(currentYear, currentMonth);
+
+					String startDate1= createLeaveRequest.getStartDate();
+					String lastDayOfMonth= String.valueOf(yearMonth.lengthOfMonth());
+
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					LocalDate startDate = LocalDate.parse(startDate1, formatter);
+					LocalDate endDate = LocalDate.parse(lastDayOfMonth, formatter);
+
+					long daysInBetween= ChronoUnit.DAYS.between(startDate,endDate);
+					long difference = daysInBetween + 1;
+
+					if(difference>createLeaveRequest.getNoOfDays()) {
+						if (createLeaveRequest.getNoOfDays() >= createLeaveRequest.getLeaveRecord().getTotalLeave()) {
+							LeaveRecord leaveRecord1 = new LeaveRecord();
+							leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
+							leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
+							leaveRecord1.setLop(createLeaveRequest.getNoOfDays() - createLeaveRequest.getLeaveRecord().getTotalLeave() + createLeaveRequest.getLeaveRecord().getLop());
+							leaveRecord1.setTotalLeave(0);
+							leaveRecord1.setLeaveLeft(0);
+							leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays() + createLeaveRequest.getLeaveRecord().getLeaveTaken());
+							leaveRecordRepository.save(leaveRecord1);
+							createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+						} else {
+							LeaveRecord leaveRecord1 = new LeaveRecord();
+							leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
+							leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
+							leaveRecord1.setLop(0);
+							leaveRecord1.setTotalLeave(createLeaveRequest.getLeaveRecord().getTotalLeave() - createLeaveRequest.getNoOfDays());
+							leaveRecord1.setLeaveLeft(createLeaveRequest.getLeaveRecord().getTotalLeave() - createLeaveRequest.getNoOfDays());
+							leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays());
+							leaveRecordRepository.save(leaveRecord1);
+							createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+						}
 					}
-					else {
-						LeaveRecord leaveRecord1=new LeaveRecord();
-						leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
-						leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
-						leaveRecord1.setLop(0);
-						leaveRecord1.setTotalLeave(createLeaveRequest.getLeaveRecord().getTotalLeave()- createLeaveRequest.getNoOfDays());
-						leaveRecord1.setLeaveLeft(createLeaveRequest.getLeaveRecord().getTotalLeave()-createLeaveRequest.getNoOfDays());
-						leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays());
-						leaveRecordRepository.save(leaveRecord1);
-						createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+					else
+					{
+						if (createLeaveRequest.getNoOfDays() >= createLeaveRequest.getLeaveRecord().getTotalLeave())
+						{
+							LeaveRecord leaveRecord1 = new LeaveRecord();
+							leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
+							leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
+							leaveRecord1.setLop(createLeaveRequest.getNoOfDays() - createLeaveRequest.getLeaveRecord().getTotalLeave() + createLeaveRequest.getLeaveRecord().getLop());
+							leaveRecord1.setTotalLeave(0);
+							leaveRecord1.setLeaveLeft(0);
+							leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays() + createLeaveRequest.getLeaveRecord().getLeaveTaken());
+							leaveRecordRepository.save(leaveRecord1);
+							createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+						} else {
+							LeaveRecord leaveRecord1 = new LeaveRecord();
+							leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
+							leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
+							leaveRecord1.setLop(0);
+							leaveRecord1.setTotalLeave(createLeaveRequest.getLeaveRecord().getTotalLeave() - createLeaveRequest.getNoOfDays());
+							leaveRecord1.setLeaveLeft(createLeaveRequest.getLeaveRecord().getTotalLeave() - createLeaveRequest.getNoOfDays());
+							leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays());
+							leaveRecordRepository.save(leaveRecord1);
+							createLeaveRequestDto.setLeaveRecord(leaveRecord1);
+						}
 					}
 				}catch (RuntimeException e) {
 					e.printStackTrace();

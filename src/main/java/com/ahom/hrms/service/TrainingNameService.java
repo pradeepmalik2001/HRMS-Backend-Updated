@@ -17,4 +17,8 @@ public interface TrainingNameService {
     TrainingNameDto trainingNameToTrainingNameDto(TrainingName trainingName);
 
     List<TrainingNameDto> getAll();
+
+    TrainingName updateTraining(TrainingName trainingName,int id);
+
+    TrainingName deleteById(int id);
 }

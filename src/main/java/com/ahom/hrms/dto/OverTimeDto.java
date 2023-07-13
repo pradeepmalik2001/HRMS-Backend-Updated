@@ -31,4 +31,7 @@ public class OverTimeDto {
 	@NotEmpty
 	private String userName;
 
+	@NotEmpty(message = "Overtime rate can`t be empty")
+	private double rate;
+
 }
