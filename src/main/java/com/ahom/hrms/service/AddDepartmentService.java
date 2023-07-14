@@ -20,4 +20,6 @@ public interface AddDepartmentService {
 
 	public Optional<AddDepartment> getDepartmentById(int departmentId);
 
+	AddDepartment updateDepartment(AddDepartment addDepartment,int id);
+
 }

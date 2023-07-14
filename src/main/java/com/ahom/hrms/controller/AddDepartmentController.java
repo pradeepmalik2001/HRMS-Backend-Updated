@@ -52,4 +52,10 @@ public class AddDepartmentController {
 	{
 		return ResponseHandler.responseBuilder("Fetch Successfully",HttpStatus.OK,addDepartmentService.getDepartmentById(departmentId));
 	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateDepartment(@Valid @RequestBody AddDepartment addDepartment,@PathVariable int id)
+	{
+		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,addDepartmentService.updateDepartment(addDepartment, id));
+	}
 }

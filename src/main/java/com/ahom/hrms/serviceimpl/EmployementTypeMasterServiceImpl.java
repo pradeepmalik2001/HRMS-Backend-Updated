@@ -65,4 +65,17 @@ public List<EmployementTypeMasterDto> getAll() {
 		return employementTypeMaster;
 	}
 
+	@Override
+	public EmployementTypeMaster updateEmployement(EmployementTypeMaster employementTypeMaster, int id)
+	{
+		EmployementTypeMaster employementTypeMaster1=employementTypeMasterRepository.findById(id).orElse(null);
+		if(employementTypeMaster1!=null)
+		{
+			employementTypeMaster1.setEmploymentType(employementTypeMaster.getEmploymentType());
+			employementTypeMaster1.setDescription(employementTypeMaster.getDescription());
+			employementTypeMasterRepository.save(employementTypeMaster1);
+		}
+		return employementTypeMaster;
+	}
+
 }
