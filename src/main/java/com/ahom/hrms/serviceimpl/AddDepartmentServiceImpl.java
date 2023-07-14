@@ -77,4 +77,17 @@ public class AddDepartmentServiceImpl implements AddDepartmentService{
 		}
 	}
 
+	@Override
+	public AddDepartment updateDepartment(AddDepartment addDepartment, int id)
+	{
+		AddDepartment addDepartment1=addDepartmentRepository.findById(id).orElse(null);
+		if(addDepartment1!=null)
+		{
+			addDepartment1.setDepartmentName(addDepartment.getDepartmentName());
+			addDepartment1.setDescription(addDepartment.getDescription());
+			addDepartmentRepository.save(addDepartment1);
+		}
+		return addDepartment;
+	}
+
 }

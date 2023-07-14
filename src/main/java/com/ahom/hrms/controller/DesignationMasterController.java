@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ahom.hrms.Response.ResponseHandler;
+import com.ahom.hrms.entities.DesignationMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,11 @@ public class DesignationMasterController {
 	public ResponseEntity<Object> delete(@PathVariable int id){
 		return ResponseHandler.responseBuilder("Designation for ID:" +id +" " +"deleted successfully",
 				HttpStatus.OK, designationMasterService.deleteDesignation(id));
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateDesignation(@Valid @RequestBody DesignationMaster designationMaster,@PathVariable int id)
+	{
+		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,designationMasterService.updateDesignation(designationMaster, id));
 	}
 }

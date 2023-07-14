@@ -70,4 +70,16 @@ public class DesignationMasterServiceImpl implements DesignationMasterService{
 		return designationMaster;
 	}
 
+	@Override
+	public DesignationMaster updateDesignation(DesignationMaster designationMaster, int id)
+	{
+		DesignationMaster designationMaster1=designationMasterRepository.findById(id).orElse(null);
+		if(designationMaster1!=null)
+		{
+			designationMaster1.setDesignationName(designationMaster.getDesignationName());
+			designationMasterRepository.save(designationMaster1);
+		}
+		return designationMaster;
+	}
+
 }

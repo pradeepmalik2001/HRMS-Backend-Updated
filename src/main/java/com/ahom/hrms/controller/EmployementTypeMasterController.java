@@ -2,6 +2,7 @@ package com.ahom.hrms.controller;
 
 
 import com.ahom.hrms.Response.ResponseHandler;
+import com.ahom.hrms.entities.EmployementTypeMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,11 @@ public class EmployementTypeMasterController {
 	public ResponseEntity<Object> deleteEmployement(@PathVariable int id)
 	{
 		return ResponseHandler.responseBuilder("Deleted Successfully",HttpStatus.OK,employementTypeMasterService.deleteEMployement(id));
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateEmployment(@Valid @RequestBody EmployementTypeMaster employementTypeMaster,@PathVariable int id)
+	{
+		return ResponseHandler.responseBuilder("Data Updated Successfully",HttpStatus.OK,employementTypeMasterService.updateEmployement(employementTypeMaster, id));
 	}
 }

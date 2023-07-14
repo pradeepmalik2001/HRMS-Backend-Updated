@@ -17,5 +17,5 @@ public interface DesignationMasterService {
 
 	DesignationMaster deleteDesignation(int id);
 
-
+	DesignationMaster updateDesignation(DesignationMaster designationMaster,int id);
 }
