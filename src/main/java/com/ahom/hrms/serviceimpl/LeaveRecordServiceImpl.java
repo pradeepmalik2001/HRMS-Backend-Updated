@@ -3,15 +3,12 @@ package com.ahom.hrms.serviceimpl;
 import com.ahom.hrms.Repository.LeaveRecordRepository;
 import com.ahom.hrms.dto.EmployeeLeaveCount;
 import com.ahom.hrms.entities.CreateLeaveRequest;
-import com.ahom.hrms.entities.Employee;
 import com.ahom.hrms.entities.LeaveRecord;
 import com.ahom.hrms.service.LeaveRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +31,12 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
     {
 
         return leaveRecordRepository.save(leaveRecord);
+    }
+
+    @Override
+    public LeaveRecord updateLeaveRecord(LeaveRecord leaveRecord, int id) {
+        leaveRecordRepository.save(leaveRecord);
+        return null;
     }
 
     @Scheduled(cron = "0 40 17 6 * *")
