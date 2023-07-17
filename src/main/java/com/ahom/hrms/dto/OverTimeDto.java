@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -32,6 +33,6 @@ public class OverTimeDto {
 	private String userName;
 
 	@NotEmpty(message = "Overtime rate can`t be empty")
-	private double rate;
+	private String rate;
 
 }

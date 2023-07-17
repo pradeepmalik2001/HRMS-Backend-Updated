@@ -3,6 +3,7 @@ package com.ahom.hrms.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Type;
@@ -32,10 +33,11 @@ public class OverTime {
 
 	@NotEmpty(message = "Write Something Here")
 	private String description;
+
 	@NotEmpty
 	private String userName;
 
 	@NotEmpty(message = "Overtime rate can`t be empty")
-	private double rate;
+	private String rate;
 	
 }
