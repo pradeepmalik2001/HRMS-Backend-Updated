@@ -25,8 +25,7 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 	
 	public List<LeaveTypeDto> getAllLeaveDetail(){
 		List<LeaveType>jobTitles=this.leaveTypeRepository.findAll();
-		List<LeaveTypeDto>jobTitleToList=jobTitles.stream().map(title->this.leaveTypetoLeaveTypeDto(title)).collect(Collectors.toList());
-		return jobTitleToList;
+		return jobTitles.stream().map(this::leaveTypetoLeaveTypeDto).collect(Collectors.toList());
 	}
 
 	
@@ -61,14 +60,12 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 
 
 	public LeaveType LeaveTypeDtotoLeaveType(LeaveTypeDto leaveTypeDto) {
-		LeaveType addholiday=this.modelMapper.map(leaveTypeDto, LeaveType.class);
-		return addholiday;
+		return this.modelMapper.map(leaveTypeDto, LeaveType.class);
 	}
 
 
 	public LeaveTypeDto leaveTypetoLeaveTypeDto(LeaveType leaveType) {
-		LeaveTypeDto addjobtitledto=this.modelMapper.map(leaveType, LeaveTypeDto.class);
-		return addjobtitledto;
+		return this.modelMapper.map(leaveType, LeaveTypeDto.class);
 	}
 
 }

@@ -29,7 +29,8 @@ import org.springframework.web.filter.CorsFilter;
                 "/login",
                 "/salarySlip/**",
                 "/signup",
-                "/api/forgot-password/**"
+                "/api/forgot-password/**",
+                "notification/**"
         };
         public static final String [] ADMIN_URLS= {
                 "/saveApproval",           "/department/**",
@@ -66,7 +67,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/attendance/statusOf",
                 "/CreateLeaveRequest/**",
                 "/work/fetchData",
-                "notification/**"
+
         };
         @Autowired
         private CustomUserDetailService customUserDetailService;
