@@ -31,7 +31,7 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
             advanceSalary1.setAmountToPayPerMonth(advanceSalary.getAmountToPayPerMonth());
             advanceSalaryRepository.save(advanceSalary1);
         }
-        return advanceSalary1;
+        return advanceSalary;
     }
 
     @Override

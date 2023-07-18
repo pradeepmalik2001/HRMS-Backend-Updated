@@ -99,13 +99,13 @@ public class ForgotPasswordService
 
     private String sendEmail(String userName, String otp)
     {
-//        SimpleMailMessage messageToEmployee = new SimpleMailMessage();
-//        messageToEmployee.setFrom(fromEmail);
-//        messageToEmployee.setTo(userName);
-//        messageToEmployee.setSubject("OTP for Reset Password");
-//        messageToEmployee.setText("Otp : "+otp);
-//        javaMailSender.send(messageToEmployee);
-//        System.out.println(messageToEmployee);
+        SimpleMailMessage messageToEmployee = new SimpleMailMessage();
+        messageToEmployee.setFrom(fromEmail);
+        messageToEmployee.setTo(userName);
+        messageToEmployee.setSubject("OTP for Reset Password");
+        messageToEmployee.setText("Otp : "+otp);
+        javaMailSender.send(messageToEmployee);
+        System.out.println(messageToEmployee);
 
         return "Otp Sent Successfully";
     }
