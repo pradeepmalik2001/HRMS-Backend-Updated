@@ -36,5 +36,11 @@ public class ForgotPasswordController {
     {
         return ResponseHandler.responseBuilder("OTP Verified Successfully",HttpStatus.OK,forgotPasswordService.verifyOtp(userName, otp));
     }
+
+    @PostMapping("/resendOtp")
+    public ResponseEntity<Object> resendOtp(@Valid @RequestParam String userName)
+    {
+        return ResponseHandler.responseBuilder("Otp Resend Successfully",HttpStatus.OK,forgotPasswordService.resendOTP(userName));
+    }
 }
 
