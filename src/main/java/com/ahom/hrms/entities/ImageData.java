@@ -31,6 +31,7 @@ public class ImageData {
 
 	private String name;
 	private String type;
+	private String employeeId;
 	
 	
 	@Lob

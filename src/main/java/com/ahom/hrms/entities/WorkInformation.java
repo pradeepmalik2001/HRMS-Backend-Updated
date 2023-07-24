@@ -24,14 +24,14 @@ public class WorkInformation {
     private String employmentType;
     @NotEmpty(message = "Branch required")
     private String officeBranch;
-    @NotEmpty(message = "specify gender")
+
     private String gender;
-    @NotEmpty(message = "Blood Group needed")
+
     private String bloodGroup;
    
     @NotEmpty(message = "Fill the address")
     private String address;
-    @NotEmpty(message = "Description is empty")
+
 
     private String description;
 

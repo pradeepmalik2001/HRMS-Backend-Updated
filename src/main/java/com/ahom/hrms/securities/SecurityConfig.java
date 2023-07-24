@@ -30,7 +30,9 @@ import org.springframework.web.filter.CorsFilter;
                 "/salarySlip/**",
                 "/signup",
                 "/api/forgot-password/**",
-                "notification/**"
+                "/notification/**",
+                "/deduction/**",
+                "/image/**"
         };
         public static final String [] ADMIN_URLS= {
                 "/saveApproval",           "/department/**",

@@ -14,4 +14,6 @@ public interface OverTimeService {
 			, String name);
 	 int getByUserNameAndMonth(String month,String userName);
 
+	 OverTime findByUserName(String userName);
+
 }
