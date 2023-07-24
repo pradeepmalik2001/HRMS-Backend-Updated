@@ -47,8 +47,6 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	private String fromEmail;
 
 	@Autowired
-	private BasicEmployeeRepository basicEmployeeRepository;
-	@Autowired
 	private EmployeeRepository employeeRepository;
 
 	@Autowired
@@ -66,39 +64,45 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 		Employee employee = employeeRepository.findById(createLeaveRequest.getId()).orElse(null);
 		LeaveRecord leaveRecord1=leaveRecordRepository.findByEmployeeIdAndLeaveRecordOfMonth(createLeaveRequest.getId(),month);
 
+		CreateLeaveRequest createLeaveRequest1=createLeaveRequestRepository.
+				findByIdAndStartDateAndEndDate(createLeaveRequest.getId(),
+								createLeaveRequest.getStartDate(), createLeaveRequest.getEndDate());
+
 		Notification notification=new Notification();
 		if (employee!=null) {
-			LocalDate currentDate = LocalDate.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			String startDateString = createLeaveRequest.getStartDate();
-			String endDateString = createLeaveRequest.getEndDate();
-			LocalDate startDate = LocalDate.parse(startDateString, formatter);
-			LocalDate endDate = LocalDate.parse(endDateString, formatter);
+			if (createLeaveRequest1 == null) {
+				LocalDate currentDate = LocalDate.now();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				String startDateString = createLeaveRequest.getStartDate();
+				String endDateString = createLeaveRequest.getEndDate();
+				LocalDate startDate = LocalDate.parse(startDateString, formatter);
+				LocalDate endDate = LocalDate.parse(endDateString, formatter);
 
-			long daysInBetween= ChronoUnit.DAYS.between(startDate,endDate);
-			long finalDays = daysInBetween + 1;
-			System.out.println("daysInBetwwnnnnnnn : "+daysInBetween);
-			System.out.println("finalDaysssss : "+finalDays);
+				long daysInBetween = ChronoUnit.DAYS.between(startDate, endDate);
+				long finalDays = daysInBetween + 1;
+				System.out.println("daysInBetwwnnnnnnn : " + daysInBetween);
+				System.out.println("finalDaysssss : " + finalDays);
 
 
-
-			if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
-				if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
-					createLeaveRequest.setEmail(employee.getUsername());
-					createLeaveRequest.setStatus("3");
-					createLeaveRequest.setNoOfDays(finalDays);
-					createLeaveRequest.setLeaveRecord(leaveRecord1);
-					notification.setMessage("New leave request from Employee: " + createLeaveRequest.getEmail());
-					notification.setStatus(true);
-					notificationService.saveNotification(notification);
-					createLeaveRequestRepository.save(createLeaveRequest);
-				}else {
-					throw new CustomException("End date cannot be earlier than current date or before start date ");
+				if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
+					if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
+						createLeaveRequest.setEmail(employee.getUsername());
+						createLeaveRequest.setStatus("3");
+						createLeaveRequest.setNoOfDays(finalDays);
+						createLeaveRequest.setLeaveRecord(leaveRecord1);
+						notification.setMessage("New leave request from Employee: " + createLeaveRequest.getEmail());
+						notification.setStatus(true);
+						notificationService.saveNotification(notification);
+						createLeaveRequestRepository.save(createLeaveRequest);
+					} else {
+						throw new CustomException("End date cannot be earlier than current date or before start date ");
+					}
+				} else {
+					throw new RuntimeException("Start date cannot be earlier than the current date");
 				}
 			}
-			else {
-				throw new RuntimeException("Start date cannot be earlier than the current date");
-			}
+			else
+				throw new RuntimeException("Already Leave request is submitted ");
 		}
 
 		else {

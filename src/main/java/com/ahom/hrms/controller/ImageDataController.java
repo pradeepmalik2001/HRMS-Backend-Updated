@@ -2,6 +2,7 @@ package com.ahom.hrms.controller;
 
 import java.io.IOException;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,36 +38,35 @@ public class ImageDataController {
 //	ImageData imageData;
 
 	
-	@PostMapping(path="/save")
-	public ResponseEntity<ApplicationDto> uploadImage(@RequestParam("image")MultipartFile file,
-			@RequestParam("applicationDto") String applicationDto ) throws IOException {
-		
-		
-		
-		
-		
-		ApplicationDto appDto= objectMapper.readValue(applicationDto, ApplicationDto.class);
-		applicationService.svaeApp(appDto);
-		
-		
-		//imageData.setId(appDto.getId());
-		String uploadImage = service.uploadImage(file);
-				
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(appDto);
-	}
-	
-	
-//	@PostMapping
-//	public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile file) throws IOException {
+//	@PostMapping(path="/save")
+//	public ResponseEntity<ApplicationDto> uploadImage(@RequestParam("image")MultipartFile file,
+//			@RequestParam("applicationDto") String applicationDto ) throws IOException {
+//
+//
+//
+//
+//
+//		ApplicationDto appDto= objectMapper.readValue(applicationDto, ApplicationDto.class);
+//		applicationService.svaeApp(appDto);
+//
+//
+//		//imageData.setId(appDto.getId());
 //		String uploadImage = service.uploadImage(file);
+//
 //		return ResponseEntity.status(HttpStatus.OK)
-//				.body(uploadImage);
+//				.body(appDto);
 //	}
 
-	@GetMapping("/{fileName}")
-	public ResponseEntity<?> downloadImage(@PathVariable String fileName){
-		byte[] imageData=service.downloadImage(fileName);
+	
+	@PostMapping
+	public ResponseEntity<Object> uploadImage(@RequestParam("image")MultipartFile file,@RequestParam String id) throws IOException {
+		String uploadImage = service.uploadImage(file,id);
+		return ResponseHandler.responseBuilder("saved",HttpStatus.OK,uploadImage);
+	}
+
+	@GetMapping("/get")
+	public ResponseEntity<Object> downloadImage(@RequestParam String employeeId){
+		byte[] imageData=service.downloadImage(employeeId);
 		return ResponseEntity.status(HttpStatus.OK)
 				.contentType(MediaType.valueOf("image/png"))
 				.body(imageData);

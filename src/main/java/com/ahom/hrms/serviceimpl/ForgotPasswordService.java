@@ -57,7 +57,7 @@ public class ForgotPasswordService
     public String resendOTP(String userName) {
         Employee employee = employeeRepository.getByUserName(userName);
         if (employee == null) {
-            throw new IllegalArgumentException("User not found");
+            throw new IllegalArgumentException("UserName not found");
         }
 
         Map<String, Long> otpInfo = otpMap.getOrDefault(userName, null);

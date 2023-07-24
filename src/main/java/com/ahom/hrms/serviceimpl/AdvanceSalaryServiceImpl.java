@@ -38,13 +38,18 @@ public class AdvanceSalaryServiceImpl implements AdvanceSalaryService
     public AdvanceSalary saveSalary(AdvanceSalary advanceSalary)
     {
         Employee employee=employeeRepository.findById(advanceSalary.getEmployeeId()).orElse(null);
+        AdvanceSalary salary=advanceSalaryRepository.findByEmployeeId(advanceSalary.getEmployeeId());
+
         if(employee!=null)
         {
-            LocalDate localDate=LocalDate.now();
-            advanceSalary.setDate(localDate);
-            advanceSalary.setRemainingAdvance(advanceSalary.getAdvance());
-            advanceSalary.setAmountToPayPerMonth(advanceSalary.getAdvance()/ advanceSalary.getAmountToPayWithinMonth());
-            advanceSalaryRepository.save(advanceSalary);
+            if (salary==null || salary.isStatus()) {
+                LocalDate localDate = LocalDate.now();
+                advanceSalary.setDate(localDate);
+                advanceSalary.setRemainingAdvance(advanceSalary.getAdvance());
+                advanceSalary.setAmountToPayPerMonth(advanceSalary.getAdvance() / advanceSalary.getAmountToPayWithinMonth());
+                advanceSalaryRepository.save(advanceSalary);
+            }else
+                throw new CustomException("There is already one advance active for :"+ employee.getEmployeeName());
         }
         else {
             throw new CustomException("Employee Not Found for ID : "+advanceSalary.getId());
