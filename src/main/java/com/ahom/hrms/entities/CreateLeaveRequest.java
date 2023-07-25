@@ -27,6 +27,8 @@ public class CreateLeaveRequest {
 
 	private String id;
 
+	private String employeeId;
+
 	@NotEmpty(message = "Employee Name can`t be Empty")
 	private String selectEmployee;
 
