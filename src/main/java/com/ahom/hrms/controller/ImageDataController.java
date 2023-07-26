@@ -1,6 +1,7 @@
 package com.ahom.hrms.controller;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,12 @@ public class ImageDataController {
 	}
 
 	@PostMapping("/get")
-	public ResponseEntity<Object> downloadImage(@RequestParam String employeeId) {
+	public ResponseEntity<Object> getImage(@RequestParam String employeeId) {
 		byte[] imageData = service.downloadImage(employeeId);
+		String base64ImageData = Base64.getEncoder().encodeToString(imageData);
 		return ResponseEntity.status(HttpStatus.OK)
-				.contentType(MediaType.valueOf("image/png"))
-				.body(imageData);
+				.contentType(MediaType.APPLICATION_JSON) // Set the content type to JSON
+				.body(base64ImageData);
 	}
 	@PutMapping("update/{employeeId}")
 	public ResponseEntity<Object> updateImage(@RequestParam("image") MultipartFile file, @PathVariable String employeeId) throws IOException {
