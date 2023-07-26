@@ -27,15 +27,26 @@ public class ImageDataServiceImpl implements ImageDataService {
 
     @Override
     public String uploadImage(MultipartFile file,String id) throws IOException {
-        Employee employee=employeeRepository.findById(id).orElse(null);
-        if (employee!=null) {
-            ImageData imageData = dataRepo.save(ImageData.builder()
-                    .name(file.getOriginalFilename())
-                    .type(file.getContentType())
-                    .employeeId(employee.getId())
-                    .imageData(Imageutils.compressImage(file.getBytes())).build());
-            return "file uploaded successfully : " + file.getOriginalFilename();
-        }else throw new RuntimeException("error");
+        Optional<ImageData> existingImageData = Optional.ofNullable(dataRepo.findByEmployeeId(id));
+        if (existingImageData.isPresent()) {
+            ImageData imageData = existingImageData.get();
+            imageData.setName(file.getOriginalFilename());
+            imageData.setType(file.getContentType());
+            imageData.setImageData(Imageutils.compressImage(file.getBytes()));
+            dataRepo.save(imageData);
+            return "Image updated successfully: " + file.getOriginalFilename();
+        } else {
+
+            Employee employee = employeeRepository.findById(id).orElse(null);
+            if (employee != null) {
+                ImageData imageData = dataRepo.save(ImageData.builder()
+                        .name(file.getOriginalFilename())
+                        .type(file.getContentType())
+                        .employeeId(employee.getId())
+                        .imageData(Imageutils.compressImage(file.getBytes())).build());
+                return "file uploaded successfully : " + file.getOriginalFilename();
+            } else throw new RuntimeException("error");
+        }
     }
 
 
