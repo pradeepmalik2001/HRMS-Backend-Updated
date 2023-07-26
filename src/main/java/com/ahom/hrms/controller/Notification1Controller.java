@@ -22,10 +22,10 @@ public class Notification1Controller
         return ResponseHandler.responseBuilder("Notification Saved Successfully", HttpStatus.OK,notification1Service.saveNotification(notification1));
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<Object> getAllNotification()
+    @GetMapping("/getById")
+    public ResponseEntity<Object> getAllNotification(String employeeId)
     {
-        return ResponseHandler.responseBuilder("Notification Fetched Successfully",HttpStatus.OK,notification1Service.getAllNotification());
+        return ResponseHandler.responseBuilder("Notification Fetched Successfully",HttpStatus.OK,notification1Service.getNotification(employeeId));
     }
 
     @PutMapping("/update/{id}")
