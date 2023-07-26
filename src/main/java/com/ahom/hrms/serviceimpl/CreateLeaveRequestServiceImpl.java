@@ -8,6 +8,7 @@ import com.ahom.hrms.entities.*;
 import com.ahom.hrms.exception.CustomException;
 import com.ahom.hrms.service.CreateLeaveRequestService;
 import com.ahom.hrms.service.LeaveRecordService;
+import com.ahom.hrms.service.Notification1Service;
 import com.ahom.hrms.service.NotificationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,12 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Autowired
 	NotificationService notificationService;
 
+	@Autowired
+	Notification1Service notification1Service;
+
+	@Autowired
+
+
 	LeaveRecord leaveRecord;
 
 	@Override
@@ -62,6 +69,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 		CreateLeaveRequest createLeaveRequest1=createLeaveRequestRepository.findByEmployeeIdAndStartDateAndEndDate(createLeaveRequest.getId(),createLeaveRequest.getStartDate(), createLeaveRequest.getEndDate());
 
 		Notification notification=new Notification();
+
 		if (employee!=null) {
 			if (createLeaveRequest1!=null){
 				throw new RuntimeException("Leave request already present");
@@ -117,6 +125,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	public CreateLeaveRequestDto updateCreateLeaveRequest(CreateLeaveRequestDto createLeaveRequestDto,String id) {
 		CreateLeaveRequest createLeaveRequest=createLeaveRequestRepository.findById(id).orElse(null);
 
+		Notification1 notification1=new Notification1();
+
 		if(createLeaveRequest!=null)
 		{
 			createLeaveRequest.setStatus(createLeaveRequestDto.getStatus());
@@ -124,14 +134,17 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			if(createLeaveRequestDto.getStatus().equals("1"))
 			{
 				try {
-//					MimeMessage message=mailSender.createMimeMessage();
-//					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
-//					messageToEmployee.setFrom(fromEmail);
-//					messageToEmployee.setTo(createLeaveRequest.getEmail());
-//					messageToEmployee.setSubject("Response Against Leave Request");
-//					messageToEmployee.setText("Request for leave");
-//					mailSender.send(message);
+					MimeMessage message=mailSender.createMimeMessage();
+					MimeMessageHelper messageToEmployee=new MimeMessageHelper(message);
+					messageToEmployee.setFrom(fromEmail);
+					messageToEmployee.setTo(createLeaveRequest.getEmail());
+					messageToEmployee.setSubject("Response Against Leave Request");
+					messageToEmployee.setText("Request for leave");
+					mailSender.send(message);
 					System.out.println("message");
+					notification1.setMessage("Hurrah! "+createLeaveRequest.getSelectEmployee()+" your leave has been approved");
+					notification1.setStatus(true);
+					notification1Service.saveNotification(notification1);
 
 //					LocalDate localDate=LocalDate.now();
 //
@@ -213,6 +226,8 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 //					}
 				}catch (RuntimeException e) {
 					e.printStackTrace();
+				} catch (MessagingException e) {
+					throw new RuntimeException(e);
 				}
 //				catch (MessagingException e) {
 //					throw new RuntimeException(e);
@@ -230,6 +245,9 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 
 					mailSender.send(message);
 					System.out.println(message);
+					notification1.setMessage("Alas "+createLeaveRequest.getSelectEmployee()+" your leave has been Rejected");
+					notification1.setStatus(true);
+					notification1Service.saveNotification(notification1);
 				}catch (RuntimeException e)
 				{
 					e.printStackTrace();
