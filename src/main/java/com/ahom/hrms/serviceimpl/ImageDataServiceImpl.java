@@ -38,10 +38,26 @@ public class ImageDataServiceImpl implements ImageDataService {
         }else throw new RuntimeException("error");
     }
 
-	@Override
+
+    @Override
     public byte[] downloadImage(String employeeId){
         Optional<ImageData> dbImageData = Optional.ofNullable(dataRepo.findByEmployeeId(employeeId));
         return Imageutils.decompressImage(dbImageData.get().getImageData());
+    }
+
+    @Override
+    public String updateImage(MultipartFile file, String employeeId) throws IOException {
+        Optional<ImageData> existingImageData = Optional.ofNullable(dataRepo.findByEmployeeId(employeeId));
+        if (existingImageData.isPresent()) {
+            ImageData imageData = existingImageData.get();
+            imageData.setName(file.getOriginalFilename());
+            imageData.setType(file.getContentType());
+            imageData.setImageData(Imageutils.compressImage(file.getBytes()));
+            dataRepo.save(imageData);
+            return "Image updated successfully: " + file.getOriginalFilename();
+        } else {
+            throw new RuntimeException("No image data found for the given employeeId: " + employeeId);
+        }
     }
 
 }

@@ -10,4 +10,6 @@ public interface ImageDataService {
 
 	String uploadImage(MultipartFile file,String id) throws IOException;
 
+	String updateImage(MultipartFile file, String employeeId) throws IOException;
+
 }
