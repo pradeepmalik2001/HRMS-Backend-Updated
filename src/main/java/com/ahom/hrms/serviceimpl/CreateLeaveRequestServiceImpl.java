@@ -53,10 +53,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	@Autowired
 	Notification1Service notification1Service;
 
-	@Autowired
 
-
-	LeaveRecord leaveRecord;
 
 	@Override
 	public CreateLeaveRequest saveCreateLeaveRequest(CreateLeaveRequest createLeaveRequest) throws ParseException {
