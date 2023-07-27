@@ -13,7 +13,7 @@ import java.util.List;
 @EnableJpaRepositories
 public interface OverTimeRepository extends JpaRepository<OverTime, Integer> {
 
-    OverTime findByUserName(String userName);
+    List<OverTime> findByUserName(String userName);
 
 
 

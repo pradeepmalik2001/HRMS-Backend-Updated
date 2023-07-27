@@ -137,7 +137,7 @@ public class OverTimeServiceImpl implements OverTimeService {
 	}
 
 	@Override
-	public OverTime findByUserName(String userName) {
+	public List<OverTime> findByUserName(String userName) {
 		return overRepository.findByUserName(userName);
 	}
 }
