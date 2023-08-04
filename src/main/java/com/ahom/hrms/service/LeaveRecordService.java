@@ -2,8 +2,14 @@ package com.ahom.hrms.service;
 
 import com.ahom.hrms.entities.LeaveRecord;
 
+import java.util.List;
+
 public interface LeaveRecordService
 {
-    public LeaveRecord saveLeave(LeaveRecord leaveRecord);
+     LeaveRecord saveLeave(LeaveRecord leaveRecord);
+
     LeaveRecord updateLeaveRecord(LeaveRecord leaveRecord,int id);
+
+    List<LeaveRecord> getAll();
+
 }

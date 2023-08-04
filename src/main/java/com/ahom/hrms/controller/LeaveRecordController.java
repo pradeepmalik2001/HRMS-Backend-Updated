@@ -53,5 +53,10 @@ public class LeaveRecordController
                         HttpStatus.OK,leaveRecordService.saveLeave(leaveRecord1));
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<Object>getAll(){
+        return ResponseHandler.responseBuilder("fetched",HttpStatus.OK,leaveRecordService.getAll());
+    }
+
 
 }
