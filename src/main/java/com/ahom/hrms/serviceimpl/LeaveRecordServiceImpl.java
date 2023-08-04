@@ -10,8 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -36,6 +34,11 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
     public LeaveRecord updateLeaveRecord(LeaveRecord leaveRecord, int id) {
         leaveRecordRepository.save(leaveRecord);
         return null;
+    }
+
+    @Override
+    public List<LeaveRecord> getAll() {
+        return leaveRecordRepository.findAll();
     }
 
     @Scheduled(cron = "0 40 17 6 * *")
