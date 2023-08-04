@@ -10,13 +10,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class LeaveRecordServiceImpl implements LeaveRecordService
@@ -130,7 +129,7 @@ public class LeaveRecordServiceImpl implements LeaveRecordService
             employeeLeaveCount.setLeaveCount(byId.getLop());
             return employeeLeaveCount;
         }
-        else throw new RuntimeException("Record for EmployeeId: "+employeeId + " for Month:"+leaveRecordOfMonth+" "+"not available");
+        else throw new RuntimeException("Record  for Month:"+leaveRecordOfMonth+" "+"not available");
     }
 
 }

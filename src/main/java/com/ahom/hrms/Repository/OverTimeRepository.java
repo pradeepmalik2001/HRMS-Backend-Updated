@@ -13,6 +13,10 @@ import java.util.List;
 @EnableJpaRepositories
 public interface OverTimeRepository extends JpaRepository<OverTime, Integer> {
 
+    List<OverTime> findByUserName(String userName);
+
+
+
 //    @Query(value = "SELECT * FROM Overtime ud WHERE ud.date BETWEEN :startdate AND :enddate AND ud.select_employee=:name" ,nativeQuery = true )
     @Query(value= "SELECT * FROM overtime o WHERE o.user_name=:userName AND o.date BETWEEN :startdate AND :enddate", nativeQuery = true)
     List <OverTime> findByUserNameAndDateRange(@Param("startdate") Date startdate,

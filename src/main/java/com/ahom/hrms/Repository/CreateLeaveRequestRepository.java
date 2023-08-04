@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface CreateLeaveRequestRepository extends JpaRepository<CreateLeaveRequest, String> {
 
+    CreateLeaveRequest findByEmployeeIdAndStartDateAndEndDate(String employeeId,String startDate,String endDate);
+
 }

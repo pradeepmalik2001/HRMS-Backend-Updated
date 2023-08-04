@@ -31,14 +31,12 @@ public class ImageData {
 
 	private String name;
 	private String type;
+	private String employeeId;
 	
 	
 	@Lob
 	@Column(name = "imagedata",length = 1000)
 	private byte[] imageData;
 
-	@OneToOne
-	@JoinColumn(name="id")
-	private Application application;
 
 }

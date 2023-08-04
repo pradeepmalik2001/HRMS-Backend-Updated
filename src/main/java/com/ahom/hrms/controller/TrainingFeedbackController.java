@@ -24,6 +24,11 @@ public class TrainingFeedbackController {
 	public ResponseEntity<Object> saveTrainingFeedback(@Valid @RequestBody TrainingFeedbackDto trDto){
 		return ResponseHandler.responseBuilder("Data Saved Successfully",HttpStatus.OK,trainingFeedbackService.saveTrainingFeedback(trDto));
 	}
+
+	@GetMapping("/getAll")
+	public ResponseEntity<Object>getAll(){
+		return ResponseHandler.responseBuilder("fetched",HttpStatus.OK,trainingFeedbackService.getAll());
+	}
 	
 
 }

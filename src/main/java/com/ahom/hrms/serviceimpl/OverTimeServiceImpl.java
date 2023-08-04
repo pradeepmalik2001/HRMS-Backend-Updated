@@ -135,4 +135,9 @@ public class OverTimeServiceImpl implements OverTimeService {
 		System.out.println("totalDuration : "+totalDuration);
 		return totalDuration;
 	}
+
+	@Override
+	public List<OverTime> findByUserName(String userName) {
+		return overRepository.findByUserName(userName);
+	}
 }

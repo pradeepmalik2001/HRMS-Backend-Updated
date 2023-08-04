@@ -30,7 +30,9 @@ import org.springframework.web.filter.CorsFilter;
                 "/salarySlip/**",
                 "/signup",
                 "/api/forgot-password/**",
-                "notification/**"
+                "/notification/**",
+                "/deduction/**",
+                "/image/**"
         };
         public static final String [] ADMIN_URLS= {
                 "/saveApproval",           "/department/**",
@@ -50,7 +52,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/TravelOverview/**",      "/work/saveWork",
                 "/attendance/upload",      "/emergency/**",
                 "/leave/leaveType/{id}",    "/advance/**",
-                "/record/**"
+                "/record/**",               "/termination/**"
 
 
         };
@@ -67,6 +69,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/attendance/statusOf",
                 "/CreateLeaveRequest/**",
                 "/work/fetchData",
+                "/WFH/**"
 
         };
         @Autowired

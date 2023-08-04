@@ -1,0 +1,1 @@
+package com.ahom.hrms.service;import com.ahom.hrms.entities.Deduction;import java.util.List;public interface DeductionService {    Deduction save (Deduction deduction);    List<Deduction> getAll ();    Deduction update(Deduction deduction,int id);    Deduction delete(int id);}

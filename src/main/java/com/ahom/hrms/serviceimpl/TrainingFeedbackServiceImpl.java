@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.ahom.hrms.dto.TrainingFeedbackDto;
 import com.ahom.hrms.service.TrainingFeedbackService;
 
+import java.util.List;
+
 @Service
 public class TrainingFeedbackServiceImpl implements TrainingFeedbackService {
 	
@@ -25,12 +27,15 @@ public class TrainingFeedbackServiceImpl implements TrainingFeedbackService {
 }
 	@Override
 	public TrainingFeedback trainingFeedbackDtoToTrainingFeedback(TrainingFeedbackDto trainingFeedbackDto) {
-		TrainingFeedback trainingFeedback=this.modelMapper.map(trainingFeedbackDto,TrainingFeedback.class);
-		return trainingFeedback;
+		return this.modelMapper.map(trainingFeedbackDto,TrainingFeedback.class);
 	}
 	@Override
 	public TrainingFeedbackDto trainingFeedbackToTrainingFeedbackDto(TrainingFeedback trainingFeedback) {
-		TrainingFeedbackDto trainingFeedbackDto=this.modelMapper.map(trainingFeedback,TrainingFeedbackDto.class);
-		return trainingFeedbackDto;
+		return this.modelMapper.map(trainingFeedback,TrainingFeedbackDto.class);
+	}
+
+	@Override
+	public List<TrainingFeedback> getAll() {
+		return trainingFeedbackReposatory.findAll();
 	}
 }
