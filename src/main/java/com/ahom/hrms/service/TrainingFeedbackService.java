@@ -15,4 +15,6 @@ public interface TrainingFeedbackService {
 
 	List<TrainingFeedback> getAll();
 
+	TrainingFeedback getById(int id);
+
 }
