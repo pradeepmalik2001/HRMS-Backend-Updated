@@ -1,0 +1,1 @@
+package com.ahom.hrms.service;import com.ahom.hrms.entities.ApplyForWfh;public interface ApplyForWfhService {    ApplyForWfh save(ApplyForWfh applyForWfh);    Object delete(int id);    ApplyForWfh update (ApplyForWfh applyForWfh,String employeeId);    ApplyForWfh getByEmployeeId(String employeeId);}

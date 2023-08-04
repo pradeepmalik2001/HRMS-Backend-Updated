@@ -1,0 +1,1 @@
+package com.ahom.hrms.Repository;import com.ahom.hrms.entities.ApplyForWfh;import org.springframework.data.jpa.repository.JpaRepository;public interface ApplyForWfhRepository extends JpaRepository<ApplyForWfh,Integer> {    ApplyForWfh findByEmployeeId(String employeeId);}
