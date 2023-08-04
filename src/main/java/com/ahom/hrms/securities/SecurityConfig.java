@@ -52,7 +52,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/TravelOverview/**",      "/work/saveWork",
                 "/attendance/upload",      "/emergency/**",
                 "/leave/leaveType/{id}",    "/advance/**",
-                "/record/**"
+                "/record/**",               "/termination/**"
 
 
         };
@@ -69,6 +69,7 @@ import org.springframework.web.filter.CorsFilter;
                 "/attendance/statusOf",
                 "/CreateLeaveRequest/**",
                 "/work/fetchData",
+                "/WFH/**"
 
         };
         @Autowired

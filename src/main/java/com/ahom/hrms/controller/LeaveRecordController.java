@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.format.DateTimeFormatter;
 
 @RestController
-@RequestMapping("record")
+@RequestMapping("/record")
+@CrossOrigin
 public class LeaveRecordController
 {
     @Autowired
