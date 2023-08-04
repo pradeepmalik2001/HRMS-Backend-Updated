@@ -38,4 +38,10 @@ public class TrainingFeedbackServiceImpl implements TrainingFeedbackService {
 	public List<TrainingFeedback> getAll() {
 		return trainingFeedbackReposatory.findAll();
 	}
+
+	@Override
+	public TrainingFeedback getById(int id)
+	{
+		return trainingFeedbackReposatory.getById(id);
+	}
 }

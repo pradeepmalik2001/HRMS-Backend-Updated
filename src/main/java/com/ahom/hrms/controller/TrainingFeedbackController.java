@@ -29,6 +29,12 @@ public class TrainingFeedbackController {
 	public ResponseEntity<Object>getAll(){
 		return ResponseHandler.responseBuilder("fetched",HttpStatus.OK,trainingFeedbackService.getAll());
 	}
+
+	@GetMapping("/getById/{id}")
+	public ResponseEntity<Object> getById(@PathVariable int id)
+	{
+		return ResponseHandler.responseBuilder("Data Fetched Successfully",HttpStatus.OK,trainingFeedbackService.getById(id));
+	}
 	
 
 }
