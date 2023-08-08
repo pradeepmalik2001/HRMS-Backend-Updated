@@ -1,1 +1,1 @@
-package com.ahom.hrms.Repository;import com.ahom.hrms.entities.Termination;import org.springframework.data.jpa.repository.JpaRepository;public interface TerminationRepository extends JpaRepository<Termination,Integer> {}
+package com.ahom.hrms.Repository;import com.ahom.hrms.entities.Termination;import org.springframework.data.jpa.repository.JpaRepository;public interface TerminationRepository extends JpaRepository<Termination,Integer> {    Termination findByEmployeeId(String employeeId);}
