@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class AttendanceServiceImpl implements AttendanceService {
+public class AttendanceServiceImpl implements AttendanceService{
 
 	@Autowired
 	AttendanceRepository attendanceRpository;
@@ -172,28 +172,59 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return this.modelMapper.map(attendance, AttendanceDto.class);
 	}
 
-	public List<Integer> countAttendance(List<String> names, List<String> userNames, Date startDate, Date endDate) {
-		List<Integer> attendanceCounts = new ArrayList<>();
+	@Override
+	public double countAttendance(String name, String userName, String month, String status) {
 
-		for (int i = 0; i < names.size(); i++) {
-			String name = names.get(i);
-			String userName = userNames.get(i);
+		List<Attendance> attendance1 = attendanceRpository.findByUserName(userName);
+		List<Attendance> attendances = attendanceRpository.findBySelectEmployee(name);
+		ArrayList<Attendance> filterAttendance = null;
+		if (!attendance1.isEmpty() && !attendances.isEmpty()) {
 
-			List<Attendance> byEmployeeName = attendanceRpository.findBySelectEmployeeAndDateBetween(name, startDate, endDate);
-			int count = 0;
+			DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+			Date startDate, endDate;
+			try {
+				month = month.toUpperCase();
+				startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(startDate);
+				calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				endDate = calendar.getTime();
 
-			if (byEmployeeName != null) {
-				for (Attendance attendance : byEmployeeName) {
-					if (attendance.getStatus().equals("Present") || attendance.getStatus().equals("WFH")) {
-						count++;
-					}
-				}
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
 			}
 
-			attendanceCounts.add(count);
-		}
+			List<Attendance> byAttendance = attendanceRpository.findByMonth(startDate, endDate, name, status);
 
-		return attendanceCounts;
+			filterAttendance = new ArrayList<>();
+
+			for (Attendance attendance : byAttendance) {
+
+					filterAttendance.add(attendance);
+//					System.out.println(filterAttendance.size());
+
+			}
+			return filterAttendance.size();
+
+		} else
+			throw new RuntimeException("Record For Employee either" + " " + userName + " " + "OR " + name + " " + "is not defined");
+
+
+	}
+
+	@Override
+	public List<Attendance> dataFor(String name, String userName, String month) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+		Date startDate, endDate;
+		month = month.toUpperCase();
+		startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(startDate);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		endDate = calendar.getTime();
+
+		List<Attendance> attendances = attendanceRpository.findBySelectEmployeeAndUserNameAndDateBetween(name, userName, startDate, endDate);
+		return attendances;
 	}
 
 }

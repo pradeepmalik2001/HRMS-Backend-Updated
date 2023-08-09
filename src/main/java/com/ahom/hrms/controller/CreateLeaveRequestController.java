@@ -48,4 +48,9 @@ public class CreateLeaveRequestController {
 					createLeaveRequestService.updateCreateLeaveRequest(createLeaveRequestDto,id));
 	    }
 
+		@PostMapping("/count")
+		public ResponseEntity<Object> countStatus(@RequestParam String employeeId,@RequestParam String month) throws ParseException {
+			return ResponseHandler.responseBuilder("Data Posted",HttpStatus.OK,createLeaveRequestService.countApprovedLeave(employeeId,month));
+		}
+
 }

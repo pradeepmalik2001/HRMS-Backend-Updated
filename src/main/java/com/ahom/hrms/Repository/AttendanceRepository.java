@@ -23,6 +23,14 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 
       );
 
+    List  <Attendance> findBySelectEmployeeAndUserNameAndDateBetween(
+            @Param("selectEmployee") String selectEmployee,
+            @Param("userName") String userName,
+            @Param("date")Date startDate,
+            @Param("endDate") Date endDate
+
+    );
+
 
     @Query(value= "Select * FROM attendance o WHERE o.select_employee=:name AND o.date BETWEEN :startdate AND :enddate",
             nativeQuery = true)

@@ -1,5 +1,6 @@
 package com.ahom.hrms.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,5 +26,9 @@ public interface AttendanceService {
 									   String status);
 
 	public List <Attendance> status(String name, String userName,String month);
-	
+
+	public double countAttendance(String name, String userName,String month,String status);
+
+	List<Attendance> dataFor(String name, String userName,String month) throws ParseException;
+
 }

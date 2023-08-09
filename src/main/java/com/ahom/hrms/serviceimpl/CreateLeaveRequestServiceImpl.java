@@ -19,11 +19,16 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,25 +88,30 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 			System.out.println("daysInBetwwnnnnnnn : "+daysInBetween);
 			System.out.println("finalDaysssss : "+finalDays);
 
+			LocalDate startDate1= LocalDate.parse(createLeaveRequest.getStartDate());
+			LocalDate endDate1=LocalDate.parse(createLeaveRequest.getEndDate());
 
+			while(!startDate1.isAfter(endDate1)) {
+				if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
+					if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
+						createLeaveRequest.setEmail(employee.getUsername());
+						createLeaveRequest.setEmployeeId(createLeaveRequest.getId());
+						createLeaveRequest.setStatus("3");
+						createLeaveRequest.setNoOfDays(finalDays);
+						createLeaveRequest.setLeaveRecord(leaveRecord1);
+						createLeaveRequest.setDate(startDate1);
+						notification.setMessage("New leave request from Employee: " + createLeaveRequest.getEmail());
+						notification.setStatus(true);
+						notificationService.saveNotification(notification);
+						createLeaveRequestRepository.save(createLeaveRequest);
+						startDate1=startDate1.plusDays(1);
+					} else {
+						throw new CustomException("End date cannot be earlier than current date or before start date ");
+					}
 
-			if (currentDate.isEqual(startDate) || startDate.isAfter(currentDate)) {
-				if (endDate.isAfter(startDate) || endDate.isAfter(currentDate) || endDate.isEqual(startDate)) {
-					createLeaveRequest.setEmail(employee.getUsername());
-					createLeaveRequest.setEmployeeId(createLeaveRequest.getId());
-					createLeaveRequest.setStatus("3");
-					createLeaveRequest.setNoOfDays(finalDays);
-					createLeaveRequest.setLeaveRecord(leaveRecord1);
-					notification.setMessage("New leave request from Employee: " + createLeaveRequest.getEmail());
-					notification.setStatus(true);
-					notificationService.saveNotification(notification);
-					createLeaveRequestRepository.save(createLeaveRequest);
-				}else {
-					throw new CustomException("End date cannot be earlier than current date or before start date ");
+				} else {
+					throw new RuntimeException("Start date cannot be earlier than the current date");
 				}
-			}
-			else {
-				throw new RuntimeException("Start date cannot be earlier than the current date");
 			}
 		}
 
@@ -177,11 +187,11 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 							leaveRecord1.setLeaveId(leaveRecord1.getLeaveId());
 							leaveRecord1.setEmployeeId(createLeaveRequest.getLeaveRecord().getEmployeeId());
 							leaveRecord1.setEmployeeName(createLeaveRequest.getLeaveRecord().getEmployeeName());
-							leaveRecord1.setLop(createLeaveRequest.getNoOfDays() - createLeaveRequest.getLeaveRecord().getTotalLeave() + createLeaveRequest.getLeaveRecord().getLop());
+							leaveRecord1.setLop(1 - createLeaveRequest.getLeaveRecord().getTotalLeave() + createLeaveRequest.getLeaveRecord().getLop());
 							leaveRecord1.setTotalLeave(0);
 							leaveRecord1.setLeaveLeft(0);
 							leaveRecord1.setLeaveRecordOfMonth(format);
-							leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays() + createLeaveRequest.getLeaveRecord().getLeaveTaken());
+							leaveRecord1.setLeaveTaken(1 + createLeaveRequest.getLeaveRecord().getLeaveTaken());
 							leaveRecordService.updateLeaveRecord(leaveRecord1,createLeaveRequest.getLeaveRecord().getLeaveId());
 							createLeaveRequestDto.setLeaveRecord(leaveRecord1);
 						} else {
@@ -191,7 +201,7 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 							leaveRecord1.setLop(0);
 							leaveRecord1.setTotalLeave(createLeaveRequest.getLeaveRecord().getTotalLeave() - createLeaveRequest.getNoOfDays());
 							leaveRecord1.setLeaveLeft(createLeaveRequest.getLeaveRecord().getTotalLeave() - createLeaveRequest.getNoOfDays());
-							leaveRecord1.setLeaveTaken(createLeaveRequest.getNoOfDays());
+							leaveRecord1.setLeaveTaken(1);
 							leaveRecordRepository.save(leaveRecord1);
 							createLeaveRequestDto.setLeaveRecord(leaveRecord1);
 						}
@@ -269,6 +279,46 @@ public class CreateLeaveRequestServiceImpl implements CreateLeaveRequestService{
 	public CreateLeaveRequestDto createLeaveRequesttoCreateLeaveRequestdto(CreateLeaveRequest createLeaveRequest)
 	{
 		return this.modelMapper.map(createLeaveRequest,CreateLeaveRequestDto.class);
+	}
+
+	public double countApprovedLeave(String employeeId, String month) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+		Date startDate, endDate;
+
+		month = month.toUpperCase();
+		startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(startDate);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		endDate = calendar.getTime();
+
+		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String endDateString = outputDateFormat.format(endDate);
+		String startdateString = outputDateFormat.format(startDate);
+
+		String status1 = "1";
+		List<CreateLeaveRequest> list = createLeaveRequestRepository.findByEmployeeIdAndStartDateAndEndDateAndStatus(employeeId,startdateString, endDateString,status1);
+		return list.size();
+	}
+
+	public List<CreateLeaveRequest> ApprovedLeave(String employeeId, String month) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+		Date startDate, endDate;
+
+		month = month.toUpperCase();
+		startDate = dateFormat.parse(month + " " + Calendar.getInstance().get(Calendar.YEAR));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(startDate);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		endDate = calendar.getTime();
+
+		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String endDateString = outputDateFormat.format(endDate);
+		String startdateString = outputDateFormat.format(startDate);
+
+		String status1 = "1";
+		List<CreateLeaveRequest> list = createLeaveRequestRepository.findByEmployeeIdAndStartDateAndEndDateAndStatus(employeeId,startdateString, endDateString,status1);
+		return list;
 	}
 
 }
