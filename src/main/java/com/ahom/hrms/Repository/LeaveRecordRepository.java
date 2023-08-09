@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public interface LeaveRecordRepository extends JpaRepository<LeaveRecord,Integer>
 {
     LeaveRecord findByEmployeeIdAndLeaveRecordOfMonth(String employeeId,String leaveRecordOfMonth);
-    LeaveRecord findByEmployeeId(String employeeId);
+//    LeaveRecord findByEmployeeIdAndMonth(String employeeId,String);
 
 }

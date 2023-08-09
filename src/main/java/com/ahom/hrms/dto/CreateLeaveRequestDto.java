@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -41,6 +42,8 @@ public class CreateLeaveRequestDto {
 	private String email;
 
 	private double noOfDays;
+
+	private LocalDate date;
 
 	LeaveRecord leaveRecord;
 

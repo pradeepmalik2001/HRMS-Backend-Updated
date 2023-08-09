@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -52,6 +53,8 @@ public class CreateLeaveRequest {
 	private String email;
 
 	private double noOfDays;
+
+	private LocalDate date;
 
 	@OneToOne(targetEntity = LeaveRecord.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JsonBackReference
