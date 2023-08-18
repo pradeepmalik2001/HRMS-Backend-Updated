@@ -2,7 +2,6 @@ package com.ahom.hrms.entities;
 
 
 import com.ahom.hrms.constant.PrefixAndSequence;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;

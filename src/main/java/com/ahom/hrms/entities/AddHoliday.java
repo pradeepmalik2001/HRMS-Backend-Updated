@@ -1,5 +1,10 @@
 package com.ahom.hrms.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,9 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="Add_holiday")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddHoliday {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -23,44 +33,6 @@ public class AddHoliday {
 	@NotEmpty(message="To Date is Mandatory")
 	private String toDate;
 
-	public int getId() {
-		return id;
-	}
+	private LocalDate date;
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getHolidayName() {
-		return holidayName;
-	}
-
-	public void setHolidayName(String holidayName) {
-		this.holidayName = holidayName;
-	}
-
-	public String getHolidayType() {
-		return holidayType;
-	}
-
-	public void setHolidayType(String holidayType) {
-		this.holidayType = holidayType;
-	}
-
-	public String getFromDate() {
-		return fromDate;
-	}
-
-	public void setFromDate(String fromDate) {
-		this.fromDate = fromDate;
-	}
-
-	public String getToDate() {
-		return toDate;
-	}
-
-	public void setToDate(String toDate) {
-		this.toDate = toDate;
-	}
-	
 }
