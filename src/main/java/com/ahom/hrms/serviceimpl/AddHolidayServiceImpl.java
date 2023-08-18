@@ -2,6 +2,7 @@ package com.ahom.hrms.serviceimpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -32,24 +33,27 @@ public class AddHolidayServiceImpl implements AddHolidayService{
 				(addHolidayDto.getHolidayName(),
 						addHolidayDto.getFromDate(),
 						addHolidayDto.getToDate());
+		LocalDate startDate1= LocalDate.parse(addHolidayDto.getFromDate());
+		LocalDate endDate1=LocalDate.parse(addHolidayDto.getToDate());
+		 while (!startDate1.isAfter(endDate1)) {
+			 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			 String startDateString = addHolidayDto.getFromDate();
+			 String endDateString = addHolidayDto.getToDate();
+			 Date startDate = formatter.parse(startDateString);
+			 Date endDate = formatter.parse(endDateString);
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		String startDateString =addHolidayDto.getFromDate();
-		String endDateString = addHolidayDto.getToDate();
-		Date startDate = formatter.parse(startDateString);
-		Date endDate = formatter.parse(endDateString);
-
-		if(Objects.isNull(addHolidays)) {
-			 if (!endDate.before(startDate)) {
-				 addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
-			 }else {
-				 throw new CustomException("From date should be of present day or after of ToDate");
+			 if (Objects.isNull(addHolidays)) {
+				 if (!endDate.before(startDate)) {
+					 addHolidayDto.setDate(startDate1);
+					 addHolidayRepository.save(AddHolidayDtotoAddHoliday(addHolidayDto));
+					 startDate1=startDate1.plusDays(1);
+				 } else {
+					 throw new CustomException("From date should be of present day or after of ToDate");
+				 }
+			 } else {
+				 throw new RuntimeException("Data Already Exist");
 			 }
 		 }
-		else
-		{
-			throw  new RuntimeException("Data Already Exist");
-		}
 
 		return addHolidayDto;
 
