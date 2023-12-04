@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "approval")
 public class AddApproval {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -13,11 +12,8 @@ public class AddApproval {
 	private String employeeName;
 	private String approvalName;
 	private String approvalCode;
-	
-	public AddApproval() {
-		
-	}
 
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -63,7 +59,7 @@ public class AddApproval {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id){
 		this.id = id;
-	}
+  }				
 }

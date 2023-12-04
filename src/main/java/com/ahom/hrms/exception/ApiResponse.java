@@ -3,8 +3,6 @@ package com.ahom.hrms.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,10 +20,7 @@ public class ApiResponse {
     public void setError_message(String error_message) {
         this.error_message = error_message;
     }
-
-
-
-
+     
     public int getStatus_code() {
         return status_code;
     }
@@ -34,3 +29,4 @@ public class ApiResponse {
         this.status_code = status_code;
     }
 }
+ 

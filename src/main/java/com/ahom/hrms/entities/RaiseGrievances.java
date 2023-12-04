@@ -19,7 +19,6 @@ import javax.persistence.Id;
 public class RaiseGrievances {
 	
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String grievanceType;

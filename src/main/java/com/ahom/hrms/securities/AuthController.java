@@ -1,19 +1,17 @@
 package com.ahom.hrms.securities;
 
-import com.ahom.hrms.Repository.EmployeeRepository;
-import com.ahom.hrms.Response.ResponseHandler;
-import com.ahom.hrms.entities.Employee;
-import com.ahom.hrms.entities.LeaveRecord;
-import com.ahom.hrms.exception.CustomException;
-import com.ahom.hrms.service.LeaveRecordService;
-import com.ahom.hrms.serviceimpl.EmployeeService;
-import com.google.api.client.util.DateTime;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,11 +23,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.security.Principal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import com.ahom.hrms.Repository.EmployeeRepository;
+import com.ahom.hrms.Response.ResponseHandler;
+import com.ahom.hrms.entities.Employee;
+import com.ahom.hrms.entities.LeaveRecord;
+import com.ahom.hrms.exception.CustomException;
+import com.ahom.hrms.service.LeaveRecordService;
+import com.ahom.hrms.serviceimpl.EmployeeService;
 
 @RestController
 
@@ -93,10 +93,10 @@ public class AuthController {
 
     }
 
-    // register new user api
+     // register new user api
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody Employee UserDTO) {
+        public ResponseEntity<Object> registerUser(@Valid @RequestBody Employee UserDTO) {
         Optional<Employee> employee=employeeRepository.findByUserName(UserDTO.getUsername());
         if (employee.isEmpty()) {
             if (UserDTO.getRoles()!=null) {
@@ -118,6 +118,7 @@ public class AuthController {
 //                            " " + UserDTO.getConfirmPassword());
 //                    mailSender.send(messageToEmployee);
 //                    System.out.println(messageToEmployee);
+
                     LocalDate currentDate = LocalDate.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
                     String currentMonth = currentDate.format(formatter);
@@ -146,7 +147,7 @@ public class AuthController {
         }
     }
 
-    // get logged user data
+// get logged user data
     @Autowired
     private EmployeeRepository userRepo;
     @Autowired

@@ -1,9 +1,7 @@
 package com.ahom.hrms.controller;
 
-import java.util.List;
-import java.util.Objects;
+import javax.validation.Valid;
 
-import com.ahom.hrms.Response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ahom.hrms.Response.ResponseHandler;
 import com.ahom.hrms.dto.AddJobTitleDto;
 import com.ahom.hrms.serviceimpl.AddJobTitleServiceImpl;
-
-import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
